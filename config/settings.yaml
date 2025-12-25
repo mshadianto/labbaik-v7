@@ -1,0 +1,176 @@
+# =============================================================================
+# LABBAIK AI v6.0 - Main Configuration
+# =============================================================================
+# Environment-specific settings can be overridden via environment variables.
+# Environment variables take precedence over values in this file.
+# =============================================================================
+
+# Environment: development | staging | production | testing
+environment: development
+
+# Debug mode (enables verbose logging)
+debug: true
+
+# =============================================================================
+# DATABASE CONFIGURATION
+# =============================================================================
+database:
+  # Database URL (override with DATABASE_URL env var)
+  url: ""
+  
+  # Connection pool settings
+  pool_size: 5
+  max_overflow: 10
+  pool_timeout: 30
+  
+  # SQL echo for debugging
+  echo: false
+
+# =============================================================================
+# AI SERVICES CONFIGURATION
+# =============================================================================
+ai:
+  # Groq Configuration (primary)
+  groq_api_key: ""  # Override with GROQ_API_KEY env var
+  groq_model: "llama-3.3-70b-versatile"
+  groq_max_tokens: 4096
+  groq_temperature: 0.7
+  
+  # OpenAI Configuration (fallback)
+  openai_api_key: ""  # Override with OPENAI_API_KEY env var
+  openai_model: "gpt-4o-mini"
+  
+  # RAG Configuration
+  embedding_model: "all-MiniLM-L6-v2"
+  chunk_size: 500
+  chunk_overlap: 50
+  top_k_results: 5
+  
+  # Rate Limiting
+  requests_per_minute: 30
+  tokens_per_minute: 100000
+
+# =============================================================================
+# AUTHENTICATION CONFIGURATION
+# =============================================================================
+auth:
+  # Google OAuth
+  google_client_id: ""  # Override with GOOGLE_CLIENT_ID env var
+  google_client_secret: ""  # Override with GOOGLE_CLIENT_SECRET env var
+  google_redirect_uri: "http://localhost:8501/oauth/callback"
+  
+  # Session Management
+  session_secret_key: ""  # Override with SESSION_SECRET_KEY env var
+  session_expire_hours: 24
+  
+  # JWT Configuration
+  jwt_secret_key: ""  # Override with JWT_SECRET_KEY env var
+  jwt_algorithm: "HS256"
+  jwt_expire_minutes: 60
+
+# =============================================================================
+# UI CONFIGURATION
+# =============================================================================
+ui:
+  # Application Info
+  app_name: "LABBAIK AI"
+  app_tagline: "Asisten Perjalanan Umrah Cerdas"
+  app_version: "6.0.0"
+  
+  # Appearance
+  theme: "default"
+  language: "id"
+  page_icon: "🕋"
+  layout: "wide"
+  
+  # Feature Flags
+  features:
+    chat: true
+    simulator: true
+    booking: true
+    umrah_bareng: true
+    umrah_mandiri: true
+    gamification: true
+    pwa: true
+
+# =============================================================================
+# PLUGIN CONFIGURATION
+# =============================================================================
+plugins:
+  # Enable/disable plugin system
+  enabled: true
+  
+  # Plugin directory
+  plugin_dir: "plugins/available"
+  
+  # Plugins to auto-load on startup
+  auto_load:
+    - gamification
+  
+  # Plugins to explicitly disable
+  disabled: []
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+logging:
+  # Log level: DEBUG | INFO | WARNING | ERROR | CRITICAL
+  level: "INFO"
+  
+  # Log format
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+  
+  # Log file (optional, null for console only)
+  file_path: null
+  
+  # Log rotation
+  max_bytes: 10485760  # 10MB
+  backup_count: 5
+
+# =============================================================================
+# COST SIMULATION DEFAULTS
+# =============================================================================
+cost_simulation:
+  default_departure_city: "Jakarta"
+  default_package_type: "reguler"
+  default_hotel_star: 3
+  default_days_makkah: 5
+  default_days_madinah: 4
+
+# =============================================================================
+# UMRAH DATA SERVICES
+# =============================================================================
+umrah_data:
+  # Amadeus API (Hotel Search) - https://developers.amadeus.com
+  amadeus_api_key: ""  # Override with AMADEUS_API_KEY env var
+  amadeus_api_secret: ""  # Override with AMADEUS_API_SECRET env var
+  amadeus_environment: "test"  # "test" or "production"
+
+  # RapidAPI (Xotelo, etc.) - https://rapidapi.com
+  rapidapi_key: ""  # Override with RAPIDAPI_KEY env var
+
+  # Data fetching settings
+  cache_duration_hours: 24
+  max_hotel_results: 50
+  enable_geocoding: true
+  enable_demo_fallback: true
+
+  # Currency conversion
+  sar_to_idr_rate: 4200.0
+
+# =============================================================================
+# NOTIFICATIONS
+# =============================================================================
+notifications:
+  email:
+    enabled: false
+    smtp_host: ""
+    smtp_port: 587
+    smtp_user: ""
+    smtp_password: ""
+    from_address: "noreply@labbaik.cloud"
+
+  whatsapp:
+    enabled: false
+    api_url: ""
+    api_key: ""
