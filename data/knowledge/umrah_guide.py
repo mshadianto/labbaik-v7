@@ -978,6 +978,75 @@ Nasi Mandi dan Madfun autentik dengan harga terjangkau.
 
 ### 5. Buah Segar di Pasar Al-Sitteen
 Kurma, tin, dan buah-buahan segar dengan harga grosir.
+
+---
+
+## Cafe & Tempat Healing di Makkah
+
+Setelah ibadah yang melelahkan, istirahat sejenak di cafe untuk recharge:
+
+### 1. Starbucks Abraj Al-Bait (Clock Tower)
+**Lokasi:** Mall Abraj Al-Bait, lantai 4
+- View langsung ke Ka'bah dari jendela
+- Buka 24 jam
+- Wifi gratis, cocok untuk kerja remote
+- **Tips:** Datang setelah Isya untuk suasana tenang
+
+### 2. Caffe Nero - Jabal Omar
+**Lokasi:** Jabal Omar Development
+- Suasana modern dan cozy
+- Outdoor seating dengan view kota
+- Kopi dan pastry berkualitas
+
+### 3. The Coffee Bean & Tea Leaf
+**Lokasi:** Hilton Convention Center
+- AC sejuk, tempat luas
+- Cocok untuk istirahat lama
+- Banyak colokan listrik
+
+### 4. Costa Coffee - Makkah Mall
+**Lokasi:** Makkah Mall, lantai dasar
+- Suasana rileks jauh dari keramaian Haram
+- Food court lengkap di sekitarnya
+- Free parking mall
+
+### 5. Angelina Paris - Raffles Makkah
+**Lokasi:** Raffles Makkah Palace
+- Cafe mewah dengan French pastry
+- Hot chocolate signature legendary
+- Perfect untuk treat yourself
+- **Harga:** Premium tapi worth it
+
+### 6. Paul Bakery - Swissotel
+**Lokasi:** Swissotel Makkah
+- French bakery & cafe
+- Croissant dan pain au chocolat fresh
+- Breakfast set lengkap
+
+### 7. Tim Hortons - Multiple Locations
+**Lokasi:** Kudai Road, Aziziyah
+- Kopi Canada dengan harga terjangkau
+- Donut dan Timbits favorit
+- Drive-thru available
+
+### 8. Rooftop Cafe - Makkah Towers
+**Lokasi:** Makkah Towers Hotel
+- View malam Makkah yang spektakuler
+- Shisha tersedia (outdoor)
+- Suasana santai malam hari
+
+### 9. Brew92 - Jabal Omar
+**Lokasi:** Jabal Omar Hyatt
+- Local specialty coffee
+- Single origin beans
+- Barista skilled, latte art bagus
+- Vibe anak muda Saudi
+
+### 10. Food Court Clock Tower
+**Lokasi:** Abraj Al-Bait Mall, lantai 2-3
+- Berbagai pilihan makanan & minuman
+- AC kuat, istirahat dari panas
+- View Ka'bah dari beberapa spot
 """
 
 HIDDEN_GEMS_MADINAH = """
@@ -1114,6 +1183,89 @@ Roti Arab panas dengan madu, sarapan favorit jamaah.
 
 ### 5. Jus Delima Segar
 Banyak penjual jus di sekitar Masjid Nabawi, sehat dan segar!
+
+---
+
+## Cafe & Tempat Healing di Madinah
+
+Madinah punya banyak spot cozy untuk istirahat dan healing:
+
+### 1. Starbucks Reserve - Al Noor Mall
+**Lokasi:** Al Noor Mall
+- Premium reserve coffee
+- Interior mewah dan luas
+- Quiet zone tersedia
+- **Tips:** Weekday lebih sepi
+
+### 2. Dunkin' Donuts - Central Area
+**Lokasi:** King Fahd Road
+- Buka 24 jam
+- Kopi dan donat fresh
+- Harga terjangkau
+- Cocok sarapan cepat
+
+### 3. Cafe Bateel - Oberoi Hotel
+**Lokasi:** The Oberoi Madinah
+- Kurma premium + kopi Arabia
+- Suasana super mewah
+- Gift box kurma bagus untuk oleh-oleh
+- **Specialty:** Date latte
+
+### 4. Caribou Coffee - Taibah Road
+**Lokasi:** Dekat Masjid Nabawi Gate 21
+- Walking distance dari Haram
+- Tempat luas, AC kuat
+- Cocok ngobrol santai
+
+### 5. McCafe - Multiple Locations
+**Lokasi:** King Fahd Road, Central Area
+- 24 jam
+- Budget friendly
+- Wifi gratis
+
+### 6. Gloria Jean's Coffees
+**Lokasi:** Al Rashid Mega Mall
+- Australian coffee chain
+- Blended drinks enak
+- Mall lengkap untuk healing shopping
+
+### 7. The Roastery - Prince Sultan Road
+**Lokasi:** Area komersial Prince Sultan
+- Local specialty roaster
+- Pour over & espresso based
+- Beans bisa dibeli pulang
+- Vibe hipster Madinah
+
+### 8. Krispy Kreme - Quba Road
+**Lokasi:** Quba Commercial Area
+- Donat fresh daily
+- Hot glazed original harus coba
+- Coffee decent untuk accompany
+
+### 9. Garden Cafe - Anwar Al Madinah
+**Lokasi:** Anwar Al Madinah Movenpick
+- Outdoor garden setting
+- View taman hijau
+- Suasana tenang untuk refleksi
+- **Tips:** Sore hari paling enak
+
+### 10. Second Cup - Taibah
+**Lokasi:** Area universitas Taibah
+- Coffee Canada
+- Suasana anak muda
+- Harga mahasiswa friendly
+
+### 11. Rooftop Lounge - Dar Al Taqwa
+**Lokasi:** Dar Al Taqwa Hotel lantai atas
+- View panorama Madinah malam
+- Fresh juice & mocktails
+- Shisha area tersedia
+
+### 12. Public Parks untuk Healing
+**Lokasi:** Tersebar di Madinah
+- **King Fahd Garden:** Taman luas, jogging track, free
+- **Al Salam Park:** Dekat Quba, cocok sore
+- **Prince Mohammad Park:** Playground untuk anak
 
 ---
 
