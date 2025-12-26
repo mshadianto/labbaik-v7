@@ -741,6 +741,402 @@ FAQ_DATA = [
 # PACKING LIST
 # =============================================================================
 
+# =============================================================================
+# HOTEL BOOKING TIPS
+# =============================================================================
+
+HOTEL_BOOKING_TIPS = """
+# Tips Booking Hotel untuk Umrah
+
+## Penting: Konfirmasi Langsung ke Hotel Setelah Booking OTA
+
+Setelah booking melalui OTA (Agoda, Booking.com, Traveloka, dll),
+**SANGAT DISARANKAN** untuk menghubungi hotel secara langsung dan konfirmasi reservasi Anda.
+
+### Mengapa Harus Konfirmasi Langsung?
+
+1. **Menghindari Overbooking** - OTA kadang oversell, hotel penuh saat check-in
+2. **Memastikan Tipe Kamar** - Request khusus (connecting room, high floor, dll)
+3. **Konfirmasi Harga** - Pastikan tidak ada hidden charge
+4. **Jarak ke Masjid** - Tanyakan pintu terdekat ke Haram
+5. **Layanan Shuttle** - Apakah tersedia, gratis atau berbayar
+
+### Informasi yang Harus Disiapkan
+
+Saat menghubungi hotel, siapkan informasi berikut:
+
+| Data | Contoh |
+|------|--------|
+| **Booking Number** | AG-123456789 (dari OTA) |
+| **Booking Reservation Number (BRN)** | HRN-2025-001234 (dari hotel) |
+| **Tanggal Check-in** | 15 Januari 2025 |
+| **Tanggal Check-out** | 20 Januari 2025 |
+| **Nama Tamu** | Muhammad Ahmad (sesuai paspor) |
+| **Jumlah Kamar** | 2 kamar |
+| **Tipe Kamar** | Deluxe Double, Haram View |
+| **Jumlah Tamu** | 4 orang dewasa |
+| **Request Khusus** | Connecting room, non-smoking |
+
+### Template Email Konfirmasi ke Hotel
+
+```
+Subject: Booking Confirmation Request - [Booking Number] - [Nama Anda]
+
+Dear [Nama Hotel] Reservation Team,
+
+I would like to confirm my upcoming reservation:
+
+Booking Reference (OTA): [Nomor Booking dari OTA]
+Guest Name: [Nama sesuai Paspor]
+Check-in Date: [Tanggal]
+Check-out Date: [Tanggal]
+Room Type: [Tipe Kamar]
+Number of Rooms: [Jumlah]
+Number of Guests: [Jumlah]
+
+Could you please:
+1. Confirm my reservation is active
+2. Provide the Hotel Confirmation Number / BRN
+3. Confirm the room rate includes [breakfast/taxes/etc]
+4. Advise which gate is nearest to your hotel
+
+Special Request: [Connecting room / High floor / Early check-in / dll]
+
+Thank you for your assistance.
+
+Best regards,
+[Nama Anda]
+[Nomor WhatsApp]
+```
+
+### Kontak Hotel Populer di Makkah
+
+| Hotel | Telepon | Email |
+|-------|---------|-------|
+| Hilton Suites Makkah | +966 12 531 7777 | makkah.suites@hilton.com |
+| Raffles Makkah Palace | +966 12 571 9800 | makkah@raffles.com |
+| Swissotel Makkah | +966 12 571 8888 | makkah@swissotel.com |
+| Pullman Zamzam | +966 12 571 4000 | h8779@accor.com |
+| Conrad Makkah | +966 12 577 4444 | makkah.info@conradhotels.com |
+| Makkah Clock Tower | +966 12 571 2500 | - |
+| Al Marwa Rayhaan | +966 12 571 1111 | - |
+| Marriott Jabal Omar | +966 12 539 5555 | - |
+
+### Kontak Hotel Populer di Madinah
+
+| Hotel | Telepon | Email |
+|-------|---------|-------|
+| Oberoi Madinah | +966 14 818 3888 | reservations.madinah@oberoigroup.com |
+| Anwar Al Madinah Movenpick | +966 14 818 1818 | hotel.madinah@movenpick.com |
+| Dar Al Taqwa | +966 14 826 0000 | - |
+| Shaza Al Madina | +966 14 828 1111 | - |
+| Crowne Plaza Madinah | +966 14 827 5555 | madinah@ihg.com |
+| Millennium Al Aqeeq | +966 14 366 3333 | - |
+
+### Tips Memilih Hotel
+
+1. **Jarak ke Masjid** - Prioritas utama! Hotel dekat bisa jalan kaki
+2. **Pintu Terdekat** - Tanyakan pintu Haram mana yang terdekat
+3. **Fasilitas** - Laundry, restoran halal, shuttle, wifi
+4. **Review** - Baca review terbaru, terutama dari jamaah Indonesia
+5. **Harga** - Bandingkan OTA vs booking langsung ke hotel
+
+### Waktu Terbaik Booking
+
+- **3-6 bulan sebelumnya** untuk harga terbaik
+- **Hindari Ramadan & musim haji** jika ingin hemat
+- **Weekday check-in** biasanya lebih murah
+
+### Red Flags - Tanda Hotel Bermasalah
+
+1. Tidak merespons email/telepon dalam 48 jam
+2. Tidak bisa memberikan BRN/confirmation number
+3. Meminta pembayaran di luar OTA
+4. Review banyak yang komplain tentang reservasi hilang
+5. Harga terlalu murah dibanding kompetitor
+"""
+
+# =============================================================================
+# HIDDEN GEMS MAKKAH & MADINAH
+# =============================================================================
+
+HIDDEN_GEMS_MAKKAH = """
+# Hidden Gems di Makkah Al-Mukarramah
+
+Selain ibadah umrah, Makkah menyimpan banyak tempat bersejarah yang
+jarang dikunjungi turis. Berikut hidden gems yang wajib dikunjungi:
+
+## 1. Jabal Nur (Gua Hira)
+**Lokasi:** 4 km dari Masjidil Haram
+
+Tempat Nabi Muhammad SAW menerima wahyu pertama. Mendaki ke puncak
+membutuhkan 1-2 jam. Pemandangan Makkah dari atas sangat indah.
+
+**Tips:**
+- Berangkat subuh untuk menghindari panas
+- Bawa air yang cukup
+- Pakai sepatu gunung
+- Tidak disarankan untuk lansia
+
+---
+
+## 2. Jabal Tsur (Gua Tsur)
+**Lokasi:** Selatan Makkah, 5 km dari Haram
+
+Tempat persembunyian Nabi SAW dan Abu Bakar saat hijrah ke Madinah.
+Lebih sulit didaki daripada Jabal Nur (2-3 jam).
+
+**Kisah:**
+Di sinilah laba-laba membuat sarang dan burung merpati bertelur
+untuk melindungi Rasulullah dari kafir Quraisy.
+
+---
+
+## 3. Maqbarah Al-Ma'la (Pemakaman Jannat Al-Mu'alla)
+**Lokasi:** Dekat Masjidil Haram, arah Mina
+
+Pemakaman tertua di Makkah. Di sini dimakamkan:
+- Khadijah binti Khuwailid (istri pertama Nabi)
+- Abdul Muthalib (kakek Nabi)
+- Abu Talib (paman Nabi)
+- Abdullah bin Abdul Muthalib (ayah Nabi) - menurut sebagian riwayat
+
+**Tips:** Ziarah setelah Subuh, lebih sepi
+
+---
+
+## 4. Masjid Jin
+**Lokasi:** Dekat Maqbarah Al-Ma'la
+
+Tempat di mana jin-jin mendengarkan bacaan Al-Quran dari Nabi SAW.
+Masjid kecil namun penuh sejarah.
+
+---
+
+## 5. Masjid Tan'im (Miqat Aisyah)
+**Lokasi:** 7 km dari Masjidil Haram
+
+Miqat terdekat dari Makkah untuk umrah kedua.
+Dinamakan Miqat Aisyah karena Aisyah RA memulai ihram dari sini.
+
+**Tips:** Banyak tersedia travel murah dari sekitar Haram
+
+---
+
+## 6. Arafah (Di Luar Musim Haji)
+**Lokasi:** 20 km dari Makkah
+
+Berkunjung ke Jabal Rahmah dan Masjid Namira di luar musim haji.
+Suasana lebih tenang untuk berdoa.
+
+---
+
+## 7. Muzdalifah & Mina
+**Lokasi:** Antara Makkah dan Arafah
+
+Di luar musim haji, Anda bisa melihat Jamarat dan mempelajari
+jalur haji. Area ini biasanya sepi.
+
+---
+
+## 8. Hudaibiyah (Masjid Hudaibiyah)
+**Lokasi:** Di perbatasan wilayah haram
+
+Tempat bersejarah Perjanjian Hudaibiyah. Sayangnya masjid lama
+sudah direnovasi, tapi tetap layak dikunjungi.
+
+---
+
+## 9. Maktabah Makkah Al-Mukarramah
+**Lokasi:** Dekat Masjidil Haram
+
+Perpustakaan Islam dengan koleksi manuskrip kuno dan buku langka.
+Cocok untuk pencinta sejarah Islam.
+
+---
+
+## 10. Bir Tuwa (Sumur Tuwa)
+**Lokasi:** Daerah Zahir, Makkah
+
+Tempat Nabi SAW bermalam sebelum memasuki Makkah saat Fathu Makkah.
+
+---
+
+## Kuliner Hidden Gems Makkah
+
+### 1. Al Baik
+Ayam goreng legendaris Saudi. Cabang terdekat Haram di Kudai Road.
+
+### 2. Shawarma Street (Jarwal)
+Area dengan banyak kedai shawarma autentik, lebih murah dari sekitar Haram.
+
+### 3. Souq Al Khalil
+Pasar tradisional untuk oleh-oleh dengan harga lokal.
+
+### 4. Restoran Yaman di Aziziyah
+Nasi Mandi dan Madfun autentik dengan harga terjangkau.
+
+### 5. Buah Segar di Pasar Al-Sitteen
+Kurma, tin, dan buah-buahan segar dengan harga grosir.
+"""
+
+HIDDEN_GEMS_MADINAH = """
+# Hidden Gems di Madinah Al-Munawwarah
+
+Kota Nabi yang penuh berkah. Selain Masjid Nabawi, banyak tempat
+bersejarah yang menunggu untuk dijelajahi.
+
+## 1. Masjid Quba
+**Lokasi:** 5 km dari Masjid Nabawi
+
+Masjid pertama dalam Islam yang dibangun Nabi SAW.
+Shalat 2 rakaat di sini = pahala satu umrah!
+
+**Tips:**
+- Datang hari Sabtu (sunnah Nabi)
+- Shalat 2 rakaat tahiyyatul masjid
+- Gratis shuttle dari beberapa hotel
+
+---
+
+## 2. Masjid Qiblatain
+**Lokasi:** 4 km dari Masjid Nabawi
+
+Masjid tempat turunnya perintah mengubah kiblat dari Baitul Maqdis
+ke Ka'bah. Arsitektur unik dengan dua mihrab.
+
+---
+
+## 3. Uhud dan Makam Syuhada
+**Lokasi:** 5 km utara Masjid Nabawi
+
+Lokasi Perang Uhud. Ziarahi makam Hamzah bin Abdul Muthalib (paman Nabi)
+dan para syuhada lainnya.
+
+**Yang Harus Dilihat:**
+- Jabal Uhud (gunung merah)
+- Jabal Rumat (tempat pemanah)
+- Makam Syuhada Uhud
+
+**Tips:**
+- Jangan memanjat gunung (menghormati)
+- Berdoa untuk para syuhada
+- Bawa payung (sangat panas)
+
+---
+
+## 4. Masjid Sab'ah (Tujuh Masjid)
+**Lokasi:** Dekat Khandaq
+
+Kompleks 7 masjid kecil di lokasi Perang Khandaq.
+Masing-masing punya sejarah tersendiri.
+
+---
+
+## 5. Makam Baqi (Jannatul Baqi)
+**Lokasi:** Tepat di samping Masjid Nabawi
+
+Pemakaman para sahabat Nabi dan keluarga Nabi SAW:
+- Utsman bin Affan
+- Hasan bin Ali
+- Fatimah binti Muhammad (sebagian riwayat)
+- Para istri Nabi (Ummahatul Mukminin)
+- Banyak sahabat dan tabi'in
+
+**Waktu Ziarah:**
+- Pria: Setelah shalat Subuh dan Ashar
+- Wanita: Tidak diperbolehkan masuk
+
+---
+
+## 6. Bir (Sumur) Romah
+**Lokasi:** Quba area
+
+Sumur yang dibeli Utsman bin Affan dan diwakafkan untuk umat Islam.
+Airnya konon menyembuhkan.
+
+---
+
+## 7. Masjid Ghamama
+**Lokasi:** Dekat Masjid Nabawi
+
+Tempat Nabi SAW shalat Ied. Dinamakan Ghamama (awan) karena
+awan pernah menaungi Nabi saat shalat.
+
+---
+
+## 8. Kebun Kurma Madinah
+**Lokasi:** Sekitar Quba dan Uhud
+
+Kunjungi perkebunan kurma dan cicipi kurma Ajwa segar langsung
+dari pohonnya (musim panen: Juni-Agustus).
+
+**Jenis Kurma Madinah:**
+- **Ajwa** - Kurma Nabi, mencegah racun dan sihir
+- **Sukkari** - Manis seperti gula
+- **Safawi** - Lembut dan manis
+- **Mabroom** - Panjang dan chewy
+- **Khudri** - Ekonomis tapi enak
+
+---
+
+## 9. Museum Dar Al-Madinah
+**Lokasi:** Pusat kota Madinah
+
+Museum sejarah Islam dengan koleksi:
+- Replika Masjid Nabawi zaman dulu
+- Artefak era Nabi
+- Sejarah perkembangan Madinah
+
+---
+
+## 10. Wadi Al-Aqiq
+**Lokasi:** Barat Madinah
+
+Lembah indah yang sering disebut dalam hadits.
+Tempat yang tenang untuk refleksi.
+
+---
+
+## Kuliner Hidden Gems Madinah
+
+### 1. Restoran Al Romansiah (Sultan Road)
+Nasi Kabsah dan Mandi terenak di Madinah.
+
+### 2. Kurma Segar di Pasar Kurma
+Beli langsung dari petani, jauh lebih murah.
+
+### 3. Kedai Kopi Arab di Quba
+Kopi Arab dengan kurma, suasana lokal autentik.
+
+### 4. Roti Tamis di Sekitar Baqi
+Roti Arab panas dengan madu, sarapan favorit jamaah.
+
+### 5. Jus Delima Segar
+Banyak penjual jus di sekitar Masjid Nabawi, sehat dan segar!
+
+---
+
+## Tips Ziarah Hidden Gems
+
+1. **Sewa Mobil/Taksi** - Lebih efisien untuk keliling
+2. **Guide Lokal** - Banyak yang fasih bahasa Indonesia
+3. **Waktu Terbaik** - Pagi (setelah Subuh) atau sore (setelah Ashar)
+4. **Niat Ibadah** - Setiap ziarah adalah ibadah
+5. **Dokumentasi** - Boleh foto di luar masjid, hormati aturan
+"""
+
+# Combine all hidden gems
+HIDDEN_GEMS = {
+    "makkah": HIDDEN_GEMS_MAKKAH,
+    "madinah": HIDDEN_GEMS_MADINAH,
+}
+
+
+# =============================================================================
+# PACKING LIST
+# =============================================================================
+
 PACKING_LIST = {
     "documents": [
         "Paspor (masa berlaku min. 6 bulan)",
