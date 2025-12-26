@@ -38,7 +38,7 @@ st.set_page_config(
     menu_items={
         'Get Help': 'https://labbaik.cloud/help',
         'Report a bug': 'https://labbaik.cloud/feedback',
-        'About': 'LABBAIK AI v6.2 - Platform Perencanaan Umrah AI #1 Indonesia'
+        'About': 'LABBAIK AI - Platform Perencanaan Umrah AI #1 Indonesia'
     }
 )
 
@@ -77,7 +77,7 @@ except ImportError:
         st.info("Segera hadir: Generate jadwal Umrah harian otomatis!")
 
 # =============================================================================
-# 🆕 Smart Checklist (NEW in v6.2!)
+# Smart Checklist
 # =============================================================================
 try:
     from ui.pages.smart_checklist import render_smart_checklist_page
