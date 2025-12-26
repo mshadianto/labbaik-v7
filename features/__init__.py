@@ -83,6 +83,21 @@ try:
 except ImportError:
     pass
 
+# WhatsApp Bot
+try:
+    from features.whatsapp_bot import (
+        WhatsAppBot,
+        IncomingMessage,
+        BotCommand,
+        BotResponses,
+        search_doa,
+        create_webhook_handler,
+        create_fastapi_router,
+        render_bot_simulator,
+    )
+except ImportError:
+    pass
+
 # Doa Player
 try:
     from features.doa_player import (
@@ -181,6 +196,16 @@ __all__ = [
     "render_whatsapp_test",
     "render_whatsapp_settings",
     "send_sos_via_whatsapp",
+
+    # WhatsApp Bot
+    "WhatsAppBot",
+    "IncomingMessage",
+    "BotCommand",
+    "BotResponses",
+    "search_doa",
+    "create_webhook_handler",
+    "create_fastapi_router",
+    "render_bot_simulator",
     
     # Doa Player
     "Doa",
