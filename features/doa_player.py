@@ -742,7 +742,99 @@ def render_doa_list(category: DoaCategory = None, wajib_only: bool = False):
 
 def render_voice_chat():
     """Render voice chat component for asking doa questions."""
-    st.components.v1.html(VOICE_CHAT_HTML, height=280)
+
+    # Quick question buttons
+    st.markdown("**💡 Pertanyaan Cepat:**")
+
+    col1, col2 = st.columns(2)
+
+    quick_questions = [
+        ("🕋 Doa Tawaf", "tawaf"),
+        ("🏃 Doa Sa'i", "sai"),
+        ("🕌 Doa Masjid", "masjid"),
+        ("✈️ Doa Perjalanan", "perjalanan"),
+        ("🙏 Doa Ihram", "ihram"),
+        ("📿 Talbiyah", "talbiyah"),
+    ]
+
+    with col1:
+        for label, keyword in quick_questions[:3]:
+            if st.button(label, key=f"quick_{keyword}", use_container_width=True):
+                st.session_state.doa_voice_query = keyword
+                st.rerun()
+
+    with col2:
+        for label, keyword in quick_questions[3:]:
+            if st.button(label, key=f"quick_{keyword}", use_container_width=True):
+                st.session_state.doa_voice_query = keyword
+                st.rerun()
+
+    st.divider()
+
+    # Voice input using Web Speech API
+    st.markdown("**🎤 Atau gunakan suara:**")
+
+    voice_html = """
+    <div style="background: linear-gradient(135deg, #0f3460, #16213e); padding: 1rem; border-radius: 15px; border: 1px solid #00d9ff;">
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <button id="voice-btn" onclick="startRecognition()"
+                    style="background: linear-gradient(135deg, #e94560, #ff6b6b); border: none; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; font-size: 1.5rem;">
+                🎤
+            </button>
+            <div style="flex: 1;">
+                <div id="voice-status" style="color: #aaa; font-size: 0.9rem;">Tekan tombol untuk bicara</div>
+                <div id="voice-result" style="color: #00d9ff; font-size: 1.1rem; margin-top: 0.5rem; min-height: 25px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    let recognition = null;
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.lang = 'id-ID';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        recognition.onstart = function() {
+            document.getElementById('voice-status').innerText = '🔴 Mendengarkan...';
+            document.getElementById('voice-btn').style.background = '#ff0000';
+        };
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('voice-result').innerText = '📝 "' + transcript + '"';
+            document.getElementById('voice-status').innerText = '✅ Ketik hasil di kolom pencarian di bawah';
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(transcript).then(() => {
+                document.getElementById('voice-status').innerText = '✅ Tersalin! Paste di kolom pencarian';
+            });
+        };
+
+        recognition.onend = function() {
+            document.getElementById('voice-btn').style.background = 'linear-gradient(135deg, #e94560, #ff6b6b)';
+        };
+
+        recognition.onerror = function(event) {
+            document.getElementById('voice-status').innerText = '❌ Error: ' + event.error;
+            document.getElementById('voice-btn').style.background = 'linear-gradient(135deg, #e94560, #ff6b6b)';
+        };
+    }
+
+    function startRecognition() {
+        if (recognition) {
+            recognition.start();
+        } else {
+            document.getElementById('voice-status').innerText = '❌ Browser tidak mendukung';
+        }
+    }
+    </script>
+    """
+
+    st.components.v1.html(voice_html, height=120)
 
 
 def search_doa(query: str) -> List[Doa]:
@@ -789,20 +881,30 @@ def render_doa_player_page():
 
     with tab2:
         st.markdown("### 🎙️ Tanya Doa dengan Suara")
-        st.caption("Gunakan suara Anda untuk mencari doa yang tepat")
+        st.caption("Gunakan tombol cepat atau suara untuk mencari doa")
 
-        # Voice chat component
+        # Voice chat component with quick buttons
         render_voice_chat()
 
-        # Text input fallback
+        st.divider()
+
+        # Text input for manual search or paste from voice
         query = st.text_input(
-            "Atau ketik pertanyaan:",
-            placeholder="Contoh: doa masuk masjid, talbiyah, doa tawaf...",
+            "🔍 Cari doa:",
+            value=st.session_state.get("doa_voice_query", ""),
+            placeholder="Ketik atau paste hasil suara di sini...",
             key="doa_search_input"
         )
 
+        # Show results
         if query:
+            st.markdown("---")
             render_doa_answer(query)
+        elif st.session_state.get("doa_voice_query"):
+            st.markdown("---")
+            render_doa_answer(st.session_state.doa_voice_query)
+            # Clear after showing
+            st.session_state.doa_voice_query = ""
 
     # Category filter (for tab1)
     with tab1:
