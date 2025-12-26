@@ -1742,6 +1742,327 @@ PACKING_LIST = {
 
 
 # =============================================================================
+# TIPS & TRIK PACKING KOPER
+# =============================================================================
+
+TIPS_PACKING_KOPER = """
+# Tips & Trik Packing Koper untuk Umrah
+
+Koper muat lebih banyak, barang rapi, dan tidak overweight!
+
+## 1. Teknik Melipat Pakaian
+
+### Rolling Method (Gulung)
+Teknik paling hemat tempat untuk pakaian kasual.
+
+**Cara:**
+1. Letakkan baju rata di permukaan datar
+2. Lipat lengan ke dalam
+3. Gulung dari bawah ke atas dengan ketat
+4. Susun gulungan berdiri di koper
+
+**Cocok untuk:**
+- Kaos, kaos dalam
+- Celana panjang casual
+- Jilbab/kerudung
+- Piyama
+
+**Hemat ruang:** 30-40% lebih kecil dari lipatan biasa!
+
+---
+
+### Bundle Wrapping (Bungkus Tumpuk)
+Untuk pakaian formal yang tidak boleh kusut.
+
+**Cara:**
+1. Letakkan baju terbesar di dasar (gamis/jubah)
+2. Tumpuk baju lebih kecil di atasnya
+3. Lipat semua bersamaan dari pinggir ke tengah
+4. Hasilnya satu bundle kompak
+
+**Cocok untuk:**
+- Gamis, jubah, abaya
+- Kemeja/baju koko formal
+- Mukena set
+
+---
+
+### KonMari Folding (Lipat Berdiri)
+Baju dilipat kecil persegi dan disusun berdiri.
+
+**Cara:**
+1. Lipat baju jadi persegi kecil
+2. Susun berdiri di koper seperti file folder
+3. Semua terlihat dari atas, mudah ambil
+
+**Keuntungan:**
+- Mudah cari baju tanpa acak-acak
+- Koper tetap rapi selama perjalanan
+
+---
+
+## 2. Vacuum Bag - GAME CHANGER!
+
+### Apa itu Vacuum Bag?
+Plastik khusus yang bisa dikecilkan dengan membuang udara di dalamnya.
+
+### Yang Perlu Dibawa:
+| Barang | Harga | Beli di |
+|--------|-------|---------|
+| Vacuum bag set (5-10 pcs) | Rp 50-100k | Shopee/Tokopedia |
+| Pompa tangan manual | Rp 20-50k | Sudah include set |
+| Pompa elektrik mini (opsional) | Rp 80-150k | Lebih cepat |
+
+### Cara Pakai:
+1. Masukkan pakaian ke vacuum bag
+2. Tutup resleting rapat-rapat
+3. Buka katup udara
+4. Pompa sampai kempes (2-3 menit)
+5. Tutup katup
+
+### Tips Vacuum Bag:
+- **Jangan terlalu penuh** - Sisakan 20% ruang
+- **Pisahkan per kategori** - 1 bag = 1 jenis (kaos, celana, dll)
+- **Bawa pompa manual** - Untuk re-pack saat pulang
+- **Hindari untuk baju formal** - Bisa kusut permanen
+- **Cocok untuk:** Handuk, selimut, pakaian dalam, kaos
+
+### Hasil:
+- Hemat ruang **50-70%**
+- 1 koper bisa muat barang 2 koper!
+- Baju terlindung dari air & debu
+
+---
+
+## 3. Bawa Makanan Indonesia
+
+### Wajib Bawa (Kangen Killer):
+
+| Makanan | Kemasan | Tips |
+|---------|---------|------|
+| **Sambal sachet** | ABC/Indofood sachet | 10-20 sachet cukup |
+| **Kecap manis** | Botol kecil 135ml | Bungkus plastik anti bocor |
+| **Indomie** | 5-10 bungkus | Pilih yg cup lebih praktis |
+| **Abon** | Kemasan kecil | Tahan lama, enak + nasi |
+| **Kerupuk** | Kemasan kecil | Untuk teman makan |
+| **Bon Cabe** | Sachet | Taburan pedas instan |
+| **Teri kacang** | Toples kecil | Lauk tahan lama |
+| **Rendang kemasan** | Retort/kaleng | Ready to eat |
+
+### Tips Bawa Makanan:
+1. **Plastik ziplock** - Bungkus semua makanan 2 lapis
+2. **Taruh di tengah koper** - Lindungi dari benturan
+3. **Jangan bawa cairan >100ml di kabin** - Kecap masuk bagasi!
+4. **Deklarasi jika ditanya** - "Food for personal consumption"
+5. **Hindari makanan berbau tajam** - Hormati sesama jamaah
+
+### Makanan yang TIDAK BOLEH Dibawa:
+- Buah segar
+- Daging/ikan mentah
+- Makanan tanpa label
+- Cairan dalam jumlah besar
+
+---
+
+## 4. Organisasi Koper
+
+### Pembagian Zona Koper:
+
+```
+┌─────────────────────────────────────┐
+│  ATAS: Barang sering dipakai        │
+│  - Perlengkapan mandi               │
+│  - Baju ganti 1-2 hari pertama      │
+│  - Dokumen penting                  │
+├─────────────────────────────────────┤
+│  TENGAH: Pakaian utama              │
+│  - Vacuum bag pakaian               │
+│  - Mukena/gamis                     │
+│  - Baju koko/jubah                  │
+├─────────────────────────────────────┤
+│  BAWAH: Barang berat                │
+│  - Sepatu (dalam plastik)           │
+│  - Oleh-oleh (kurma, zamzam)        │
+│  - Makanan Indonesia                │
+└─────────────────────────────────────┘
+```
+
+### Packing Cube (Tas Organizer)
+Beli set packing cube untuk organisasi lebih rapi:
+- **Cube besar** - Pakaian utama
+- **Cube sedang** - Pakaian dalam
+- **Cube kecil** - Aksesoris, charger
+- **Laundry bag** - Baju kotor terpisah
+
+**Harga:** Rp 50-150k per set di marketplace
+
+---
+
+## 5. Tips Berat Koper
+
+### Batas Bagasi Umum:
+| Airline | Ekonomi | Bisnis |
+|---------|---------|--------|
+| Garuda | 30 kg | 40 kg |
+| Saudi Airlines | 23 kg x2 | 32 kg x2 |
+| Emirates | 30 kg | 40 kg |
+| Lion Air | 20 kg | 30 kg |
+
+### Tips Agar Tidak Overweight:
+
+1. **Timbang sebelum berangkat**
+   - Beli timbangan koper digital (Rp 50-100k)
+   - Atau timbang di timbangan badan
+
+2. **Pakai baju terberat saat di pesawat**
+   - Jaket tebal
+   - Sepatu berat
+   - Gamis/jubah tebal
+
+3. **Manfaatkan tas kabin**
+   - Biasanya 7 kg
+   - Taruh barang berat: laptop, buku, charger
+
+4. **Siapkan tas lipat cadangan**
+   - Untuk oleh-oleh pulang
+   - Tas kain/nylon yang bisa dilipat kecil
+
+5. **Beli oleh-oleh di hari terakhir**
+   - Kurma dan zamzam berat!
+   - Kalkulasi sisa space sebelum beli
+
+---
+
+## 6. Packing untuk Ihram
+
+### Khusus Laki-laki:
+
+**Tas Kecil Ihram (bawa ke pesawat):**
+- Kain ihram 2 lembar
+- Sabuk ihram
+- Sandal jepit
+- Deodoran non-parfum
+- Buku doa kecil
+
+**Tips:**
+- Pakai ihram dari bandara Jeddah (sebelum miqat)
+- Baju biasa taruh di tas, ambil setelah tahallul
+- Bawa peniti/klip untuk kain ihram
+
+### Khusus Perempuan:
+
+**Tas Kecil Ibadah:**
+- Mukena travel (1 set)
+- Jilbab cadangan
+- Kaos kaki
+- Sajadah travel tipis
+- Tasbih
+- Hand sanitizer
+
+---
+
+## 7. Hack Packing Pro
+
+### Space Saver Hacks:
+
+1. **Gulung kaos kaki dalam sepatu**
+   - Hemat space + jaga bentuk sepatu
+
+2. **Isi botol kosmetik dari rumah**
+   - Beli botol travel 100ml
+   - Isi shampoo, sabun cair secukupnya
+
+3. **Pakai baju multifungsi**
+   - Gamis hitam bisa formal & casual
+   - Jilbab warna netral match semua
+
+4. **Bawa hanger lipat 2-3 pcs**
+   - Untuk jemur handuk di hotel
+
+5. **Sandal di luar koper**
+   - Gantung di handle atau taruh di kantong luar
+
+6. **Compress towel tablet**
+   - Handuk kecil bentuk tablet
+   - Tambah air = handuk normal
+   - Hemat space luar biasa!
+
+### Anti Kusut Hacks:
+
+1. **Tissue paper di lipatan**
+   - Taruh tissue di lipatan baju formal
+
+2. **Gantung di kamar mandi**
+   - Uap panas shower hilangkan kusut
+
+3. **Setrika travel mini**
+   - Beli setrika lipat (Rp 100-200k)
+   - Atau steamer travel
+
+---
+
+## 8. Checklist Packing
+
+### 3 Hari Sebelum:
+- [ ] Cuci semua baju yang akan dibawa
+- [ ] Kumpulkan dokumen (paspor, visa, tiket)
+- [ ] Beli vacuum bag & packing cube
+- [ ] Charge semua elektronik
+- [ ] Beli sambal, kecap, snack
+
+### 1 Hari Sebelum:
+- [ ] Lipat & pack semua pakaian
+- [ ] Vakum pakaian dengan vacuum bag
+- [ ] Susun koper sesuai zona
+- [ ] Timbang koper
+- [ ] Siapkan tas kabin
+- [ ] Siapkan outfit pesawat
+
+### Hari H:
+- [ ] Double check dokumen
+- [ ] Cek charger & power bank
+- [ ] Bawa snack untuk pesawat
+- [ ] Kunci koper dengan TSA lock
+- [ ] Foto isi koper (untuk klaim jika hilang)
+
+---
+
+## 9. Packing Pulang (Oleh-oleh)
+
+### Antisipasi Space Oleh-oleh:
+
+1. **Bawa koper kosong lipat**
+   - Koper cabin tambahan
+   - Atau tas duffel besar
+
+2. **Pakai baju selama di sana**
+   - Kurangi baju bersih yang dibawa pulang
+   - Lebih banyak space untuk oleh-oleh
+
+3. **Vacuum bag untuk baju kotor**
+   - Compress baju kotor
+   - Beri space untuk kurma & zamzam
+
+4. **Kardus dari toko**
+   - Banyak toko kasih kardus gratis
+   - Untuk extra bagasi
+
+### Berat Oleh-oleh Umum:
+| Oleh-oleh | Berat |
+|-----------|-------|
+| Kurma 5 kg | 5.5 kg (with box) |
+| Air Zamzam 10L | 10 kg |
+| Sajadah 5 pcs | 2 kg |
+| Tasbih 10 pcs | 0.5 kg |
+| Parfum 5 botol | 1 kg |
+
+### Tips:
+- **Beli zamzam di Jeddah Airport** - Bisa check-in terpisah
+- **Split kurma ke beberapa tas** - Jangan 1 koper penuh kurma
+- **Tinggal baju lama** - Sumbang ke hotel/masjid
+"""
+
+# =============================================================================
 # HELPER FUNCTIONS
 # =============================================================================
 
