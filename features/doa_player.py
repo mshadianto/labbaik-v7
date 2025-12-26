@@ -22,12 +22,27 @@ import io
 import os
 import tempfile
 
-# Try to import gTTS for audio generation
+# Try to import TTS libraries
 try:
     from gtts import gTTS
     HAS_GTTS = True
 except ImportError:
     HAS_GTTS = False
+
+try:
+    import edge_tts
+    import asyncio
+    HAS_EDGE_TTS = True
+except ImportError:
+    HAS_EDGE_TTS = False
+
+# Arabic voice options (Edge TTS)
+VOICE_OPTIONS = {
+    "pria": "ar-SA-HamedNeural",      # Male Saudi Arabic
+    "wanita": "ar-SA-ZariyahNeural",  # Female Saudi Arabic
+}
+
+DEFAULT_VOICE = "wanita"
 
 # =============================================================================
 # DOA DATABASE
@@ -528,8 +543,36 @@ TTS_HTML_TEMPLATE = AUDIO_PLAYER_HTML
 # =============================================================================
 
 @st.cache_data(ttl=3600)
+def generate_audio_edge(text: str, voice: str = "wanita") -> bytes:
+    """Generate audio from text using Edge TTS with voice selection."""
+    if not HAS_EDGE_TTS:
+        return None
+
+    try:
+        voice_id = VOICE_OPTIONS.get(voice, VOICE_OPTIONS["wanita"])
+
+        async def _generate():
+            communicate = edge_tts.Communicate(text, voice_id, rate="-20%")
+            audio_buffer = io.BytesIO()
+            async for chunk in communicate.stream():
+                if chunk["type"] == "audio":
+                    audio_buffer.write(chunk["data"])
+            audio_buffer.seek(0)
+            return audio_buffer.read()
+
+        # Run async function
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        result = loop.run_until_complete(_generate())
+        loop.close()
+        return result
+    except Exception as e:
+        return None
+
+
+@st.cache_data(ttl=3600)
 def generate_audio(text: str, lang: str = "ar") -> bytes:
-    """Generate audio from text using gTTS."""
+    """Generate audio from text using gTTS (fallback)."""
     if not HAS_GTTS:
         return None
 
@@ -540,7 +583,6 @@ def generate_audio(text: str, lang: str = "ar") -> bytes:
         audio_buffer.seek(0)
         return audio_buffer.read()
     except Exception as e:
-        st.error(f"Error generating audio: {e}")
         return None
 
 
@@ -607,18 +649,46 @@ def render_doa_card(doa: Doa, show_audio: bool = True, enhanced: bool = True):
         </div>
         """, unsafe_allow_html=True)
 
-        # Audio player using gTTS
-        if show_audio and HAS_GTTS:
+        # Audio player with voice selection
+        if show_audio and (HAS_EDGE_TTS or HAS_GTTS):
             with st.expander("🔊 Putar Audio", expanded=False):
-                # Generate audio
-                audio_data = generate_audio(doa.arabic, lang="ar")
-                if audio_data:
-                    st.audio(audio_data, format="audio/mp3")
-                    st.caption("💡 Klik tombol play untuk mendengarkan bacaan doa")
+                # Voice selection (only for Edge TTS)
+                if HAS_EDGE_TTS:
+                    col_voice1, col_voice2 = st.columns(2)
+                    with col_voice1:
+                        voice_choice = st.radio(
+                            "Pilih Suara:",
+                            ["👨 Pria", "👩 Wanita"],
+                            index=1,
+                            horizontal=True,
+                            key=f"voice_{doa.id}"
+                        )
+                    voice = "pria" if "Pria" in voice_choice else "wanita"
+
+                    # Generate audio with selected voice
+                    audio_data = generate_audio_edge(doa.arabic, voice=voice)
+
+                    if audio_data:
+                        st.audio(audio_data, format="audio/mp3")
+                        st.caption(f"🎙️ Suara: {'Hamed (Pria)' if voice == 'pria' else 'Zariyah (Wanita)'} - Arab Saudi")
+                    else:
+                        # Fallback to gTTS
+                        audio_data = generate_audio(doa.arabic, lang="ar")
+                        if audio_data:
+                            st.audio(audio_data, format="audio/mp3")
+                            st.caption("🎙️ Suara: Google TTS")
+                        else:
+                            st.warning("Audio tidak tersedia. Pastikan koneksi internet aktif.")
                 else:
-                    st.warning("Audio tidak tersedia. Pastikan koneksi internet aktif.")
+                    # gTTS only (no voice selection)
+                    audio_data = generate_audio(doa.arabic, lang="ar")
+                    if audio_data:
+                        st.audio(audio_data, format="audio/mp3")
+                        st.caption("💡 Klik tombol play untuk mendengarkan bacaan doa")
+                    else:
+                        st.warning("Audio tidak tersedia. Pastikan koneksi internet aktif.")
         elif show_audio:
-            st.info("💡 Install gTTS untuk audio: `pip install gtts`")
+            st.info("💡 Install edge-tts untuk audio: `pip install edge-tts`")
 
         # Latin transliteration
         st.markdown(f"**Latin:** *{doa.latin}*")
@@ -829,5 +899,8 @@ __all__ = [
     "render_voice_chat",
     "search_doa",
     "generate_audio",
+    "generate_audio_edge",
     "HAS_GTTS",
+    "HAS_EDGE_TTS",
+    "VOICE_OPTIONS",
 ]
