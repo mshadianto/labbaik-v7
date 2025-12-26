@@ -1,13 +1,11 @@
 """
-LABBAIK AI v6.0 - Group Tracking System
-========================================
+LABBAIK AI - Group Tracking System
+==================================
 Real-time group tracking for Umrah Bareng:
 - Live location sharing among group members
 - Check-in system at key locations
 - Member status dashboard
 - Lost member alerts
-
-Inspired by PilgrimPal's group tracking feature.
 """
 
 import streamlit as st

@@ -1,8 +1,8 @@
 """
-LABBAIK AI v6.0 - Enhanced Analytics Dashboard
-===============================================
+LABBAIK AI - Analytics Dashboard
+================================
 Historical trends, geo tracking, session analytics, and visualizations.
-Inspired by PilgrimPal's analytics but optimized for Streamlit.
+Optimized for Streamlit with real-time data updates.
 """
 
 import streamlit as st

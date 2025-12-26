@@ -1,8 +1,7 @@
 """
-LABBAIK AI v6.0 - Enhanced Features Package
-============================================
-New features inspired by PilgrimPal and other leading
-Hajj/Umrah apps, optimized for Streamlit.
+LABBAIK AI - Enhanced Features Package
+======================================
+Advanced features for Umrah planning platform.
 
 Features included:
 1. Crowd Prediction - Masjid crowd level predictions
@@ -13,6 +12,8 @@ Features included:
 6. Analytics Dashboard - Enhanced visitor analytics
 7. WhatsApp Service - WAHA integration for notifications
 8. Doa Player - Voice-guided doa/dzikir
+9. WhatsApp Bot - Intelligent chat bot
+10. Live Price Updates - Real-time package pricing
 """
 
 # Crowd Prediction
@@ -236,5 +237,8 @@ __all__ = [
     "OFFLINE_HTML",
 ]
 
-# Version
-__version__ = "7.0.0"
+# Dynamic Version
+try:
+    from core.version import APP_VERSION as __version__
+except ImportError:
+    __version__ = "7.1.0"

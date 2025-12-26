@@ -1,0 +1,146 @@
+"""
+LABBAIK AI - Dynamic Version Management
+========================================
+Centralized version control for the entire application.
+"""
+
+from datetime import datetime
+from typing import Dict, Any
+
+# =============================================================================
+# VERSION INFO
+# =============================================================================
+
+MAJOR = 7
+MINOR = 1
+PATCH = 0
+RELEASE_TYPE = "stable"  # stable, beta, alpha, dev
+
+# Build info
+BUILD_DATE = "2024-12-26"
+BUILD_NUMBER = 1
+
+# =============================================================================
+# VERSION STRINGS
+# =============================================================================
+
+def get_version() -> str:
+    """Get semantic version string."""
+    return f"{MAJOR}.{MINOR}.{PATCH}"
+
+
+def get_full_version() -> str:
+    """Get full version with release type."""
+    version = get_version()
+    if RELEASE_TYPE != "stable":
+        version += f"-{RELEASE_TYPE}"
+    return version
+
+
+def get_display_version() -> str:
+    """Get version for display in UI."""
+    return f"v{get_version()}"
+
+
+def get_version_info() -> Dict[str, Any]:
+    """Get complete version information."""
+    return {
+        "version": get_version(),
+        "full_version": get_full_version(),
+        "display_version": get_display_version(),
+        "major": MAJOR,
+        "minor": MINOR,
+        "patch": PATCH,
+        "release_type": RELEASE_TYPE,
+        "build_date": BUILD_DATE,
+        "build_number": BUILD_NUMBER,
+        "app_name": "LABBAIK AI",
+        "tagline": "Platform Umrah Cerdas Indonesia",
+    }
+
+
+# =============================================================================
+# VERSION CONSTANTS (for backward compatibility)
+# =============================================================================
+
+APP_VERSION = get_version()
+APP_FULL_VERSION = get_full_version()
+APP_DISPLAY_VERSION = get_display_version()
+APP_NAME = "LABBAIK AI"
+APP_TAGLINE = "Platform Umrah Cerdas Indonesia"
+
+
+# =============================================================================
+# CHANGELOG
+# =============================================================================
+
+CHANGELOG = [
+    {
+        "version": "7.1.0",
+        "date": "2024-12-26",
+        "changes": [
+            "Live price updates for Umrah packages",
+            "Scenario planning with Monte Carlo simulation",
+            "WhatsApp bot integration",
+            "Enhanced Umrah guide from official Saudi Ministry",
+            "Dynamic version management",
+        ]
+    },
+    {
+        "version": "7.0.0",
+        "date": "2024-12-25",
+        "changes": [
+            "Complete Umrah guide with 20+ doas",
+            "Audio doa with male/female Arabic voices",
+            "Ecosystem strategy and API specification",
+            "Historical sites database",
+        ]
+    },
+    {
+        "version": "6.0.0",
+        "date": "2024-12-20",
+        "changes": [
+            "PWA support for offline access",
+            "SOS emergency system",
+            "Group tracking feature",
+            "Crowd prediction widget",
+            "Smart package comparison",
+        ]
+    },
+]
+
+
+def get_latest_changelog() -> Dict[str, Any]:
+    """Get the latest changelog entry."""
+    return CHANGELOG[0] if CHANGELOG else {}
+
+
+def get_all_changelogs() -> list:
+    """Get all changelog entries."""
+    return CHANGELOG
+
+
+# =============================================================================
+# EXPORTS
+# =============================================================================
+
+__all__ = [
+    "MAJOR",
+    "MINOR",
+    "PATCH",
+    "RELEASE_TYPE",
+    "BUILD_DATE",
+    "BUILD_NUMBER",
+    "APP_VERSION",
+    "APP_FULL_VERSION",
+    "APP_DISPLAY_VERSION",
+    "APP_NAME",
+    "APP_TAGLINE",
+    "get_version",
+    "get_full_version",
+    "get_display_version",
+    "get_version_info",
+    "get_latest_changelog",
+    "get_all_changelogs",
+    "CHANGELOG",
+]

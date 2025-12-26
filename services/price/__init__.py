@@ -1,7 +1,8 @@
 """
-LABBAIK AI v6.0 - Price Intelligence Service
-=============================================
-Service untuk mengakses data harga dari n8n Price Intelligence System.
+LABBAIK AI - Price Intelligence Service
+=======================================
+Service untuk mengakses data harga dari n8n Price Intelligence System
+dan live price updates.
 """
 
 from services.price.repository import (
@@ -27,6 +28,16 @@ from services.price.monitoring import (
     get_cached_health_status,
 )
 
+from services.price.live_prices import (
+    LivePackage,
+    PriceAlert,
+    LivePriceService,
+    render_live_price_badge,
+    render_package_card_live,
+    render_live_prices_page,
+    render_live_prices_widget,
+)
+
 __all__ = [
     # Repository
     'PriceRepository',
@@ -47,4 +58,12 @@ __all__ = [
     'render_monitoring_dashboard',
     'render_last_update_badge',
     'get_cached_health_status',
+    # Live Prices
+    'LivePackage',
+    'PriceAlert',
+    'LivePriceService',
+    'render_live_price_badge',
+    'render_package_card_live',
+    'render_live_prices_page',
+    'render_live_prices_widget',
 ]

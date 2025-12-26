@@ -1,15 +1,12 @@
 """
-LABBAIK AI v6.0 - Enhanced SOS Emergency System
-================================================
+LABBAIK AI - SOS Emergency System
+=================================
 One-tap emergency system with:
 - WhatsApp integration for instant alerts (via WAHA)
 - GPS location sharing
 - Pre-configured emergency contacts
 - Embassy & hospital quick dial
 - Group notification for Umrah Bareng
-
-Inspired by PilgrimPal's emergency features.
-Now with WAHA WhatsApp API integration!
 """
 
 import streamlit as st

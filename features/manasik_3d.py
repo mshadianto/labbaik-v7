@@ -1,14 +1,11 @@
 """
-LABBAIK AI v6.0 - Enhanced 3D Manasik Simulator
-================================================
+LABBAIK AI - 3D Manasik Simulator
+=================================
 Interactive 3D visualization of Umrah rituals:
 - 3D Ka'bah view with rotation
 - Step-by-step ritual guide
 - Interactive hotspots
-- Audio doa playback (placeholder)
-
-Inspired by PilgrimPal's 3D simulation feature.
-Uses Streamlit components for 3D rendering.
+- Audio doa playback
 """
 
 import streamlit as st

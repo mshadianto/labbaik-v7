@@ -1,6 +1,6 @@
 """
-LABBAIK AI v6.0 - Application Constants
-=======================================
+LABBAIK AI - Application Constants
+==================================
 Centralized constants for consistent values across the application.
 """
 
@@ -8,12 +8,16 @@ from enum import Enum, IntEnum
 from typing import Dict, List, Tuple
 
 # =============================================================================
-# APPLICATION INFO
+# APPLICATION INFO (Dynamic from version.py)
 # =============================================================================
 
-APP_NAME = "LABBAIK AI"
-APP_VERSION = "6.0.0"
-APP_TAGLINE = "Asisten Perjalanan Umrah Cerdas"
+try:
+    from core.version import APP_VERSION, APP_NAME, APP_TAGLINE
+except ImportError:
+    APP_NAME = "LABBAIK AI"
+    APP_VERSION = "7.1.0"
+    APP_TAGLINE = "Platform Umrah Cerdas Indonesia"
+
 APP_AUTHOR = "MS Hadianto"
 APP_WEBSITE = "https://labbaik.cloud"
 

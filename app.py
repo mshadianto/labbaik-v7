@@ -1,15 +1,16 @@
 """
-LABBAIK AI v6.2 - Super Boom Edition
-=====================================
-Platform Perencanaan Umrah AI #1 Indonesia
+LABBAIK AI - Platform Umrah Cerdas Indonesia
+=============================================
 By MS Hadianto
 
 Main entry point - compatible with Streamlit Cloud deployment
 
-UPDATE v6.2:
-- Added Smart Checklist
-- Added AI Itinerary Builder
-- Added Official Resources (Umrah Mandiri v7.1)
+Features:
+- AI Chat Assistant for Umrah guidance
+- Cost Simulator with Scenario Planning
+- Live Package Price Updates
+- WhatsApp Bot Integration
+- Group Tracking & SOS Emergency
 """
 
 import streamlit as st
@@ -19,6 +20,14 @@ from datetime import datetime, timedelta
 
 # Add current directory to path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# Import version info
+try:
+    from core.version import get_display_version, APP_VERSION
+except ImportError:
+    def get_display_version():
+        return "v7.1.0"
+    APP_VERSION = "7.1.0"
 
 # Page config - MUST be first Streamlit command
 st.set_page_config(
@@ -491,14 +500,14 @@ def render_sidebar():
         st.markdown("---")
         
         # Footer
-        st.markdown("""
+        st.markdown(f"""
         <div style="text-align: center; padding: 1rem 0;">
             <p style="color: #666; font-size: 0.75rem;">
-                v6.2.0 - Super Boom Edition<br>
+                {get_display_version()}<br>
                 © 2025 MS Hadianto
             </p>
             <p style="color: #444; font-size: 0.65rem;">
-                Inspired by PilgrimPal<br>
+                Platform Umrah Cerdas Indonesia<br>
                 Powered by AI
             </p>
         </div>

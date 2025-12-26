@@ -1,10 +1,8 @@
 """
-LABBAIK AI v6.0 - Crowd Prediction Widget
-==========================================
+LABBAIK AI - Crowd Prediction Widget
+====================================
 Predicts crowd levels at Masjidil Haram & Masjid Nabawi
 based on prayer times, day of week, and seasonal patterns.
-
-Inspired by PilgrimPal's crowd monitoring feature.
 """
 
 import streamlit as st
