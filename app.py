@@ -192,6 +192,18 @@ except ImportError:
     def render_referral_page(): st.warning("⚠️ Fitur Referral belum tersedia")
     def render_referral_widget(): pass
 
+# Partner System
+try:
+    from ui.pages.partner_landing import render_partner_landing_page
+    from ui.pages.partner_dashboard import render_partner_dashboard
+    from ui.pages.api_docs import render_api_docs_page
+    HAS_PARTNER_SYSTEM = True
+except ImportError:
+    HAS_PARTNER_SYSTEM = False
+    def render_partner_landing_page(): st.warning("⚠️ Partner Landing belum tersedia")
+    def render_partner_dashboard(): st.warning("⚠️ Partner Dashboard belum tersedia")
+    def render_api_docs_page(): st.warning("⚠️ API Docs belum tersedia")
+
 # WhatsApp Integration
 try:
     from services.whatsapp import (
@@ -497,11 +509,20 @@ def render_sidebar():
             ("📲", "Install App", "install", HAS_PWA, False),
         ]
 
-        # Admin Features (only for logged in admin)
+        # Admin/Partner Features
         if HAS_USER_MANAGEMENT and is_logged_in():
             if user and user.role.value in ["admin", "partner"]:
                 st.markdown("---")
                 st.markdown("### 🔐 Admin/Mitra")
+
+                if user.role.value in ["partner", "admin"]:
+                    if st.button("📊 Partner Dashboard", key="nav_partner_dash", use_container_width=True):
+                        st.session_state.current_page = "partner_dashboard"
+                        st.rerun()
+                    if st.button("📖 API Docs", key="nav_api_docs", use_container_width=True):
+                        st.session_state.current_page = "api_docs"
+                        st.rerun()
+
                 if user.role.value == "admin":
                     if st.button("👥 User Analytics", key="nav_user_analytics", use_container_width=True):
                         st.session_state.current_page = "user_analytics"
@@ -509,9 +530,24 @@ def render_sidebar():
                     if st.button("📈 Analytics", key="nav_analytics_admin", use_container_width=True):
                         st.session_state.current_page = "analytics"
                         st.rerun()
+
                 if st.button("📱 WhatsApp", key="nav_whatsapp_admin", use_container_width=True):
                     st.session_state.current_page = "whatsapp"
                     st.rerun()
+
+        # Partner CTA for non-partners
+        if not user or (user and user.role.value not in ["partner", "admin"]):
+            st.markdown("---")
+            st.markdown("""
+                <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+                            padding: 0.75rem; border-radius: 12px; text-align: center;">
+                    <div style="color: #000; font-weight: bold; font-size: 0.9rem;">Jadi Mitra Travel</div>
+                    <div style="color: #333; font-size: 0.75rem;">Komisi hingga 15%</div>
+                </div>
+            """, unsafe_allow_html=True)
+            if st.button("Daftar Mitra", key="nav_partner_cta", use_container_width=True):
+                st.session_state.current_page = "partner"
+                st.rerun()
 
         for icon, label, page_key, is_available, is_premium in new_features:
             if is_available:
@@ -632,6 +668,11 @@ def render_page():
         # Subscription & Growth
         "subscription": render_subscription_page,
         "referral": render_referral_page,
+
+        # Partner System
+        "partner": render_partner_landing_page,
+        "partner_dashboard": render_partner_dashboard,
+        "api_docs": render_api_docs_page,
     }
     
     renderer = page_map.get(page, render_home_page)
