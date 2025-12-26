@@ -162,6 +162,11 @@ try:
     )
     from ui.pages.user_analytics import render_user_analytics_page
     from services.user.user_service import get_current_user, is_logged_in
+    from services.user.access_control import (
+        check_page_access,
+        render_access_denied,
+        get_page_access_role,
+    )
     HAS_USER_MANAGEMENT = True
 except ImportError:
     HAS_USER_MANAGEMENT = False
@@ -171,6 +176,21 @@ except ImportError:
     def render_user_analytics_page(): st.warning("⚠️ Fitur User Analytics belum tersedia")
     def get_current_user(): return None
     def is_logged_in(): return False
+    def check_page_access(page): return True, ""
+    def render_access_denied(reason, name=""): st.error("Access denied")
+    def get_page_access_role(page): return None
+
+# Subscription & Referral
+try:
+    from ui.pages.subscription_page import render_subscription_page, render_subscription_widget
+    from ui.pages.referral_page import render_referral_page, render_referral_widget
+    HAS_SUBSCRIPTION = True
+except ImportError:
+    HAS_SUBSCRIPTION = False
+    def render_subscription_page(): st.warning("⚠️ Fitur Subscription belum tersedia")
+    def render_subscription_widget(): pass
+    def render_referral_page(): st.warning("⚠️ Fitur Referral belum tersedia")
+    def render_referral_widget(): pass
 
 # WhatsApp Integration
 try:
@@ -456,37 +476,53 @@ def render_sidebar():
         
         # ✨ New Features Menu
         st.markdown("### ✨ Fitur Baru")
-        
-        # 🆕 UPDATED: Added Smart Checklist
+
+        # Check user access for premium features
+        user = get_current_user() if HAS_USER_MANAGEMENT else None
+        user_role = user.role.value if user else "guest"
+
+        # Feature list with premium indicator
+        # Format: (icon, label, page_key, is_available, is_premium)
         new_features = [
-            ("📊", "Prediksi Keramaian", "crowd", HAS_CROWD_PREDICTION),
-            ("📍", "Group Tracking", "tracking", HAS_TRACKING),
-            ("🗓️", "AI Itinerary", "itinerary", HAS_ITINERARY),
-            ("📋", "Smart Checklist", "checklist", HAS_CHECKLIST),
-            ("🕋", "Manasik 3D", "manasik", HAS_MANASIK),
-            ("🤲", "Doa & Dzikir", "doa", HAS_DOA_PLAYER),
-            ("🔍", "Bandingkan Paket", "compare", HAS_COMPARISON),
-            ("📱", "WhatsApp", "whatsapp", HAS_WHATSAPP),
-            ("📈", "Analytics", "analytics", HAS_ANALYTICS),
-            ("👤", "Akun Saya", "auth", HAS_USER_MANAGEMENT),
-            ("📲", "Install App", "install", HAS_PWA),
+            ("📊", "Prediksi Keramaian", "crowd", HAS_CROWD_PREDICTION, False),
+            ("📍", "Group Tracking", "tracking", HAS_TRACKING, True),  # Premium
+            ("🗓️", "AI Itinerary", "itinerary", HAS_ITINERARY, True),  # Premium
+            ("📋", "Smart Checklist", "checklist", HAS_CHECKLIST, False),
+            ("🕋", "Manasik 3D", "manasik", HAS_MANASIK, False),
+            ("🤲", "Doa & Dzikir", "doa", HAS_DOA_PLAYER, False),
+            ("🔍", "Bandingkan Paket", "compare", HAS_COMPARISON, False),
+            ("👤", "Akun Saya", "auth", HAS_USER_MANAGEMENT, False),
+            ("⭐", "Upgrade Premium", "subscription", HAS_SUBSCRIPTION, False),
+            ("🎁", "Referral", "referral", HAS_SUBSCRIPTION, False),
+            ("📲", "Install App", "install", HAS_PWA, False),
         ]
 
         # Admin Features (only for logged in admin)
         if HAS_USER_MANAGEMENT and is_logged_in():
-            user = get_current_user()
-            if user and user.role.value == "admin":
+            if user and user.role.value in ["admin", "partner"]:
                 st.markdown("---")
-                st.markdown("### 🔐 Admin")
-                if st.button("👥 User Analytics", key="nav_user_analytics", use_container_width=True):
-                    st.session_state.current_page = "user_analytics"
+                st.markdown("### 🔐 Admin/Mitra")
+                if user.role.value == "admin":
+                    if st.button("👥 User Analytics", key="nav_user_analytics", use_container_width=True):
+                        st.session_state.current_page = "user_analytics"
+                        st.rerun()
+                    if st.button("📈 Analytics", key="nav_analytics_admin", use_container_width=True):
+                        st.session_state.current_page = "analytics"
+                        st.rerun()
+                if st.button("📱 WhatsApp", key="nav_whatsapp_admin", use_container_width=True):
+                    st.session_state.current_page = "whatsapp"
                     st.rerun()
-        
-        for icon, label, page_key, is_available in new_features:
+
+        for icon, label, page_key, is_available, is_premium in new_features:
             if is_available:
                 is_active = st.session_state.get("current_page") == page_key
+
+                # Add lock icon for premium features if user doesn't have access
+                premium_locked = is_premium and user_role not in ["premium", "partner", "admin"]
+                lock_icon = " 🔒" if premium_locked else ""
+
                 label_display = f"**{label}**" if is_active else label
-                if st.button(f"{icon} {label_display}", key=f"nav_{page_key}", use_container_width=True):
+                if st.button(f"{icon} {label_display}{lock_icon}", key=f"nav_{page_key}", use_container_width=True):
                     st.session_state.current_page = page_key
                     st.rerun()
         
@@ -592,10 +628,30 @@ def render_page():
         # User management pages
         "auth": render_auth_page,
         "user_analytics": render_user_analytics_page,
+
+        # Subscription & Growth
+        "subscription": render_subscription_page,
+        "referral": render_referral_page,
     }
     
     renderer = page_map.get(page, render_home_page)
-    
+
+    # Check page access control
+    if HAS_USER_MANAGEMENT and page not in ["home", "auth"]:
+        has_access, reason = check_page_access(page)
+        if not has_access:
+            page_names = {
+                "chat": "AI Chat",
+                "tracking": "Group Tracking",
+                "itinerary": "AI Itinerary",
+                "user_analytics": "User Analytics",
+                "analytics": "Analytics Dashboard",
+                "whatsapp": "WhatsApp Settings",
+                "partner_dashboard": "Partner Dashboard",
+            }
+            render_access_denied(reason, page_names.get(page, page))
+            return
+
     try:
         renderer()
     except Exception as e:
