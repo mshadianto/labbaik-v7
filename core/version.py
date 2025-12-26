@@ -12,7 +12,7 @@ from typing import Dict, Any
 # =============================================================================
 
 MAJOR = 7
-MINOR = 2
+MINOR = 3
 PATCH = 0
 RELEASE_TYPE = "stable"  # stable, beta, alpha, dev
 
@@ -75,6 +75,18 @@ APP_TAGLINE = "Platform Umrah Cerdas Indonesia"
 # =============================================================================
 
 CHANGELOG = [
+    {
+        "version": "7.3.0",
+        "date": "2025-12-26",
+        "changes": [
+            "Role-based access control for all pages and features",
+            "Premium subscription system with multiple plans",
+            "Referral system for viral growth with rewards",
+            "Chat rate limiting based on user role",
+            "Premium feature gating with upgrade CTAs",
+            "Promo code support for subscriptions",
+        ]
+    },
     {
         "version": "7.2.0",
         "date": "2025-12-26",
