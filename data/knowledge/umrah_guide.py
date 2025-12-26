@@ -2062,6 +2062,740 @@ Beli set packing cube untuk organisasi lebih rapi:
 - **Tinggal baju lama** - Sumbang ke hotel/masjid
 """
 
+
+# =============================================================================
+# TIPS HEMAT - HARGA KAKI LIMA, KUALITAS BINTANG 5
+# =============================================================================
+
+TIPS_HEMAT_TIKET = """
+# Tips & Hack Beli Tiket Pesawat Murah
+
+Dapat tiket murah tanpa korbankan kenyamanan!
+
+## 1. Waktu Terbaik Beli Tiket
+
+### Kapan Harga Paling Murah?
+
+| Waktu Beli | Potensi Hemat | Catatan |
+|------------|---------------|---------|
+| **3-4 bulan sebelum** | 30-50% | Sweet spot terbaik |
+| **Selasa-Rabu** | 10-20% | Harga turun di hari kerja |
+| **Dini hari (00:00-06:00)** | 5-15% | Algoritma harga rendah |
+| **Setelah tanggal gajian** | Naik! | HINDARI beli saat ini |
+
+### Bulan Termurah untuk Umrah:
+1. **Maret-April** - Setelah Ramadan rush
+2. **Juni-Juli** - Musim panas (panas banget, tapi murah!)
+3. **Oktober-November** - Sebelum peak season
+
+### Bulan TERMAHAL (Hindari):
+- Ramadan (terutama 10 hari terakhir)
+- Desember-Januari (libur sekolah)
+- Musim haji
+
+---
+
+## 2. Trik Cari Tiket Murah
+
+### Incognito/Private Mode - WAJIB!
+Browser menyimpan pencarian & naikkan harga. Selalu pakai:
+- Chrome: Ctrl+Shift+N
+- Firefox: Ctrl+Shift+P
+- Safari: Cmd+Shift+N
+
+### Hack VPN
+Harga tiket berbeda tiap negara! Coba:
+1. Pasang VPN (gratis: ProtonVPN, Windscribe)
+2. Set lokasi ke India atau Malaysia
+3. Bandingkan harga - kadang 20-30% lebih murah!
+
+### Multi-City vs Round Trip
+Kadang beli terpisah lebih murah:
+- Jakarta → Jeddah (Airline A)
+- Jeddah → Jakarta (Airline B)
+- Cek di Skyscanner "Multi-city"
+
+### Error Fare Alert
+Kadang airline salah input harga. Subscribe:
+- Secret Flying
+- The Flight Deal
+- Scott's Cheap Flights
+- Follow @airaborong (Twitter/X)
+
+---
+
+## 3. Platform Booking Terbaik
+
+### Untuk Bandingkan Harga:
+| Platform | Kelebihan | Link |
+|----------|-----------|------|
+| **Skyscanner** | Paling lengkap, ada "Everywhere" | skyscanner.co.id |
+| **Google Flights** | Price tracking, calendar view | google.com/flights |
+| **Kayak** | Hack: Price forecast | kayak.com |
+| **Momondo** | Kombinasi airline berbeda | momondo.com |
+
+### Untuk Booking:
+| Platform | Promo | Tips |
+|----------|-------|------|
+| **Traveloka** | Flash sale Selasa | Pakai kode PEGIPEGI20 |
+| **Tiket.com** | Cashback ke TIX Point | Tukar point di trip berikut |
+| **PegiPegi** | Diskon BCA/Mandiri | Kamis = kartu kredit day |
+| **Booking langsung** | Miles/points | Untuk frequent flyer |
+
+### Hack Traveloka/Tiket.com:
+1. Masukkan ke cart, JANGAN bayar
+2. Tunggu 1-2 jam
+3. Sering dapat notif diskon 5-10%!
+
+---
+
+## 4. Pilihan Rute & Airline
+
+### Rute Termurah dari Indonesia:
+
+| Rute | Airline | Harga Estimasi | Durasi |
+|------|---------|----------------|--------|
+| CGK-JED langsung | Garuda, Saudi | Rp 8-12 juta | 9 jam |
+| CGK-KUL-JED | AirAsia+Flynas | Rp 5-7 juta | 12-14 jam |
+| CGK-DOH-JED | Qatar | Rp 7-10 juta | 14 jam |
+| CGK-DXB-JED | Emirates | Rp 8-11 juta | 13 jam |
+| SUB-KUL-JED | AirAsia | Rp 4-6 juta | 13 jam |
+
+### Transit Hack:
+- **Transit KL 8+ jam?** Keluar airport, makan murah!
+- **Transit Dubai/Doha?** Lounge gratis untuk transit panjang
+- **Pilih transit siang** - Bisa istirahat di airport
+
+### Low Cost Carrier (LCC) untuk Hemat:
+- **AirAsia** - CGK/SUB ke KUL, lanjut Flynas/Flyadeal
+- **Scoot** - Via Singapura
+- **IndiGo** - Via India (murah tapi lama)
+
+---
+
+## 5. Hack Bagasi & Seat
+
+### Bagasi:
+- Beli bagasi ONLINE saat booking (50% lebih murah dari di airport)
+- Share bagasi dengan teman/keluarga
+- Pakai koper cabin max 7kg + tas laptop/backpack
+
+### Seat:
+- Jangan bayar pilih seat - Check-in online 24 jam sebelum
+- Seat gratis biasanya tengah
+- **Hack:** Check-in paling awal, seat depan masih ada
+
+### Makanan:
+- Bawa makanan sendiri (kecuali airline melarang)
+- Atau beli di airport sebelum boarding
+- Makanan pesawat LCC mahal & biasa saja
+
+---
+
+## 6. Kartu Kredit & Payment Hack
+
+### Kartu Terbaik untuk Travel:
+| Bank | Benefit | Promo |
+|------|---------|-------|
+| BCA | Cicilan 0% 6-12 bulan | Diskon di Traveloka |
+| Mandiri | Miles program | Diskon Garuda |
+| BNI | Cashback 10% | Promo tiket.com |
+| CIMB | Air miles | Enrich Malaysia |
+
+### Timing Pembayaran:
+1. Beli saat promo kartu kredit
+2. Cicilan 0% untuk cash flow
+3. Bayar sebelum jatuh tempo (hindari bunga)
+
+### E-Wallet Promo:
+- GoPay: Cashback di Traveloka
+- OVO: Points di tiket.com
+- ShopeePay: Flash sale di Shopee Travel
+
+---
+
+## 7. Alert & Tracking
+
+### Setup Price Alert:
+1. **Google Flights** - Klik "Track prices"
+2. **Skyscanner** - "Get price alerts"
+3. **Hopper App** - Prediksi harga naik/turun
+
+### Kapan Harus Beli?
+- Google Flights bilang "Prices are low" ✅
+- Hopper bilang "Buy now" ✅
+- Harga turun 15%+ dari minggu lalu ✅
+"""
+
+TIPS_HEMAT_HOTEL = """
+# Tips & Hack Booking Hotel Murah
+
+Hotel bintang 4-5 dengan harga bintang 2!
+
+## 1. Jarak vs Harga - Strategi Terbaik
+
+### Makkah:
+| Jarak dari Haram | Harga/Malam | Worth it? |
+|------------------|-------------|-----------|
+| < 100m (depan Haram) | Rp 3-8 juta | Kalau budget ok |
+| 100-500m | Rp 800k-2 juta | **SWEET SPOT!** |
+| 500m-1km | Rp 400-800k | Masih jalan kaki |
+| > 1km (Aziziyah) | Rp 200-400k | Perlu transport |
+
+**Rekomendasi:** 200-500m dari Haram, hemat jutaan!
+
+### Madinah:
+| Jarak dari Masjid Nabawi | Harga/Malam | Worth it? |
+|--------------------------|-------------|-----------|
+| < 100m | Rp 2-5 juta | Premium banget |
+| 100-300m | Rp 500k-1.5 juta | **RECOMMENDED** |
+| 300-500m | Rp 300-600k | Masih oke |
+| > 500m | Rp 150-300k | Perlu transport |
+
+---
+
+## 2. Platform Booking Terbaik
+
+### Bandingkan Harga:
+| Platform | Kelebihan | Hack |
+|----------|-----------|------|
+| **Agoda** | Harga kompetitif | "Secret deals" login member |
+| **Booking.com** | Free cancel banyak | Genius Level = diskon 10-15% |
+| **Traveloka** | Promo lokal | Flash sale Rabu |
+| **Trip.com** | Murah untuk Asia | Kode IDTRIP |
+| **Hotels.com** | 10 malam = 1 gratis | Kumpulkan stamps |
+
+### JANGAN Booking di:
+- Website hotel langsung (biasanya lebih mahal)
+- Walk-in tanpa booking (harga tertinggi)
+- Satu platform saja (harus bandingkan!)
+
+---
+
+## 3. Timing Booking
+
+### Kapan Booking Termurah?
+
+| Waktu | Potensi Diskon |
+|-------|----------------|
+| **2-3 bulan sebelum** | 20-40% |
+| **Minggu-Senin** | 10-15% vs weekend |
+| **Tengah malam** | 5-10% (algoritma) |
+| **Last minute (3-7 hari)** | 30-50% (risky!) |
+
+### Last Minute Hack:
+- Install HotelTonight app
+- Cek Agoda "Last Minute Deals"
+- TAPI: Risiko sold out di peak season!
+
+---
+
+## 4. Hack Platform Booking
+
+### Agoda Secret Deals:
+1. Buat akun Agoda
+2. Login sebelum search
+3. Harga "Secret Deal" muncul (5-15% lebih murah)
+4. Kombinasi dengan kode promo
+
+### Booking.com Genius:
+1. Daftar akun gratis
+2. Selesaikan 2 booking = Genius Level 1 (10% off)
+3. 5 booking = Genius Level 2 (15% off + breakfast)
+
+### Hotels.com Stamps:
+- Setiap malam = 1 stamp
+- 10 stamps = 1 malam GRATIS
+- Pilih malam termahal untuk redeem!
+
+### Traveloka Points:
+1. Kumpulkan dari setiap booking
+2. Tukar jadi diskon
+3. Kombinasi dengan promo bank
+
+---
+
+## 5. Tipe Kamar & Negosiasi
+
+### Pilih Tipe Kamar Hemat:
+| Tipe | Harga | Cocok Untuk |
+|------|-------|-------------|
+| Standard/Superior | Termurah | Solo/couple |
+| Triple | Lebih hemat/orang | Keluarga kecil |
+| Quad/Family | Paling hemat/orang | Rombongan |
+
+### Request Gratis (Saat Booking):
+- High floor (view bagus)
+- Quiet room (jauh lift)
+- Extra bed (kadang gratis!)
+- Late checkout (tanya saat check-in)
+- Room upgrade (kalau available)
+
+### Hack: Tulis di Special Request
+"Celebrating honeymoon/anniversary" - Sering dapat upgrade gratis!
+
+---
+
+## 6. Hotel Rekomendasi Value for Money
+
+### Makkah (Harga Kaki Lima, Kualitas Bintang 4):
+
+| Hotel | Jarak | Harga/Malam | Rating |
+|-------|-------|-------------|--------|
+| Al Marwa Rayhaan | 200m | Rp 800k-1.2jt | 4.5★ |
+| Makkah Millennium | 300m | Rp 700k-1jt | 4.3★ |
+| Elaf Ajyad | 400m | Rp 500-800k | 4.2★ |
+| Dar Al Ghufran | 150m | Rp 600-900k | 4.4★ |
+| Al Safwah Tower | 100m | Rp 900k-1.5jt | 4.5★ |
+
+### Madinah (Budget Friendly):
+
+| Hotel | Jarak | Harga/Malam | Rating |
+|-------|-------|-------------|--------|
+| Frontel Al Harithia | 200m | Rp 400-700k | 4.3★ |
+| Dallah Taibah | 300m | Rp 350-600k | 4.2★ |
+| Al Eiman Taibah | 250m | Rp 400-650k | 4.1★ |
+| Millennium Madinah | 150m | Rp 500-900k | 4.4★ |
+
+---
+
+## 7. Hack Spesial
+
+### Price Match Guarantee:
+Beberapa platform refund selisih jika ketemu lebih murah:
+1. Screenshot harga lebih murah
+2. Hubungi CS dalam 24 jam
+3. Dapat refund selisih!
+
+### Booking Refundable Dulu:
+1. Book kamar refundable (biasanya +10-15%)
+2. Pantau harga terus
+3. Kalau turun, cancel & book ulang
+4. Kalau naik, keep booking awal
+
+### Grup/Rombongan:
+- Booking 10+ kamar? Minta harga grup!
+- Email langsung ke hotel
+- Diskon 15-30% + bonus (guide gratis, transport, dll)
+
+### Loyalty Program:
+- Marriott Bonvoy
+- Hilton Honors
+- IHG Rewards
+- Accor Live Limitless
+
+Daftar gratis, dapat:
+- Member rate lebih murah
+- Points untuk stay gratis
+- Late checkout, upgrade
+"""
+
+TIPS_HEMAT_TRANSPORT = """
+# Tips & Hack Transportasi Murah
+
+Keliling Makkah-Madinah tanpa kuras dompet!
+
+## 1. Dari Bandara ke Hotel
+
+### Jeddah Airport (JED) ke Makkah:
+
+| Opsi | Harga | Durasi | Rating |
+|------|-------|--------|--------|
+| **SAPTCO Bus** | 50-80 SAR | 1.5 jam | Budget pick |
+| **Haramain Train** | Tidak ada | - | Belum connect |
+| **Taksi Resmi** | 200-300 SAR | 1 jam | Nyaman, cepat |
+| **Uber/Careem** | 150-250 SAR | 1 jam | **RECOMMENDED** |
+| **Hotel Shuttle** | 100-200 SAR | 1.5 jam | Kalau include |
+
+**Hack SAPTCO:**
+- Beli tiket online di saptco.com.sa (lebih murah)
+- Bus AC, WiFi, nyaman
+- Terminal di airport mudah ditemukan
+
+### Jeddah ke Madinah via Haramain Train:
+
+| Kelas | Harga | Fasilitas |
+|-------|-------|-----------|
+| Economy | 150 SAR | AC, seat standar |
+| Business | 250 SAR | Seat lebar, makanan |
+| First | 350 SAR | Premium lounge |
+
+**Hack Haramain Train:**
+- Booking di hhr.sa (website resmi)
+- Beli 2 minggu sebelum (harga fixed, tapi cepat habis)
+- Durasi cuma 2 jam (vs 5 jam mobil)!
+- View bagus, WiFi, bersih
+
+---
+
+## 2. Transportasi dalam Kota
+
+### Makkah:
+
+| Opsi | Harga | Keterangan |
+|------|-------|------------|
+| **Jalan kaki** | GRATIS | < 1km dari Haram |
+| **Shuttle hotel** | Gratis/10-20 SAR | Tanya hotel |
+| **Uber/Careem** | 10-30 SAR | App based, aman |
+| **Taksi biasa** | 20-50 SAR | HARUS NEGO! |
+| **Bus kota** | 2-5 SAR | Ribet, tapi super murah |
+
+**Hack Uber/Careem:**
+- First ride promo (50% off)
+- Share ride = lebih murah
+- Surge pricing? Tunggu 10-15 menit
+- Pickup di lokasi yang mudah (bukan di tengah jalan)
+
+### Madinah:
+
+| Opsi | Harga | Keterangan |
+|------|-------|------------|
+| **Jalan kaki** | GRATIS | < 500m dari Masjid |
+| **Shuttle hotel** | Gratis-15 SAR | Banyak yang gratis |
+| **Uber/Careem** | 8-25 SAR | Madinah lebih murah |
+| **Taksi** | 15-40 SAR | Nego keras! |
+
+---
+
+## 3. Makkah - Madinah
+
+### Perbandingan Opsi:
+
+| Opsi | Harga | Durasi | Kenyamanan |
+|------|-------|--------|------------|
+| **SAPTCO VIP Bus** | 100-150 SAR | 5-6 jam | ⭐⭐⭐⭐ |
+| **Haramain Train** | 150-250 SAR | 2 jam | ⭐⭐⭐⭐⭐ |
+| **Private Car** | 600-1000 SAR | 4-5 jam | ⭐⭐⭐⭐⭐ |
+| **Uber (long dist)** | 400-600 SAR | 4-5 jam | ⭐⭐⭐⭐ |
+
+**WINNER: Haramain Train**
+- Harga oke, durasi singkat
+- Stasiun baru, bersih, modern
+- Beli di hhr.sa atau app SAR
+
+### Hack Private Car:
+- Cari di grup FB/WA jamaah Indonesia
+- Sharing dengan jamaah lain (split cost)
+- Nego include ziarah (Uhud, Quba, dll)
+- Harga per mobil, bukan per orang
+
+---
+
+## 4. Sewa Mobil
+
+### Kapan Worth It?
+- Rombongan 4+ orang
+- Mau fleksibel keliling
+- Banyak ziarah tempat jauh
+
+### Platform Rental:
+
+| Platform | Harga/Hari | Kelebihan |
+|----------|------------|-----------|
+| **LocalRent** | 100-200 SAR | Pilihan lokal |
+| **Budget** | 150-250 SAR | Internasional, trusted |
+| **Hertz** | 150-300 SAR | Banyak lokasi |
+| **Yelo** | 80-150 SAR | App local, murah |
+
+### Hack Rental:
+1. **Booking dari Indonesia** - Harga lebih murah
+2. **Weekly rate** - Jauh lebih hemat dari harian
+3. **Ambil di kota, return di airport** - One way fee kecil
+4. **Avoid airport pickup** - +20-30% surcharge
+5. **Full insurance** - Worth it untuk peace of mind
+
+### Dokumen:
+- SIM Internasional (buat di Polda/Polres)
+- Paspor
+- Kartu kredit untuk deposit
+
+---
+
+## 5. Taksi - Panduan Nego
+
+### Taksi Bandara/Kota:
+
+**ATURAN EMAS:**
+1. Tanya harga SEBELUM naik
+2. Mulai nego dari 50% harga yang disebutkan
+3. Deal biasanya di 60-70%
+4. Kalau tidak mau nego, cari taksi lain
+
+### Tarif Patokan:
+
+| Rute | Harga Wajar |
+|------|-------------|
+| JED Airport - Makkah | 150-200 SAR |
+| JED Airport - Madinah | 350-450 SAR |
+| Dalam kota Makkah | 15-30 SAR |
+| Dalam kota Madinah | 10-25 SAR |
+| Makkah - Madinah | 400-500 SAR |
+
+### Red Flag Taksi:
+- Tidak mau pakai meter ❌
+- Minta harga 2x lipat ❌
+- Ngotot tidak bisa nego ❌
+- Mau bawa ke "toko temannya" ❌
+
+---
+
+## 6. Ziarah & City Tour
+
+### Paket Ziarah Value:
+
+| Paket | Termasuk | Harga | Durasi |
+|-------|----------|-------|--------|
+| Makkah Tour | Jabal Nur, Jabal Tsur, Arafah | 80-150 SAR | 4-5 jam |
+| Madinah Tour | Uhud, Quba, Qiblatain, Khandaq | 60-120 SAR | 3-4 jam |
+| Combo Tour | Kedua kota | 200-300 SAR | Full day |
+
+### Hack Ziarah:
+1. **Gabung rombongan lain** - Tanya di hotel
+2. **Grup WA jamaah Indonesia** - Sering ada open trip
+3. **Guide lokal** - 150-200 SAR/hari include mobil
+4. **DIY dengan Uber** - Lebih fleksibel
+
+### Guide Lokal Indonesia:
+- Banyak WNI jadi guide part-time
+- Tarif 150-300 SAR/hari
+- Fasih Arab & Indonesia
+- Tau tempat makan enak!
+
+---
+
+## 7. Hack Transfer Bandara
+
+### Jeddah Airport Tips:
+1. **Terminal baru (T1)** - Modern, banyak taksi/Uber
+2. **Avoid porter yang maksa** - Bawa koper sendiri
+3. **Tukar uang di kota** - Rate airport jelek
+4. **SIM card di airport** - STC, Mobily, Zain
+
+### Tips Money Changer:
+| Lokasi | Rate | Rekomendasi |
+|--------|------|-------------|
+| Indonesia | Biasa | Tukar sedikit |
+| Airport Jeddah | Jelek | Darurat saja |
+| Kota (Al Rajhi, dll) | **Terbaik** | Tukar banyak di sini |
+| Hotel | Buruk | Hindari |
+
+### Bawa Uang dari Indonesia:
+- Tukar USD/SAR di Indonesia
+- Rate lumayan bagus
+- Hindari tukar rupiah di Saudi (rate buruk)
+"""
+
+TIPS_HEMAT_AKOMODASI = """
+# Tips & Hack Akomodasi Alternatif
+
+Beyond hotel - opsi kreatif untuk budget terbatas!
+
+## 1. Apartment/Flat Rental
+
+### Kapan Lebih Hemat?
+- Rombongan 4-8 orang
+- Stay lebih dari 5 hari
+- Mau masak sendiri
+
+### Platform:
+| Platform | Tipe | Harga/Malam |
+|----------|------|-------------|
+| **Airbnb** | Apartment | 200-600 SAR |
+| **Booking.com** | Apartment | 250-700 SAR |
+| **Agoda Homes** | Flat/Villa | 200-500 SAR |
+| **Lokal (FB/WA)** | Flat | 150-400 SAR |
+
+### Keuntungan Apartment:
+- Dapur lengkap (hemat makan)
+- Ruang lebih luas
+- Laundry sendiri
+- Lebih private
+
+### Contoh Penghematan:
+```
+HOTEL:
+4 kamar x 500 SAR x 7 malam = 14,000 SAR
+
+APARTMENT:
+1 apartment 3BR x 400 SAR x 7 malam = 2,800 SAR
+Hemat: 11,200 SAR (80%!)
+```
+
+---
+
+## 2. Hotel + Paket dari Travel Agent
+
+### Paket All-in Termurah:
+
+| Durasi | Termasuk | Harga |
+|--------|----------|-------|
+| 9 hari | Tiket, hotel *3, visa, transport | Rp 18-25 juta |
+| 12 hari | Tiket, hotel *4, visa, transport, tour | Rp 25-35 juta |
+| 9 hari | Tiket, hotel *5, visa, transport, tour | Rp 35-50 juta |
+
+### Hack Pilih Travel Agent:
+1. **Bandingkan minimal 5 agent**
+2. **Minta breakdown harga** (tiket, hotel, visa, dll)
+3. **Cek review di Google/FB**
+4. **Pastikan PPIU resmi** (cek di Kemenag)
+5. **Nego untuk rombongan** (5+ orang = diskon)
+
+### Travel Agent Terpercaya:
+- Cek di siskopatuh.kemenag.go.id
+- Pastikan ada izin PPIU
+- Review positif konsisten
+- Kantor fisik jelas
+
+---
+
+## 3. Sharing Room Strategy
+
+### Tipe Sharing:
+
+| Tipe | Orang/Kamar | Hemat |
+|------|-------------|-------|
+| Twin share | 2 | Standar |
+| Triple | 3 | 30-40% |
+| Quad | 4 | 50-60% |
+
+### Tips Sharing:
+- Pilih teman yang cocok (jadwal, kebiasaan)
+- Buat aturan (giliran kamar mandi, AC, dll)
+- Siapkan earplug (pencegahan ngorok!)
+- Bag terpisah untuk barang pribadi
+
+### Hack Quad Room:
+1. Booking 1 quad room
+2. Bagi 4 orang
+3. Harga per orang bisa cuma Rp 200-300k/malam!
+
+---
+
+## 4. Kombinasi Hotel Bintang Berbeda
+
+### Strategi Mix:
+
+**Makkah (5 malam):**
+- 3 malam pertama: Hotel bintang 3 (adaptasi)
+- 2 malam terakhir: Hotel bintang 5 dekat Haram (hemat tenaga)
+
+**Madinah (4 malam):**
+- Hotel bintang 3-4 (Madinah lebih murah)
+
+### Contoh Budget:
+```
+CARA BIASA (semua bintang 4):
+9 malam x 800 SAR = 7,200 SAR
+
+CARA SMART:
+Makkah 3 malam x 400 SAR = 1,200 SAR
+Makkah 2 malam x 1,200 SAR = 2,400 SAR
+Madinah 4 malam x 400 SAR = 1,600 SAR
+Total: 5,200 SAR
+Hemat: 2,000 SAR (28%)
+```
+
+---
+
+## 5. Waktu Check-in/out Optimal
+
+### Hack Check-in Awal:
+- Penerbangan sampai pagi? Email hotel minta early check-in
+- Kadang gratis, kadang +50% dari 1 malam
+- Lebih baik dari bayar 1 malam penuh
+
+### Hack Late Check-out:
+- Request saat check-in (bukan hari H)
+- Biasanya dapat sampai 14:00-16:00 gratis
+- Kalau ramai, offer 25-50% harga 1 malam
+
+### Day Use Room:
+- Beberapa hotel offer room 6-12 jam
+- 50-70% dari harga semalam
+- Cocok untuk transit panjang
+
+---
+
+## 6. Makan - Hemat Tapi Kenyang
+
+### Strategi Makan:
+
+| Meal | Opsi Hemat | Harga |
+|------|------------|-------|
+| Sarapan | Hotel breakfast (kalau include) | FREE |
+| Sarapan | Roti + selai dari minimarket | 10 SAR |
+| Makan siang | Restoran lokal | 15-25 SAR |
+| Makan malam | Shawarma/Al Baik | 10-20 SAR |
+| Snack | Buah dari pasar | 10-15 SAR |
+
+### Hack Makan Murah:
+1. **Bawa rice cooker mini** - Masak nasi + lauk Indonesia
+2. **Supermarket > Restoran** - Beli roti, buah, susu
+3. **Makan di luar area Haram** - 30-50% lebih murah
+4. **Sharing porsi** - Porsi Arab besar!
+5. **Air Zamzam gratis** - Jangan beli air mineral
+
+### Minimarket/Supermarket:
+- **Bin Dawood** - 24 jam, lengkap
+- **Panda** - Harga kompetitif
+- **Carrefour** - Ada di mall
+- **Al Tamimi** - Quality bagus
+
+---
+
+## 7. Summary - Total Penghematan
+
+### Perbandingan:
+
+| Item | Cara Biasa | Cara Hemat | Hemat |
+|------|------------|------------|-------|
+| Tiket | Rp 12 jt | Rp 7 jt (LCC+transit) | 42% |
+| Hotel 9 mlm | Rp 15 jt | Rp 7 jt (mix+sharing) | 53% |
+| Transport | Rp 3 jt | Rp 1.5 jt (bus+uber) | 50% |
+| Makan | Rp 4 jt | Rp 2 jt (lokal+masak) | 50% |
+| **TOTAL** | **Rp 34 jt** | **Rp 17.5 jt** | **49%** |
+
+### Budget per Kategori:
+
+| Budget | Estimasi Total | Cocok Untuk |
+|--------|----------------|-------------|
+| Backpacker | Rp 12-15 juta | Solo, muda, kuat jalan |
+| Budget | Rp 15-20 juta | Couple, keluarga hemat |
+| Standard | Rp 20-30 juta | Keluarga, nyaman |
+| Premium | Rp 30-50 juta | VIP, dekat Haram |
+
+---
+
+## 8. Checklist Hemat
+
+### Sebelum Booking:
+- [ ] Bandingkan 5+ platform
+- [ ] Cek harga incognito mode
+- [ ] Set price alert
+- [ ] Pilih timing tepat (bulan & hari)
+
+### Saat Booking:
+- [ ] Pakai kode promo
+- [ ] Pilih opsi refundable dulu
+- [ ] Gabung loyalty program
+- [ ] Bayar pakai kartu dengan benefit
+
+### Saat di Saudi:
+- [ ] Makan di luar area touris
+- [ ] Jalan kaki kalau memungkinkan
+- [ ] Nego untuk semua transaksi
+- [ ] Tukar uang di kota, bukan airport/hotel
+"""
+
+# Combine tips hemat
+TIPS_HEMAT = {
+    "tiket_pesawat": TIPS_HEMAT_TIKET,
+    "hotel": TIPS_HEMAT_HOTEL,
+    "transportasi": TIPS_HEMAT_TRANSPORT,
+    "akomodasi": TIPS_HEMAT_AKOMODASI,
+}
+
+
 # =============================================================================
 # HELPER FUNCTIONS
 # =============================================================================
