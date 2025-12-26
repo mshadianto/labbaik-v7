@@ -1,16 +1,21 @@
 """
-LABBAIK AI v6.0 - Cost Simulator (Super WOW Edition)
-====================================================
-Advanced cost calculator with interactive charts,
-package comparison, budget planner, and savings tips.
+LABBAIK AI v7.0 - Cost Simulator with Scenario Planning
+========================================================
+Advanced cost calculator with scenario planning:
+- Multiple scenarios (Optimis, Realistis, Pesimistis)
+- Sensitivity analysis
+- Risk factor assessment
+- Monte Carlo confidence ranges
+- Interactive scenario comparison
 """
 
 import streamlit as st
 from datetime import date, datetime, timedelta
-from typing import Dict, List, Any, Tuple
-from dataclasses import dataclass
+from typing import Dict, List, Any, Tuple, Optional
+from dataclasses import dataclass, field
 from enum import Enum
 import json
+import random
 
 # =============================================================================
 # DATA CLASSES & CONSTANTS
@@ -21,6 +26,12 @@ class Season(str, Enum):
     HIGH = "high"
     PEAK = "peak"       # Ramadan
     SUPER_PEAK = "super_peak"  # Haji season
+
+
+class ScenarioType(str, Enum):
+    OPTIMISTIC = "optimistic"    # Best case
+    REALISTIC = "realistic"       # Most likely
+    PESSIMISTIC = "pessimistic"  # Worst case
 
 
 @dataclass
@@ -37,6 +48,119 @@ class CostBreakdown:
     misc: int
     seasonal_adj: int
     total: int
+
+
+@dataclass
+class RiskFactor:
+    """Risk factor that affects cost."""
+    name: str
+    description: str
+    probability: float  # 0-1
+    impact_min: float   # percentage impact
+    impact_max: float
+    category: str
+
+
+@dataclass
+class Scenario:
+    """Complete scenario with costs and analysis."""
+    name: str
+    type: ScenarioType
+    base_cost: CostBreakdown
+    adjusted_cost: int
+    confidence_low: int
+    confidence_high: int
+    risk_factors: List[Dict]
+    assumptions: List[str]
+    probability: float  # likelihood of this scenario
+
+
+@dataclass
+class SensitivityResult:
+    """Result of sensitivity analysis."""
+    variable: str
+    base_value: Any
+    low_value: Any
+    high_value: Any
+    base_cost: int
+    low_cost: int
+    high_cost: int
+    impact_range: int
+
+
+# Risk factors database
+RISK_FACTORS = [
+    RiskFactor(
+        name="Fluktuasi Kurs",
+        description="Perubahan nilai tukar IDR/SAR",
+        probability=0.7,
+        impact_min=-5,
+        impact_max=15,
+        category="ekonomi"
+    ),
+    RiskFactor(
+        name="Kenaikan Harga Tiket",
+        description="Harga tiket pesawat naik mendekati keberangkatan",
+        probability=0.5,
+        impact_min=0,
+        impact_max=20,
+        category="penerbangan"
+    ),
+    RiskFactor(
+        name="Occupancy Hotel Tinggi",
+        description="Hotel penuh, harus upgrade atau hotel lebih jauh",
+        probability=0.4,
+        impact_min=0,
+        impact_max=25,
+        category="akomodasi"
+    ),
+    RiskFactor(
+        name="Biaya Tak Terduga",
+        description="Pengeluaran tidak terencana (medis, extra bagasi, dll)",
+        probability=0.6,
+        impact_min=2,
+        impact_max=10,
+        category="lainnya"
+    ),
+    RiskFactor(
+        name="Inflasi Saudi",
+        description="Kenaikan harga umum di Arab Saudi",
+        probability=0.5,
+        impact_min=0,
+        impact_max=8,
+        category="ekonomi"
+    ),
+    RiskFactor(
+        name="Perubahan Regulasi Visa",
+        description="Biaya visa naik atau persyaratan baru",
+        probability=0.2,
+        impact_min=0,
+        impact_max=30,
+        category="regulasi"
+    ),
+]
+
+# Scenario multipliers
+SCENARIO_MULTIPLIERS = {
+    ScenarioType.OPTIMISTIC: {
+        "flight": 0.90,
+        "hotel": 0.85,
+        "misc": 0.80,
+        "seasonal": 0.90,
+    },
+    ScenarioType.REALISTIC: {
+        "flight": 1.0,
+        "hotel": 1.0,
+        "misc": 1.0,
+        "seasonal": 1.0,
+    },
+    ScenarioType.PESSIMISTIC: {
+        "flight": 1.20,
+        "hotel": 1.30,
+        "misc": 1.50,
+        "seasonal": 1.15,
+    },
+}
 
 
 # Pricing data
@@ -176,6 +300,323 @@ def calculate_cost(
 def format_currency(amount: int) -> str:
     """Format as Indonesian Rupiah."""
     return f"Rp {amount:,.0f}".replace(",", ".")
+
+
+# =============================================================================
+# SCENARIO PLANNING FUNCTIONS
+# =============================================================================
+
+def calculate_scenario_cost(
+    base_cost: CostBreakdown,
+    scenario_type: ScenarioType
+) -> CostBreakdown:
+    """Calculate cost for a specific scenario."""
+    multipliers = SCENARIO_MULTIPLIERS[scenario_type]
+
+    flight = int(base_cost.flight * multipliers["flight"])
+    hotel_makkah = int(base_cost.hotel_makkah * multipliers["hotel"])
+    hotel_madinah = int(base_cost.hotel_madinah * multipliers["hotel"])
+    misc = int(base_cost.misc * multipliers["misc"])
+    seasonal_adj = int(base_cost.seasonal_adj * multipliers["seasonal"])
+
+    total = (flight + base_cost.visa + hotel_makkah + hotel_madinah +
+             base_cost.transport + base_cost.meals + base_cost.mutawif +
+             base_cost.insurance + misc + seasonal_adj)
+
+    return CostBreakdown(
+        flight=flight,
+        visa=base_cost.visa,
+        hotel_makkah=hotel_makkah,
+        hotel_madinah=hotel_madinah,
+        transport=base_cost.transport,
+        meals=base_cost.meals,
+        mutawif=base_cost.mutawif,
+        insurance=base_cost.insurance,
+        misc=misc,
+        seasonal_adj=seasonal_adj,
+        total=total
+    )
+
+
+def generate_all_scenarios(base_cost: CostBreakdown) -> Dict[ScenarioType, Scenario]:
+    """Generate all three scenarios from base cost."""
+    scenarios = {}
+
+    # Scenario configurations
+    configs = {
+        ScenarioType.OPTIMISTIC: {
+            "name": "Skenario Optimis",
+            "probability": 0.20,
+            "assumptions": [
+                "Dapat promo early bird tiket pesawat",
+                "Hotel tersedia dengan harga normal",
+                "Kurs stabil atau menguat",
+                "Tidak ada biaya tak terduga",
+                "Berangkat di musim reguler"
+            ]
+        },
+        ScenarioType.REALISTIC: {
+            "name": "Skenario Realistis",
+            "probability": 0.60,
+            "assumptions": [
+                "Harga tiket sesuai rata-rata pasar",
+                "Hotel sesuai bintang yang dipilih",
+                "Kurs normal dengan sedikit fluktuasi",
+                "Buffer 5-10% untuk tak terduga",
+                "Kondisi pasar normal"
+            ]
+        },
+        ScenarioType.PESSIMISTIC: {
+            "name": "Skenario Pesimis",
+            "probability": 0.20,
+            "assumptions": [
+                "Tiket dibeli mendekati keberangkatan",
+                "Hotel harus upgrade karena penuh",
+                "Kurs melemah signifikan",
+                "Ada biaya tak terduga (medis, dll)",
+                "Peak season atau high demand"
+            ]
+        }
+    }
+
+    for scenario_type, config in configs.items():
+        scenario_cost = calculate_scenario_cost(base_cost, scenario_type)
+
+        # Calculate confidence range (Monte Carlo-style)
+        if scenario_type == ScenarioType.OPTIMISTIC:
+            confidence_low = int(scenario_cost.total * 0.95)
+            confidence_high = int(scenario_cost.total * 1.05)
+        elif scenario_type == ScenarioType.REALISTIC:
+            confidence_low = int(scenario_cost.total * 0.92)
+            confidence_high = int(scenario_cost.total * 1.12)
+        else:
+            confidence_low = int(scenario_cost.total * 0.98)
+            confidence_high = int(scenario_cost.total * 1.25)
+
+        # Identify relevant risk factors
+        risk_factors = []
+        for rf in RISK_FACTORS:
+            if scenario_type == ScenarioType.PESSIMISTIC:
+                impact = rf.impact_max
+            elif scenario_type == ScenarioType.OPTIMISTIC:
+                impact = rf.impact_min
+            else:
+                impact = (rf.impact_min + rf.impact_max) / 2
+
+            risk_factors.append({
+                "name": rf.name,
+                "description": rf.description,
+                "probability": rf.probability,
+                "impact": impact,
+                "category": rf.category
+            })
+
+        scenarios[scenario_type] = Scenario(
+            name=config["name"],
+            type=scenario_type,
+            base_cost=scenario_cost,
+            adjusted_cost=scenario_cost.total,
+            confidence_low=confidence_low,
+            confidence_high=confidence_high,
+            risk_factors=risk_factors,
+            assumptions=config["assumptions"],
+            probability=config["probability"]
+        )
+
+    return scenarios
+
+
+def run_monte_carlo_simulation(
+    base_cost: CostBreakdown,
+    num_simulations: int = 1000
+) -> Dict[str, Any]:
+    """Run Monte Carlo simulation for cost estimation."""
+    results = []
+
+    for _ in range(num_simulations):
+        # Random variations for each component
+        flight_var = random.uniform(0.85, 1.25)
+        hotel_var = random.uniform(0.90, 1.35)
+        misc_var = random.uniform(0.80, 1.50)
+
+        # Apply risk factors randomly
+        risk_multiplier = 1.0
+        for rf in RISK_FACTORS:
+            if random.random() < rf.probability:
+                impact = random.uniform(rf.impact_min, rf.impact_max) / 100
+                risk_multiplier += impact
+
+        # Calculate simulated total
+        sim_total = (
+            base_cost.flight * flight_var +
+            base_cost.visa +
+            (base_cost.hotel_makkah + base_cost.hotel_madinah) * hotel_var +
+            base_cost.transport +
+            base_cost.meals +
+            base_cost.mutawif +
+            base_cost.insurance +
+            base_cost.misc * misc_var +
+            base_cost.seasonal_adj
+        ) * risk_multiplier
+
+        results.append(int(sim_total))
+
+    results.sort()
+
+    return {
+        "min": results[0],
+        "max": results[-1],
+        "mean": int(sum(results) / len(results)),
+        "median": results[len(results) // 2],
+        "p10": results[int(len(results) * 0.10)],  # 10th percentile
+        "p25": results[int(len(results) * 0.25)],  # 25th percentile
+        "p75": results[int(len(results) * 0.75)],  # 75th percentile
+        "p90": results[int(len(results) * 0.90)],  # 90th percentile
+        "std_dev": int((sum((x - sum(results)/len(results))**2 for x in results) / len(results)) ** 0.5),
+        "distribution": results
+    }
+
+
+def calculate_sensitivity(
+    params: Dict,
+    base_cost: CostBreakdown
+) -> List[SensitivityResult]:
+    """Calculate sensitivity analysis for key variables."""
+    results = []
+
+    # Test sensitivity for hotel stars
+    for city in ["makkah", "madinah"]:
+        param_key = f"hotel_star_{city}"
+        base_value = params.get(param_key, 4)
+
+        # Low scenario (1 star lower)
+        low_params = params.copy()
+        low_params[param_key] = max(2, base_value - 1)
+        low_cost = calculate_cost(**{k: v for k, v in low_params.items()
+                                     if k in calculate_cost.__code__.co_varnames})
+
+        # High scenario (1 star higher)
+        high_params = params.copy()
+        high_params[param_key] = min(5, base_value + 1)
+        high_cost = calculate_cost(**{k: v for k, v in high_params.items()
+                                      if k in calculate_cost.__code__.co_varnames})
+
+        results.append(SensitivityResult(
+            variable=f"Hotel {city.title()}",
+            base_value=f"{base_value} bintang",
+            low_value=f"{low_params[param_key]} bintang",
+            high_value=f"{high_params[param_key]} bintang",
+            base_cost=base_cost.total,
+            low_cost=low_cost.total,
+            high_cost=high_cost.total,
+            impact_range=high_cost.total - low_cost.total
+        ))
+
+    # Test sensitivity for flight class
+    if params.get("flight_class") == "economy":
+        high_cost = calculate_cost(**{**params, "flight_class": "business"})
+        results.append(SensitivityResult(
+            variable="Kelas Penerbangan",
+            base_value="Economy",
+            low_value="Economy",
+            high_value="Business",
+            base_cost=base_cost.total,
+            low_cost=base_cost.total,
+            high_cost=high_cost.total,
+            impact_range=high_cost.total - base_cost.total
+        ))
+
+    # Test sensitivity for duration
+    base_duration = params.get("duration", 10)
+    short_params = {**params, "duration": max(9, base_duration - 2),
+                    "nights_makkah": max(3, params.get("nights_makkah", 5) - 1)}
+    short_params["nights_madinah"] = short_params["duration"] - 1 - short_params["nights_makkah"]
+
+    long_params = {**params, "duration": min(21, base_duration + 4),
+                   "nights_makkah": min(12, params.get("nights_makkah", 5) + 2)}
+    long_params["nights_madinah"] = long_params["duration"] - 1 - long_params["nights_makkah"]
+
+    short_cost = calculate_cost(**{k: v for k, v in short_params.items()
+                                   if k in calculate_cost.__code__.co_varnames})
+    long_cost = calculate_cost(**{k: v for k, v in long_params.items()
+                                  if k in calculate_cost.__code__.co_varnames})
+
+    results.append(SensitivityResult(
+        variable="Durasi Trip",
+        base_value=f"{base_duration} hari",
+        low_value=f"{short_params['duration']} hari",
+        high_value=f"{long_params['duration']} hari",
+        base_cost=base_cost.total,
+        low_cost=short_cost.total,
+        high_cost=long_cost.total,
+        impact_range=long_cost.total - short_cost.total
+    ))
+
+    # Test sensitivity for meals
+    meal_options = ["none", "basic", "standard", "premium"]
+    current_meal = params.get("meal_type", "standard")
+    current_idx = meal_options.index(current_meal)
+
+    low_meal = meal_options[max(0, current_idx - 1)]
+    high_meal = meal_options[min(3, current_idx + 1)]
+
+    low_cost = calculate_cost(**{**params, "meal_type": low_meal})
+    high_cost = calculate_cost(**{**params, "meal_type": high_meal})
+
+    results.append(SensitivityResult(
+        variable="Paket Makan",
+        base_value=current_meal.title(),
+        low_value=low_meal.title(),
+        high_value=high_meal.title(),
+        base_cost=base_cost.total,
+        low_cost=low_cost.total,
+        high_cost=high_cost.total,
+        impact_range=high_cost.total - low_cost.total
+    ))
+
+    # Sort by impact range (highest first)
+    results.sort(key=lambda x: x.impact_range, reverse=True)
+
+    return results
+
+
+def calculate_break_even_analysis(
+    base_cost: CostBreakdown,
+    num_travelers: int
+) -> Dict[str, Any]:
+    """Calculate break-even points and group discounts."""
+    total_per_person = base_cost.total
+
+    # Group discount tiers
+    discount_tiers = [
+        {"min_travelers": 1, "discount": 0, "label": "Individual"},
+        {"min_travelers": 5, "discount": 0.03, "label": "Keluarga Kecil"},
+        {"min_travelers": 10, "discount": 0.05, "label": "Grup Kecil"},
+        {"min_travelers": 20, "discount": 0.08, "label": "Grup Sedang"},
+        {"min_travelers": 30, "discount": 0.10, "label": "Grup Besar"},
+        {"min_travelers": 45, "discount": 0.12, "label": "Satu Bus"},
+    ]
+
+    # Find applicable discount
+    applicable_discount = 0
+    applicable_label = "Individual"
+    for tier in discount_tiers:
+        if num_travelers >= tier["min_travelers"]:
+            applicable_discount = tier["discount"]
+            applicable_label = tier["label"]
+
+    discounted_total = int(total_per_person * (1 - applicable_discount))
+    total_savings = (total_per_person - discounted_total) * num_travelers
+
+    return {
+        "base_per_person": total_per_person,
+        "discounted_per_person": discounted_total,
+        "discount_percentage": applicable_discount * 100,
+        "discount_label": applicable_label,
+        "total_group_cost": discounted_total * num_travelers,
+        "total_savings": total_savings,
+        "discount_tiers": discount_tiers
+    }
 
 
 # =============================================================================
@@ -613,25 +1054,431 @@ def render_save_simulation(params: Dict, cost: CostBreakdown):
 
 def render_saved_simulations():
     """Render saved simulations."""
-    
+
     saved = st.session_state.get("sim_saved", [])
-    
+
     if saved:
         st.markdown("## 📁 Simulasi Tersimpan")
-        
+
         for i, sim in enumerate(saved[-5:], 1):  # Show last 5
             with st.container(border=True):
                 col1, col2, col3 = st.columns([1, 2, 1])
-                
+
                 with col1:
                     st.caption(f"#{i}")
-                
+
                 with col2:
                     params = sim["params"]
                     st.caption(f"{params.get('departure_city', 'N/A')} | {params.get('duration', 0)} hari")
-                
+
                 with col3:
                     st.markdown(f"**{format_currency(sim['total'])}**")
+
+
+# =============================================================================
+# SCENARIO PLANNING UI
+# =============================================================================
+
+def render_scenario_planning(cost: CostBreakdown, params: Dict):
+    """Render complete scenario planning section."""
+
+    st.markdown("## 🎯 Scenario Planning")
+    st.caption("Perencanaan biaya dengan analisis skenario dan risiko")
+
+    # Generate scenarios
+    scenarios = generate_all_scenarios(cost)
+
+    # Scenario cards
+    st.markdown("### 📊 Perbandingan Skenario")
+
+    cols = st.columns(3)
+
+    scenario_configs = [
+        (ScenarioType.OPTIMISTIC, "🌟", "#28a745", "success"),
+        (ScenarioType.REALISTIC, "⚖️", "#007bff", "info"),
+        (ScenarioType.PESSIMISTIC, "⚠️", "#dc3545", "warning"),
+    ]
+
+    for col, (sc_type, icon, color, alert_type) in zip(cols, scenario_configs):
+        scenario = scenarios[sc_type]
+
+        with col:
+            with st.container(border=True):
+                st.markdown(f"### {icon} {scenario.name}")
+                st.markdown(f"**Probabilitas: {scenario.probability * 100:.0f}%**")
+
+                # Main cost
+                st.markdown(f"## {format_currency(scenario.adjusted_cost)}")
+                st.caption("per orang")
+
+                # Confidence range
+                st.markdown(f"""
+                <div style="background: linear-gradient(90deg, #333 0%, {color} 50%, #333 100%);
+                            padding: 0.5rem; border-radius: 5px; text-align: center; margin: 0.5rem 0;">
+                    <small>{format_currency(scenario.confidence_low)} - {format_currency(scenario.confidence_high)}</small>
+                </div>
+                """, unsafe_allow_html=True)
+
+                st.caption("Range estimasi (90% confidence)")
+
+                # Assumptions
+                with st.expander("📋 Asumsi"):
+                    for assumption in scenario.assumptions:
+                        st.markdown(f"• {assumption}")
+
+    # Scenario difference analysis
+    st.markdown("---")
+    st.markdown("### 📈 Analisis Perbedaan Skenario")
+
+    optimistic = scenarios[ScenarioType.OPTIMISTIC]
+    realistic = scenarios[ScenarioType.REALISTIC]
+    pessimistic = scenarios[ScenarioType.PESSIMISTIC]
+
+    # Calculate differences
+    diff_opt_real = realistic.adjusted_cost - optimistic.adjusted_cost
+    diff_real_pess = pessimistic.adjusted_cost - realistic.adjusted_cost
+    total_range = pessimistic.adjusted_cost - optimistic.adjusted_cost
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric(
+            "Optimis vs Realistis",
+            format_currency(diff_opt_real),
+            delta=f"+{diff_opt_real / optimistic.adjusted_cost * 100:.1f}%",
+            delta_color="inverse"
+        )
+
+    with col2:
+        st.metric(
+            "Realistis vs Pesimis",
+            format_currency(diff_real_pess),
+            delta=f"+{diff_real_pess / realistic.adjusted_cost * 100:.1f}%",
+            delta_color="inverse"
+        )
+
+    with col3:
+        st.metric(
+            "Total Range",
+            format_currency(total_range),
+            delta=f"{total_range / realistic.adjusted_cost * 100:.1f}% variasi"
+        )
+
+    # Visual range bar
+    st.markdown("#### Range Biaya")
+
+    # Create visual range
+    range_data = {
+        "Optimis": optimistic.adjusted_cost,
+        "Realistis": realistic.adjusted_cost,
+        "Pesimis": pessimistic.adjusted_cost,
+    }
+
+    max_val = max(range_data.values())
+    for label, value in range_data.items():
+        pct = value / max_val * 100
+        color = "#28a745" if "Optimis" in label else "#007bff" if "Realistis" in label else "#dc3545"
+        st.markdown(f"**{label}**: {format_currency(value)}")
+        st.markdown(f"""
+        <div style="background: #333; border-radius: 5px; height: 25px; margin-bottom: 10px;">
+            <div style="background: {color}; width: {pct}%; height: 100%; border-radius: 5px;"></div>
+        </div>
+        """, unsafe_allow_html=True)
+
+
+def render_monte_carlo_analysis(cost: CostBreakdown):
+    """Render Monte Carlo simulation results."""
+
+    st.markdown("### 🎲 Simulasi Monte Carlo")
+    st.caption("1,000 simulasi untuk estimasi range biaya yang lebih akurat")
+
+    # Run simulation
+    with st.spinner("Menjalankan simulasi..."):
+        mc_results = run_monte_carlo_simulation(cost)
+
+    # Results display
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        st.metric("Rata-rata", format_currency(mc_results["mean"]))
+    with col2:
+        st.metric("Median", format_currency(mc_results["median"]))
+    with col3:
+        st.metric("Std Deviasi", format_currency(mc_results["std_dev"]))
+    with col4:
+        st.metric("Range", format_currency(mc_results["max"] - mc_results["min"]))
+
+    # Percentile breakdown
+    st.markdown("#### Distribusi Percentile")
+
+    percentiles = [
+        ("P10 (Optimis)", mc_results["p10"], "#28a745"),
+        ("P25", mc_results["p25"], "#5cb85c"),
+        ("P50 (Median)", mc_results["median"], "#007bff"),
+        ("P75", mc_results["p75"], "#f0ad4e"),
+        ("P90 (Pesimis)", mc_results["p90"], "#dc3545"),
+    ]
+
+    cols = st.columns(5)
+    for col, (label, value, color) in zip(cols, percentiles):
+        with col:
+            st.markdown(f"""
+            <div style="text-align: center; padding: 1rem; background: #1a1a2e; border-radius: 10px; border-left: 4px solid {color};">
+                <div style="font-size: 0.8rem; color: #888;">{label}</div>
+                <div style="font-size: 1.1rem; font-weight: bold; color: white;">{format_currency(value)}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # Confidence interval recommendation
+    st.markdown("---")
+    with st.container(border=True):
+        st.markdown("#### 💡 Rekomendasi Budget")
+        st.markdown(f"""
+        Berdasarkan simulasi Monte Carlo dengan 1,000 iterasi:
+
+        - **Budget Minimal** (P10): {format_currency(mc_results["p10"])}
+        - **Budget Rekomendasi** (P75): {format_currency(mc_results["p75"])}
+        - **Budget Aman** (P90): {format_currency(mc_results["p90"])}
+
+        > Kami rekomendasikan menyiapkan budget sebesar **{format_currency(mc_results["p75"])}**
+        > untuk mengantisipasi 75% kemungkinan skenario.
+        """)
+
+
+def render_sensitivity_analysis(params: Dict, cost: CostBreakdown):
+    """Render sensitivity analysis (tornado chart style)."""
+
+    st.markdown("### 🌪️ Analisis Sensitivitas")
+    st.caption("Variabel mana yang paling mempengaruhi total biaya?")
+
+    # Calculate sensitivity
+    sensitivity_results = calculate_sensitivity(params, cost)
+
+    if not sensitivity_results:
+        st.info("Tidak dapat menghitung sensitivitas dengan konfigurasi saat ini")
+        return
+
+    # Tornado chart (text-based)
+    st.markdown("#### Tornado Chart")
+
+    max_impact = max(s.impact_range for s in sensitivity_results) if sensitivity_results else 1
+
+    for result in sensitivity_results:
+        # Calculate bar widths
+        low_diff = result.base_cost - result.low_cost
+        high_diff = result.high_cost - result.base_cost
+
+        low_pct = abs(low_diff) / max_impact * 50 if max_impact > 0 else 0
+        high_pct = abs(high_diff) / max_impact * 50 if max_impact > 0 else 0
+
+        st.markdown(f"**{result.variable}**")
+        st.caption(f"{result.low_value} ← {result.base_value} → {result.high_value}")
+
+        # Visual bar
+        st.markdown(f"""
+        <div style="display: flex; align-items: center; margin: 5px 0 15px 0;">
+            <div style="width: 50%; display: flex; justify-content: flex-end;">
+                <div style="background: #28a745; height: 20px; width: {low_pct}%; border-radius: 3px 0 0 3px;"></div>
+            </div>
+            <div style="width: 2px; height: 30px; background: #fff;"></div>
+            <div style="width: 50%;">
+                <div style="background: #dc3545; height: 20px; width: {high_pct}%; border-radius: 0 3px 3px 0;"></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            if low_diff != 0:
+                st.caption(f"↓ {format_currency(abs(low_diff))}")
+        with col2:
+            st.caption(f"Base: {format_currency(result.base_cost)}")
+        with col3:
+            if high_diff != 0:
+                st.caption(f"↑ {format_currency(high_diff)}")
+
+    # Summary table
+    st.markdown("---")
+    st.markdown("#### Ringkasan Sensitivitas")
+
+    for result in sensitivity_results:
+        impact_pct = result.impact_range / result.base_cost * 100
+
+        with st.container(border=True):
+            col1, col2, col3 = st.columns([2, 1, 1])
+
+            with col1:
+                st.markdown(f"**{result.variable}**")
+
+            with col2:
+                st.markdown(f"Impact: **{format_currency(result.impact_range)}**")
+
+            with col3:
+                if impact_pct > 20:
+                    st.error(f"{impact_pct:.1f}% variasi")
+                elif impact_pct > 10:
+                    st.warning(f"{impact_pct:.1f}% variasi")
+                else:
+                    st.success(f"{impact_pct:.1f}% variasi")
+
+
+def render_risk_factors(cost: CostBreakdown):
+    """Render risk factors analysis."""
+
+    st.markdown("### ⚠️ Analisis Faktor Risiko")
+    st.caption("Faktor-faktor yang dapat mempengaruhi biaya umrah Anda")
+
+    # Group by category
+    categories = {}
+    for rf in RISK_FACTORS:
+        if rf.category not in categories:
+            categories[rf.category] = []
+        categories[rf.category].append(rf)
+
+    # Display by category
+    category_icons = {
+        "ekonomi": "💰",
+        "penerbangan": "✈️",
+        "akomodasi": "🏨",
+        "lainnya": "📦",
+        "regulasi": "📋"
+    }
+
+    for category, risks in categories.items():
+        icon = category_icons.get(category, "📌")
+        st.markdown(f"#### {icon} {category.title()}")
+
+        for rf in risks:
+            # Calculate potential impact
+            avg_impact = (rf.impact_min + rf.impact_max) / 2
+            potential_cost = int(cost.total * avg_impact / 100)
+
+            with st.container(border=True):
+                col1, col2, col3 = st.columns([3, 1, 1])
+
+                with col1:
+                    st.markdown(f"**{rf.name}**")
+                    st.caption(rf.description)
+
+                with col2:
+                    # Probability indicator
+                    prob_pct = rf.probability * 100
+                    if prob_pct >= 60:
+                        st.error(f"📊 {prob_pct:.0f}%")
+                    elif prob_pct >= 40:
+                        st.warning(f"📊 {prob_pct:.0f}%")
+                    else:
+                        st.success(f"📊 {prob_pct:.0f}%")
+                    st.caption("Probabilitas")
+
+                with col3:
+                    st.markdown(f"**+{format_currency(potential_cost)}**")
+                    st.caption(f"Impact {rf.impact_min:.0f}-{rf.impact_max:.0f}%")
+
+    # Risk mitigation tips
+    st.markdown("---")
+    st.markdown("#### 🛡️ Tips Mitigasi Risiko")
+
+    mitigations = [
+        ("✈️ Booking tiket 3-6 bulan sebelumnya", "Hindari kenaikan harga last-minute"),
+        ("💱 Pantau kurs dan tukar saat menguntungkan", "Manfaatkan kurs bagus untuk pembelian SAR"),
+        ("🏨 Reservasi hotel jauh hari", "Dapatkan harga terbaik dan pilihan hotel"),
+        ("🛡️ Beli asuransi perjalanan", "Lindungi dari biaya medis tak terduga"),
+        ("📅 Pilih waktu di luar peak season", "Hemat 15-35% dari total biaya"),
+        ("💰 Siapkan dana darurat 10-15%", "Buffer untuk pengeluaran tak terduga"),
+    ]
+
+    cols = st.columns(2)
+    for i, (tip, desc) in enumerate(mitigations):
+        with cols[i % 2]:
+            with st.container(border=True):
+                st.markdown(f"**{tip}**")
+                st.caption(desc)
+
+
+def render_group_discount_analysis(cost: CostBreakdown, num_travelers: int):
+    """Render group discount and break-even analysis."""
+
+    st.markdown("### 👥 Analisis Grup & Diskon")
+
+    # Calculate break-even
+    be_analysis = calculate_break_even_analysis(cost, num_travelers)
+
+    # Current discount status
+    col1, col2 = st.columns(2)
+
+    with col1:
+        with st.container(border=True):
+            st.markdown("#### Status Diskon Saat Ini")
+            st.markdown(f"**Jumlah Jamaah:** {num_travelers} orang")
+            st.markdown(f"**Kategori:** {be_analysis['discount_label']}")
+            st.markdown(f"**Diskon:** {be_analysis['discount_percentage']:.0f}%")
+
+            if be_analysis['discount_percentage'] > 0:
+                st.success(f"Hemat {format_currency(be_analysis['total_savings'])} total!")
+            else:
+                st.info("Tambah jamaah untuk dapat diskon grup")
+
+    with col2:
+        with st.container(border=True):
+            st.markdown("#### Biaya dengan Diskon")
+
+            st.metric(
+                "Per Orang",
+                format_currency(be_analysis['discounted_per_person']),
+                delta=f"-{format_currency(cost.total - be_analysis['discounted_per_person'])}" if be_analysis['discount_percentage'] > 0 else None
+            )
+
+            st.metric(
+                "Total Grup",
+                format_currency(be_analysis['total_group_cost'])
+            )
+
+    # Discount tiers visualization
+    st.markdown("---")
+    st.markdown("#### 📊 Tier Diskon Grup")
+
+    for tier in be_analysis['discount_tiers']:
+        is_current = (num_travelers >= tier['min_travelers'] and
+                      (tier == be_analysis['discount_tiers'][-1] or
+                       num_travelers < be_analysis['discount_tiers'][be_analysis['discount_tiers'].index(tier) + 1]['min_travelers']))
+
+        discount_amount = int(cost.total * tier['discount'])
+        final_price = cost.total - discount_amount
+
+        border_color = "#d4af37" if is_current else "#333"
+
+        st.markdown(f"""
+        <div style="background: #1a1a2e; padding: 1rem; border-radius: 10px; margin: 0.5rem 0;
+                    border: 2px solid {border_color}; {'box-shadow: 0 0 10px rgba(212,175,55,0.3);' if is_current else ''}">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong style="color: white;">{tier['label']}</strong>
+                    <span style="color: #888;"> ({tier['min_travelers']}+ jamaah)</span>
+                </div>
+                <div style="text-align: right;">
+                    <span style="color: #28a745; font-weight: bold;">{tier['discount']*100:.0f}% OFF</span><br/>
+                    <span style="color: white;">{format_currency(final_price)}/orang</span>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Next tier suggestion
+    current_tier_idx = 0
+    for i, tier in enumerate(be_analysis['discount_tiers']):
+        if num_travelers >= tier['min_travelers']:
+            current_tier_idx = i
+
+    if current_tier_idx < len(be_analysis['discount_tiers']) - 1:
+        next_tier = be_analysis['discount_tiers'][current_tier_idx + 1]
+        needed = next_tier['min_travelers'] - num_travelers
+
+        with st.container(border=True):
+            st.markdown(f"""
+            💡 **Tambah {needed} jamaah** untuk naik ke tier **{next_tier['label']}**
+            dan dapat diskon **{next_tier['discount']*100:.0f}%**!
+            """)
 
 
 # =============================================================================
@@ -852,22 +1699,54 @@ def render_simulator_page():
     
     st.divider()
 
-    # Additional sections
-    tabs = st.tabs(["📊 Grafik", "🔄 Perbandingan", "💡 Tips Hemat", "📈 Rencana Tabungan", "🏨 Hotel Live"])
+    # Additional sections with Scenario Planning
+    tabs = st.tabs([
+        "🎯 Scenario Planning",
+        "📊 Grafik",
+        "🔄 Perbandingan",
+        "💡 Tips Hemat",
+        "📈 Rencana Tabungan",
+        "🏨 Hotel Live"
+    ])
 
     with tabs[0]:
-        render_cost_chart(cost)
+        # Scenario Planning Tab
+        scenario_subtabs = st.tabs([
+            "📊 Skenario",
+            "🎲 Monte Carlo",
+            "🌪️ Sensitivitas",
+            "⚠️ Risiko",
+            "👥 Grup"
+        ])
+
+        with scenario_subtabs[0]:
+            render_scenario_planning(cost, params)
+
+        with scenario_subtabs[1]:
+            render_monte_carlo_analysis(cost)
+
+        with scenario_subtabs[2]:
+            render_sensitivity_analysis(params, cost)
+
+        with scenario_subtabs[3]:
+            render_risk_factors(cost)
+
+        with scenario_subtabs[4]:
+            render_group_discount_analysis(cost, params["num_travelers"])
 
     with tabs[1]:
-        render_comparison()
+        render_cost_chart(cost)
 
     with tabs[2]:
-        render_savings_tips(cost)
+        render_comparison()
 
     with tabs[3]:
-        render_budget_planner(cost, params["num_travelers"])
+        render_savings_tips(cost)
 
     with tabs[4]:
+        render_budget_planner(cost, params["num_travelers"])
+
+    with tabs[5]:
         render_live_hotel_prices(params)
     
     # Save/export
