@@ -7,6 +7,7 @@ Audio playback for Umrah duas with:
 - Indonesian translation
 - Audio playback (TTS or pre-recorded)
 - Bookmark/favorites system
+- Voice chat for doa questions
 
 Uses Web Speech API for TTS when audio files not available.
 """
@@ -16,6 +17,7 @@ from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 from enum import Enum
 import json
+import base64
 
 # =============================================================================
 # DOA DATABASE
@@ -240,123 +242,376 @@ UMRAH_DOAS: List[Doa] = [
 
 
 # =============================================================================
-# TTS COMPONENT (Web Speech API)
+# ENHANCED AUDIO PLAYER COMPONENT
 # =============================================================================
 
-TTS_HTML_TEMPLATE = """
-<div id="doa-player-{doa_id}" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); padding: 1.5rem; border-radius: 15px; border: 1px solid #d4af37; margin-bottom: 1rem;">
+AUDIO_PLAYER_HTML = """
+<div id="enhanced-player-{doa_id}" style="background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 1.5rem; border-radius: 20px; border: 1px solid #d4af37; margin-bottom: 1.5rem; box-shadow: 0 10px 40px rgba(212, 175, 55, 0.1);">
+
+    <!-- Header -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
         <div>
-            <h3 style="color: #d4af37; margin: 0;">{name}</h3>
-            <span style="color: #888; font-size: 0.85rem;">{category} • {when_to_read}</span>
+            <h3 style="color: #d4af37; margin: 0; font-size: 1.2rem;">{name}</h3>
+            <span style="color: #888; font-size: 0.8rem;">{category} • {when_to_read}</span>
         </div>
-        <div style="display: flex; gap: 0.5rem;">
-            {wajib_badge}
-            <button onclick="speakArabic_{doa_id}()" style="background: #d4af37; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 1rem;">
-                🔊 Play
-            </button>
-        </div>
+        {wajib_badge}
     </div>
-    
-    <div style="background: #0a0a0a; padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
-        <div style="direction: rtl; text-align: right; font-family: 'Traditional Arabic', 'Amiri', serif; font-size: 1.8rem; line-height: 2; color: #d4af37;">
+
+    <!-- Arabic Text -->
+    <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem;">
+        <div style="direction: rtl; text-align: right; font-family: 'Amiri', 'Traditional Arabic', serif; font-size: 2rem; line-height: 2.2; color: #d4af37;">
             {arabic}
         </div>
     </div>
-    
-    <div style="color: #888; font-style: italic; margin-bottom: 0.5rem;">
+
+    <!-- Audio Controls -->
+    <div style="background: rgba(212, 175, 55, 0.1); padding: 1rem; border-radius: 15px; margin-bottom: 1rem;">
+        <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <!-- Play/Pause/Stop -->
+            <div style="display: flex; gap: 0.5rem;">
+                <button id="play-{doa_id}" onclick="playDoa_{doa_id}()" style="background: #d4af37; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">
+                    ▶️
+                </button>
+                <button onclick="pauseDoa_{doa_id}()" style="background: #333; border: 1px solid #d4af37; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1rem;">
+                    ⏸️
+                </button>
+                <button onclick="stopDoa_{doa_id}()" style="background: #333; border: 1px solid #d4af37; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1rem;">
+                    ⏹️
+                </button>
+            </div>
+
+            <!-- Speed Control -->
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="color: #888; font-size: 0.8rem;">Kecepatan:</span>
+                <select id="speed-{doa_id}" onchange="updateSpeed_{doa_id}()" style="background: #333; color: white; border: 1px solid #d4af37; padding: 5px 10px; border-radius: 8px;">
+                    <option value="0.5">0.5x (Lambat)</option>
+                    <option value="0.7" selected>0.7x (Normal)</option>
+                    <option value="0.9">0.9x (Cepat)</option>
+                    <option value="1.0">1.0x (Asli)</option>
+                </select>
+            </div>
+
+            <!-- Repeat Toggle -->
+            <button id="repeat-{doa_id}" onclick="toggleRepeat_{doa_id}()" style="background: #333; border: 1px solid #555; padding: 8px 15px; border-radius: 20px; cursor: pointer; color: #888;">
+                🔁 Ulangi
+            </button>
+        </div>
+
+        <!-- Status -->
+        <div id="status-{doa_id}" style="color: #888; font-size: 0.8rem; margin-top: 0.5rem;">
+            Siap diputar
+        </div>
+    </div>
+
+    <!-- Latin & Translation -->
+    <div style="color: #aaa; font-style: italic; margin-bottom: 0.5rem; font-size: 0.95rem;">
         {latin}
     </div>
-    
-    <div style="color: white;">
-        {translation}
+    <div style="color: #eee; font-size: 1rem;">
+        <strong>Artinya:</strong> {translation}
     </div>
 </div>
 
 <script>
-function speakArabic_{doa_id}() {{
-    const text = `{arabic}`;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'ar-SA';
-    utterance.rate = 0.8;
-    window.speechSynthesis.speak(utterance);
-}}
+(function() {{
+    let currentUtterance_{doa_id} = null;
+    let repeatEnabled_{doa_id} = false;
+    let playbackSpeed_{doa_id} = 0.7;
+
+    window.playDoa_{doa_id} = function() {{
+        window.speechSynthesis.cancel();
+
+        const text = `{arabic}`;
+        currentUtterance_{doa_id} = new SpeechSynthesisUtterance(text);
+        currentUtterance_{doa_id}.lang = 'ar-SA';
+        currentUtterance_{doa_id}.rate = playbackSpeed_{doa_id};
+        currentUtterance_{doa_id}.pitch = 1.0;
+
+        // Find Arabic voice if available
+        const voices = window.speechSynthesis.getVoices();
+        const arabicVoice = voices.find(v => v.lang.includes('ar'));
+        if (arabicVoice) currentUtterance_{doa_id}.voice = arabicVoice;
+
+        currentUtterance_{doa_id}.onstart = () => {{
+            document.getElementById('status-{doa_id}').innerText = '🔊 Sedang memutar...';
+            document.getElementById('play-{doa_id}').innerText = '🔊';
+        }};
+
+        currentUtterance_{doa_id}.onend = () => {{
+            document.getElementById('status-{doa_id}').innerText = repeatEnabled_{doa_id} ? '🔁 Mengulang...' : '✅ Selesai';
+            document.getElementById('play-{doa_id}').innerText = '▶️';
+            if (repeatEnabled_{doa_id}) {{
+                setTimeout(() => playDoa_{doa_id}(), 1500);
+            }}
+        }};
+
+        currentUtterance_{doa_id}.onerror = () => {{
+            document.getElementById('status-{doa_id}').innerText = '❌ Error - coba lagi';
+        }};
+
+        window.speechSynthesis.speak(currentUtterance_{doa_id});
+    }};
+
+    window.pauseDoa_{doa_id} = function() {{
+        if (window.speechSynthesis.speaking) {{
+            window.speechSynthesis.pause();
+            document.getElementById('status-{doa_id}').innerText = '⏸️ Dijeda';
+        }} else if (window.speechSynthesis.paused) {{
+            window.speechSynthesis.resume();
+            document.getElementById('status-{doa_id}').innerText = '🔊 Melanjutkan...';
+        }}
+    }};
+
+    window.stopDoa_{doa_id} = function() {{
+        window.speechSynthesis.cancel();
+        repeatEnabled_{doa_id} = false;
+        document.getElementById('repeat-{doa_id}').style.borderColor = '#555';
+        document.getElementById('repeat-{doa_id}').style.color = '#888';
+        document.getElementById('status-{doa_id}').innerText = 'Siap diputar';
+        document.getElementById('play-{doa_id}').innerText = '▶️';
+    }};
+
+    window.updateSpeed_{doa_id} = function() {{
+        playbackSpeed_{doa_id} = parseFloat(document.getElementById('speed-{doa_id}').value);
+    }};
+
+    window.toggleRepeat_{doa_id} = function() {{
+        repeatEnabled_{doa_id} = !repeatEnabled_{doa_id};
+        const btn = document.getElementById('repeat-{doa_id}');
+        btn.style.borderColor = repeatEnabled_{doa_id} ? '#d4af37' : '#555';
+        btn.style.color = repeatEnabled_{doa_id} ? '#d4af37' : '#888';
+        btn.style.background = repeatEnabled_{doa_id} ? 'rgba(212,175,55,0.2)' : '#333';
+    }};
+
+    // Load voices
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {{
+        window.speechSynthesis.onvoiceschanged = () => {{}};
+    }}
+}})();
 </script>
 """
+
+# =============================================================================
+# VOICE CHAT COMPONENT
+# =============================================================================
+
+VOICE_CHAT_HTML = """
+<div id="voice-chat-container" style="background: linear-gradient(135deg, #0f3460, #16213e); padding: 1.5rem; border-radius: 20px; border: 1px solid #00d9ff; margin-bottom: 1.5rem;">
+    <h3 style="color: #00d9ff; margin-bottom: 1rem;">🎙️ Tanya Doa dengan Suara</h3>
+
+    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+        <!-- Record Button -->
+        <button id="voice-record-btn" onclick="toggleRecording()" style="background: linear-gradient(135deg, #e94560, #ff6b6b); border: none; width: 70px; height: 70px; border-radius: 50%; cursor: pointer; font-size: 2rem; box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4); transition: all 0.3s;">
+            🎤
+        </button>
+
+        <div style="flex: 1; min-width: 200px;">
+            <div id="voice-status" style="color: #aaa; margin-bottom: 0.5rem;">
+                Tekan tombol mikrofon untuk bertanya
+            </div>
+            <div id="voice-transcript" style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 10px; min-height: 50px; color: white; font-size: 1rem;">
+                <span style="color: #666;">Pertanyaan Anda akan muncul di sini...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Example Questions -->
+    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(0,217,255,0.2);">
+        <span style="color: #888; font-size: 0.8rem;">💡 Contoh pertanyaan:</span>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+            <span onclick="setQuestion('Apa doa masuk masjid?')" style="background: rgba(0,217,255,0.1); color: #00d9ff; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; cursor: pointer; border: 1px solid rgba(0,217,255,0.3);">Doa masuk masjid?</span>
+            <span onclick="setQuestion('Bacaan talbiyah lengkap')" style="background: rgba(0,217,255,0.1); color: #00d9ff; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; cursor: pointer; border: 1px solid rgba(0,217,255,0.3);">Talbiyah lengkap</span>
+            <span onclick="setQuestion('Doa saat tawaf')" style="background: rgba(0,217,255,0.1); color: #00d9ff; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; cursor: pointer; border: 1px solid rgba(0,217,255,0.3);">Doa saat tawaf</span>
+            <span onclick="setQuestion('Doa wajib saat sai')" style="background: rgba(0,217,255,0.1); color: #00d9ff; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; cursor: pointer; border: 1px solid rgba(0,217,255,0.3);">Doa wajib sai</span>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    let recognition = null;
+    let isRecording = false;
+
+    // Initialize Speech Recognition
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        recognition.lang = 'id-ID';
+
+        recognition.onresult = function(event) {
+            let transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+            }
+            document.getElementById('voice-transcript').innerHTML = transcript || '<span style="color: #666;">Mendengarkan...</span>';
+
+            if (event.results[event.results.length - 1].isFinal) {
+                // Send to Streamlit
+                window.parent.postMessage({
+                    type: 'streamlit:setComponentValue',
+                    value: transcript
+                }, '*');
+            }
+        };
+
+        recognition.onstart = function() {
+            document.getElementById('voice-status').innerText = '🔴 Mendengarkan... Silakan bicara';
+            document.getElementById('voice-record-btn').style.background = 'linear-gradient(135deg, #ff0000, #ff4444)';
+            document.getElementById('voice-record-btn').style.animation = 'pulse 1s infinite';
+        };
+
+        recognition.onend = function() {
+            isRecording = false;
+            document.getElementById('voice-status').innerText = 'Tekan tombol mikrofon untuk bertanya lagi';
+            document.getElementById('voice-record-btn').style.background = 'linear-gradient(135deg, #e94560, #ff6b6b)';
+            document.getElementById('voice-record-btn').style.animation = 'none';
+        };
+
+        recognition.onerror = function(event) {
+            document.getElementById('voice-status').innerText = '❌ Error: ' + event.error;
+            isRecording = false;
+        };
+    }
+
+    window.toggleRecording = function() {
+        if (!recognition) {
+            document.getElementById('voice-status').innerText = '❌ Browser tidak mendukung voice input';
+            return;
+        }
+
+        if (isRecording) {
+            recognition.stop();
+            isRecording = false;
+        } else {
+            recognition.start();
+            isRecording = true;
+        }
+    };
+
+    window.setQuestion = function(question) {
+        document.getElementById('voice-transcript').innerText = question;
+        window.parent.postMessage({
+            type: 'streamlit:setComponentValue',
+            value: question
+        }, '*');
+    };
+})();
+</script>
+
+<style>
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4); }
+    50% { transform: scale(1.1); box-shadow: 0 5px 30px rgba(255, 0, 0, 0.6); }
+    100% { transform: scale(1); box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4); }
+}
+</style>
+"""
+
+# Legacy template (kept for compatibility)
+TTS_HTML_TEMPLATE = AUDIO_PLAYER_HTML
 
 
 # =============================================================================
 # RENDER FUNCTIONS
 # =============================================================================
 
-def render_doa_card(doa: Doa, show_audio: bool = True):
+def render_doa_card(doa: Doa, show_audio: bool = True, enhanced: bool = True):
     """Render a single doa card with audio player."""
-    
+
     wajib_badge = ""
     if doa.is_wajib:
-        wajib_badge = '<span style="background: #ef4444; color: white; padding: 3px 10px; border-radius: 10px; font-size: 0.75rem;">WAJIB</span>'
-    
-    # Use Streamlit components instead of raw HTML for better compatibility
-    with st.container():
-        # Header
-        col1, col2 = st.columns([3, 1])
-        
+        wajib_badge = '<span style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 5px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">⚠️ WAJIB</span>'
+
+    if enhanced and show_audio:
+        # Use enhanced HTML audio player
+        html = AUDIO_PLAYER_HTML.format(
+            doa_id=doa.id.replace("-", "_"),
+            name=doa.name,
+            category=doa.category.value.title(),
+            when_to_read=doa.when_to_read,
+            arabic=doa.arabic,
+            latin=doa.latin,
+            translation=doa.translation,
+            wajib_badge=wajib_badge
+        )
+        st.components.v1.html(html, height=420)
+
+        # Bookmark button (Streamlit native)
+        bookmarks = st.session_state.get("doa_bookmarks", set())
+        is_bookmarked = doa.id in bookmarks
+
+        col1, col2 = st.columns([1, 4])
         with col1:
-            st.markdown(f"### {doa.name}")
-            st.caption(f"{doa.category.value.title()} • {doa.when_to_read}")
-        
-        with col2:
-            if doa.is_wajib:
-                st.error("WAJIB", icon="⚠️")
-        
-        # Arabic text
-        st.markdown(f"""
-        <div style="background: #0a0a0a; padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border: 1px solid #333;">
-            <div style="direction: rtl; text-align: right; font-family: 'Traditional Arabic', 'Amiri', serif; font-size: 1.8rem; line-height: 2.2; color: #d4af37;">
-                {doa.arabic}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Latin & Translation
-        st.markdown(f"*{doa.latin}*")
-        st.markdown(f"**Artinya:** {doa.translation}")
-        
-        # Audio controls
-        if show_audio:
-            col1, col2, col3 = st.columns([1, 1, 2])
-            
+            if st.button(
+                "❤️ Favorit" if is_bookmarked else "🤍 Simpan",
+                key=f"bookmark_{doa.id}"
+            ):
+                if is_bookmarked:
+                    bookmarks.discard(doa.id)
+                    st.toast("Dihapus dari favorit")
+                else:
+                    bookmarks.add(doa.id)
+                    st.toast("Ditambahkan ke favorit!")
+                st.session_state.doa_bookmarks = bookmarks
+                st.rerun()
+    else:
+        # Fallback to simple Streamlit components
+        with st.container():
+            col1, col2 = st.columns([3, 1])
+
             with col1:
-                if st.button("🔊 Play", key=f"play_{doa.id}"):
-                    # Trigger TTS via JavaScript
-                    st.components.v1.html(f"""
-                    <script>
-                        const text = `{doa.arabic}`;
-                        const utterance = new SpeechSynthesisUtterance(text);
-                        utterance.lang = 'ar-SA';
-                        utterance.rate = 0.7;
-                        window.speechSynthesis.speak(utterance);
-                    </script>
-                    """, height=0)
-                    st.toast("🔊 Memutar doa...", icon="🕋")
-            
+                st.markdown(f"### {doa.name}")
+                st.caption(f"{doa.category.value.title()} • {doa.when_to_read}")
+
             with col2:
-                # Bookmark button
-                bookmarks = st.session_state.get("doa_bookmarks", set())
-                is_bookmarked = doa.id in bookmarks
-                
-                if st.button(
-                    "❤️" if is_bookmarked else "🤍",
-                    key=f"bookmark_{doa.id}"
-                ):
-                    if is_bookmarked:
-                        bookmarks.discard(doa.id)
-                        st.toast("Dihapus dari favorit")
-                    else:
-                        bookmarks.add(doa.id)
-                        st.toast("Ditambahkan ke favorit!")
-                    st.session_state.doa_bookmarks = bookmarks
-        
+                if doa.is_wajib:
+                    st.error("WAJIB", icon="⚠️")
+
+            st.markdown(f"""
+            <div style="background: #0a0a0a; padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border: 1px solid #333;">
+                <div style="direction: rtl; text-align: right; font-family: 'Traditional Arabic', 'Amiri', serif; font-size: 1.8rem; line-height: 2.2; color: #d4af37;">
+                    {doa.arabic}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown(f"*{doa.latin}*")
+            st.markdown(f"**Artinya:** {doa.translation}")
+
+            if show_audio:
+                col1, col2, col3 = st.columns([1, 1, 2])
+
+                with col1:
+                    if st.button("🔊 Play", key=f"play_{doa.id}"):
+                        st.components.v1.html(f"""
+                        <script>
+                            const text = `{doa.arabic}`;
+                            const utterance = new SpeechSynthesisUtterance(text);
+                            utterance.lang = 'ar-SA';
+                            utterance.rate = 0.7;
+                            window.speechSynthesis.speak(utterance);
+                        </script>
+                        """, height=0)
+                        st.toast("🔊 Memutar doa...", icon="🕋")
+
+                with col2:
+                    bookmarks = st.session_state.get("doa_bookmarks", set())
+                    is_bookmarked = doa.id in bookmarks
+
+                    if st.button(
+                        "❤️" if is_bookmarked else "🤍",
+                        key=f"bookmark_{doa.id}"
+                    ):
+                        if is_bookmarked:
+                            bookmarks.discard(doa.id)
+                            st.toast("Dihapus dari favorit")
+                        else:
+                            bookmarks.add(doa.id)
+                            st.toast("Ditambahkan ke favorit!")
+                        st.session_state.doa_bookmarks = bookmarks
+
         st.divider()
 
 
@@ -380,66 +635,122 @@ def render_doa_list(category: DoaCategory = None, wajib_only: bool = False):
         render_doa_card(doa)
 
 
+def render_voice_chat():
+    """Render voice chat component for asking doa questions."""
+    st.components.v1.html(VOICE_CHAT_HTML, height=280)
+
+
+def search_doa(query: str) -> List[Doa]:
+    """Search doas by keyword."""
+    query_lower = query.lower()
+    results = []
+
+    for doa in UMRAH_DOAS:
+        if (query_lower in doa.name.lower() or
+            query_lower in doa.translation.lower() or
+            query_lower in doa.when_to_read.lower() or
+            query_lower in doa.category.value.lower()):
+            results.append(doa)
+
+    return results
+
+
+def render_doa_answer(query: str):
+    """Render AI-style answer for doa question."""
+    results = search_doa(query)
+
+    if results:
+        st.success(f"Ditemukan {len(results)} doa terkait:")
+        for doa in results[:3]:  # Show top 3
+            render_doa_card(doa, enhanced=True)
+    else:
+        st.info("Tidak ditemukan doa yang cocok. Coba kata kunci lain seperti: tawaf, sai, ihram, masjid")
+
+
 def render_doa_player_page():
     """Full doa player page."""
-    
+
     st.markdown("# 🤲 Doa & Dzikir Umrah")
-    st.caption("Kumpulan doa lengkap untuk perjalanan umrah")
-    
-    # Initialize bookmarks
+    st.caption("Kumpulan doa lengkap untuk perjalanan umrah dengan audio player")
+
+    # Initialize session state
     if "doa_bookmarks" not in st.session_state:
         st.session_state.doa_bookmarks = set()
-    
-    # Category filter
-    col1, col2 = st.columns([2, 1])
-    
-    with col1:
-        categories = ["Semua"] + [c.value.title() for c in DoaCategory]
-        selected = st.selectbox("📂 Kategori", categories)
-    
-    with col2:
-        wajib_only = st.checkbox("⚠️ Hanya Wajib")
-    
-    st.divider()
-    
-    # Tabs
-    tab1, tab2, tab3 = st.tabs(["📖 Semua Doa", "❤️ Favorit", "📋 Quick Reference"])
-    
+    if "doa_voice_query" not in st.session_state:
+        st.session_state.doa_voice_query = ""
+
+    # Tabs - add voice chat tab
+    tab1, tab2, tab3, tab4 = st.tabs(["📖 Semua Doa", "🎙️ Tanya Suara", "❤️ Favorit", "📋 Quick Reference"])
+
+    with tab2:
+        st.markdown("### 🎙️ Tanya Doa dengan Suara")
+        st.caption("Gunakan suara Anda untuk mencari doa yang tepat")
+
+        # Voice chat component
+        render_voice_chat()
+
+        # Text input fallback
+        query = st.text_input(
+            "Atau ketik pertanyaan:",
+            placeholder="Contoh: doa masuk masjid, talbiyah, doa tawaf...",
+            key="doa_search_input"
+        )
+
+        if query:
+            render_doa_answer(query)
+
+    # Category filter (for tab1)
     with tab1:
+        col1, col2 = st.columns([2, 1])
+
+        with col1:
+            categories = ["Semua"] + [c.value.title() for c in DoaCategory]
+            selected = st.selectbox("📂 Kategori", categories)
+
+        with col2:
+            wajib_only = st.checkbox("⚠️ Hanya Wajib")
+
+        st.divider()
+
         if selected == "Semua":
             render_doa_list(wajib_only=wajib_only)
         else:
-            # Convert back to enum
             category_map = {c.value.title(): c for c in DoaCategory}
             category = category_map.get(selected)
             render_doa_list(category=category, wajib_only=wajib_only)
-    
-    with tab2:
+
+    with tab3:
         bookmarks = st.session_state.get("doa_bookmarks", set())
-        
+
         if bookmarks:
+            st.success(f"Anda memiliki {len(bookmarks)} doa favorit")
             bookmarked_doas = [d for d in UMRAH_DOAS if d.id in bookmarks]
             for doa in bookmarked_doas:
-                render_doa_card(doa)
+                render_doa_card(doa, enhanced=True)
         else:
-            st.info("Belum ada doa favorit. Tekan ❤️ untuk menambahkan.")
-    
-    with tab3:
+            st.info("Belum ada doa favorit. Tekan 🤍 Simpan pada doa untuk menambahkan ke favorit.")
+
+    with tab4:
         st.markdown("### 📋 Ringkasan Doa Wajib Umrah")
-        
+
         wajib_doas = [d for d in UMRAH_DOAS if d.is_wajib]
-        
+
         for i, doa in enumerate(wajib_doas, 1):
-            st.markdown(f"""
-            **{i}. {doa.name}** ({doa.category.value.title()})
-            
-            > *{doa.latin}*
-            """)
-        
+            with st.expander(f"{i}. {doa.name} ({doa.category.value.title()})"):
+                st.markdown(f"""
+                **Arab:** {doa.arabic}
+
+                **Latin:** *{doa.latin}*
+
+                **Artinya:** {doa.translation}
+
+                **Kapan dibaca:** {doa.when_to_read}
+                """)
+
         st.divider()
-        
+
         st.markdown("### 🕋 Urutan Doa dalam Umrah")
-        
+
         st.markdown("""
         1. **Niat Ihram** - Di Miqat
         2. **Talbiyah** - Sepanjang perjalanan ke Makkah
@@ -480,4 +791,6 @@ __all__ = [
     "render_doa_list",
     "render_doa_player_page",
     "render_doa_mini_widget",
+    "render_voice_chat",
+    "search_doa",
 ]
