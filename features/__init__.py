@@ -97,6 +97,24 @@ try:
 except ImportError:
     pass
 
+# Umrah Complete Guide
+try:
+    from features.umrah_complete import (
+        render_umrah_complete_page,
+        render_doa_card_enhanced,
+    )
+    from features.umrah_guide import (
+        UMRAH_DEFINITION,
+        UMRAH_VIRTUES,
+        UMRAH_PILLARS,
+        UMRAH_SUNNAHS,
+        MIQAT_LOCATIONS,
+        HISTORICAL_SITES,
+        UMRAH_PROCEDURES,
+    )
+except ImportError:
+    pass
+
 # PWA Support
 try:
     from features.pwa_support import (
@@ -172,7 +190,18 @@ __all__ = [
     "render_doa_list",
     "render_doa_player_page",
     "render_doa_mini_widget",
-    
+
+    # Umrah Complete Guide
+    "render_umrah_complete_page",
+    "render_doa_card_enhanced",
+    "UMRAH_DEFINITION",
+    "UMRAH_VIRTUES",
+    "UMRAH_PILLARS",
+    "UMRAH_SUNNAHS",
+    "MIQAT_LOCATIONS",
+    "HISTORICAL_SITES",
+    "UMRAH_PROCEDURES",
+
     # PWA Support
     "init_pwa",
     "render_install_button",
@@ -183,4 +212,4 @@ __all__ = [
 ]
 
 # Version
-__version__ = "6.0.0"
+__version__ = "7.0.0"
