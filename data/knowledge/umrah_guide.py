@@ -1266,9 +1266,379 @@ Madinah punya banyak spot cozy untuk istirahat dan healing:
 - **King Fahd Garden:** Taman luas, jogging track, free
 - **Al Salam Park:** Dekat Quba, cocok sore
 - **Prince Mohammad Park:** Playground untuk anak
+"""
 
----
+# =============================================================================
+# TEMPAT OLEH-OLEH MURAH (MUMER)
+# =============================================================================
 
+OLEH_OLEH_MAKKAH = """
+# Tempat Beli Oleh-Oleh Murah di Makkah
+
+Jangan beli oleh-oleh di sekitar Haram! Harga bisa 2-3x lipat.
+Pergi sedikit lebih jauh untuk harga yang jauh lebih murah.
+
+## Pasar & Mall Murah
+
+### 1. Souq Al-Khalil (Pasar Khalil)
+**Lokasi:** Jalan Al Khalil, 10 menit dari Haram
+**Jam Buka:** 09:00-23:00
+- Pasar tradisional terbesar Makkah
+- Harga grosir untuk tasbih, sajadah, parfum
+- WAJIB TAWAR! Mulai dari 50% harga yang ditawarkan
+- **Tips:** Datang pagi untuk pilihan lengkap
+
+**Harga Patokan:**
+| Barang | Harga Sekitar Haram | Harga Souq Khalil |
+|--------|---------------------|-------------------|
+| Tasbih kayu | 30-50 SAR | 10-15 SAR |
+| Sajadah biasa | 40-60 SAR | 15-25 SAR |
+| Parfum non-alkohol 50ml | 80-120 SAR | 30-50 SAR |
+| Kurma Ajwa 1kg | 150-200 SAR | 80-120 SAR |
+
+### 2. Bin Dawood Supermarket
+**Lokasi:** Banyak cabang (Aziziyah, Kudai)
+**Jam Buka:** 24 jam
+- Supermarket modern, harga fixed (tidak perlu tawar)
+- Kurma kemasan, coklat, kacang Arab
+- ZamZam kemasan resmi
+- **Tips:** Ada promo bundle untuk oleh-oleh
+
+### 3. Al-Sitteen Street Market
+**Lokasi:** Jalan Al-Sitteen (Jalan 60)
+- Buah segar, kurma curah murah
+- Baju koko & gamis harga grosir
+- Perlengkapan haji/umrah lengkap
+- **Harga:** 30-40% lebih murah dari area Haram
+
+### 4. Makkah Mall
+**Lokasi:** 15 menit dari Haram
+- Mall modern dengan banyak pilihan
+- Carrefour di basement (harga supermarket)
+- Brand lokal seperti Al Baik, Kudu
+- **Tips:** Ke Carrefour untuk coklat & snack
+
+### 5. Souq Al-Arab (Pasar Arab)
+**Lokasi:** Daerah Aziziyah
+- Khusus parfum & attar (minyak wangi)
+- Harga grosir, bisa beli satuan
+- Botol parfum cantik untuk kado
+- **Warning:** Pastikan non-alkohol jika untuk shalat
+
+### 6. Abraj Mall (Clock Tower) - HINDARI untuk Oleh-oleh
+**Catatan:** Mall ini sangat mahal! Hanya untuk healing/cafe.
+Oleh-oleh di sini harga 2-3x lipat dari pasar.
+
+## Tips Belanja Hemat
+
+1. **Jangan beli hari pertama** - Survey dulu, bandingkan harga
+2. **Beli di luar area Haram** - Minimal 1-2 km dari Masjidil Haram
+3. **Tawar dengan sopan** - Mulai 50%, deal di 60-70%
+4. **Beli grosir** - Ajak teman, beli banyak dapat diskon
+5. **Bayar cash** - Kadang dapat diskon 5-10%
+6. **Malam lebih murah** - Pedagang ingin cepat tutup
+7. **Bawa kalkulator** - Hitung konversi SAR ke IDR
+
+## Oleh-Oleh Wajib Beli
+
+| Oleh-Oleh | Harga Wajar | Tempat Terbaik |
+|-----------|-------------|----------------|
+| Kurma Ajwa 1kg | 80-120 SAR | Souq Khalil |
+| Air ZamZam 5L | 10-15 SAR | Bin Dawood |
+| Tasbih 99 butir | 10-20 SAR | Souq Khalil |
+| Sajadah Turkey | 20-40 SAR | Al-Sitteen |
+| Parfum Oud 50ml | 40-80 SAR | Souq Al-Arab |
+| Kacang Arab 1kg | 25-35 SAR | Bin Dawood |
+| Siwak | 2-5 SAR | Semua pasar |
+| Baju koko | 30-50 SAR | Al-Sitteen |
+| Mukena | 50-100 SAR | Al-Sitteen |
+"""
+
+OLEH_OLEH_MADINAH = """
+# Tempat Beli Oleh-Oleh Murah di Madinah
+
+Madinah terkenal dengan kurma berkualitas. Beli kurma di sini,
+bukan di Makkah! Harga dan kualitas lebih baik.
+
+## Pasar & Mall Murah
+
+### 1. Pasar Kurma Madinah (Date Market)
+**Lokasi:** Dekat Masjid Nabawi (Bab Salam area)
+**Jam Buka:** 08:00-23:00
+- SURGA KURMA! Puluhan jenis kurma
+- Bisa cicip sebelum beli
+- Harga per kg, tawar dengan sopan
+- **Tips:** Beli Ajwa dan Sukkari di sini
+
+**Jenis Kurma & Harga:**
+| Jenis | Per Kg | Keterangan |
+|-------|--------|------------|
+| Ajwa (Premium) | 100-150 SAR | Kurma Nabi, kualitas terbaik |
+| Ajwa (Medium) | 60-80 SAR | Ukuran lebih kecil |
+| Sukkari Rutab | 40-60 SAR | Lembut, manis sekali |
+| Sukkari Kering | 30-40 SAR | Tahan lama |
+| Safawi | 25-35 SAR | Mirip Ajwa, lebih murah |
+| Mabroom | 20-30 SAR | Panjang, chewy |
+| Khudri | 15-25 SAR | Ekonomis, enak |
+
+### 2. Al Rashid Mega Mall
+**Lokasi:** King Fahd Road
+- Lulu Hypermarket di basement
+- Kurma kemasan, oleh-oleh modern
+- Parfum branded harga kompetitif
+- **Tips:** Beli coklat & snack di sini
+
+### 3. Souq Al-Madinah (Pasar Madinah)
+**Lokasi:** Sekitar area Central
+- Pasar tradisional authentic
+- Tasbih, sajadah, jubah
+- Harga lebih murah dari Makkah
+- **Tips:** Pagi hari lebih lengkap
+
+### 4. Al Noor Mall
+**Lokasi:** Prince Abdul Majeed Road
+- Danube supermarket
+- Oleh-oleh kemasan praktis
+- Souvenir official Madinah
+- **Harga:** Fixed price, tidak perlu tawar
+
+### 5. Taibah Commercial Center
+**Lokasi:** Dekat Universitas Taibah
+- Area grosir baju muslim
+- Gamis, jubah, abaya murah
+- Perlengkapan haji/umrah
+- **Harga:** 40-50% lebih murah dari mall
+
+### 6. Quba Market
+**Lokasi:** Area Masjid Quba
+- Pasar lokal, harga lokal
+- Kurma langsung dari petani
+- Suasana authentic Saudi
+- **Tips:** Kombinasi dengan ziarah Quba
+
+## Tips Khusus Beli Kurma
+
+1. **Cicip dulu!** - Pedagang biasanya mempersilakan
+2. **Periksa kesegaran** - Jangan terlalu kering atau basah
+3. **Pilih kemasan vakum** - Lebih tahan lama untuk dibawa pulang
+4. **Beli di Madinah** - Kualitas lebih baik dari Makkah
+5. **Ajwa untuk ibadah** - Makan 7 butir pagi hari (sunnah)
+6. **Sukkari untuk oleh-oleh** - Favorit orang Indonesia
+
+## Oleh-Oleh Khas Madinah
+
+| Oleh-Oleh | Harga Wajar | Tempat Terbaik |
+|-----------|-------------|----------------|
+| Kurma Ajwa 1kg | 80-120 SAR | Pasar Kurma |
+| Kurma Sukkari 1kg | 35-50 SAR | Pasar Kurma |
+| Kurma Mix 3kg box | 100-150 SAR | Lulu/Danube |
+| Kismis Madinah | 30-40 SAR/kg | Pasar Kurma |
+| Madu Arab | 50-100 SAR | Souq Madinah |
+| Habatussauda | 20-30 SAR | Souq Madinah |
+| Zaitun Arab | 25-40 SAR | Supermarket |
+| Sorban/Shemagh | 15-30 SAR | Taibah Center |
+"""
+
+# =============================================================================
+# TEMPAT MAKAN SELERA INDONESIA
+# =============================================================================
+
+MAKANAN_INDONESIA_MAKKAH = """
+# Tempat Makan Selera Indonesia di Makkah
+
+Kangen masakan Indonesia? Berikut tempat makan yang cocok di lidah!
+
+## Restoran Indonesia
+
+### 1. Restoran Sederhana
+**Lokasi:** Aziziyah, dekat Bin Dawood
+**Jam Buka:** 11:00-23:00
+- Menu: Nasi Padang lengkap!
+- Rendang, gulai, sambal ijo
+- Harga: 25-40 SAR per porsi
+- **Favorit:** Rendang + nasi + teh manis
+- Owner orang Padang asli
+
+### 2. Warung Jawa "Mbak Yuni"
+**Lokasi:** Aziziyah area
+**Jam Buka:** 10:00-22:00
+- Menu: Soto ayam, rawon, nasi pecel
+- Harga: 20-30 SAR
+- Rasanya authentic Jawa Timur
+- **Tips:** Pesan soto + tempe goreng
+
+### 3. Dapur Sunda
+**Lokasi:** Kudai Road
+**Jam Buka:** 11:00-22:00
+- Menu: Nasi timbel, sayur asem, ikan bakar
+- Sambal terasi available!
+- Harga: 25-35 SAR
+- **Favorit:** Nasi timbel komplit
+
+### 4. Restoran Minang "Pagi Sore"
+**Lokasi:** Rusaifah
+**Jam Buka:** 07:00-23:00
+- Menu: Nasi kapau, gulai otak, dendeng
+- Cabai ijo mantap
+- Harga: 25-40 SAR
+- Buka dari pagi (sarapan)
+
+### 5. Mie Aceh "Bang Jali"
+**Lokasi:** Aziziyah
+**Jam Buka:** 12:00-midnight
+- Menu: Mie Aceh basah/goreng, roti cane
+- Harga: 20-30 SAR
+- **Tips:** Minta level pedas sesuai selera
+- Porsi besar!
+
+### 6. Ayam Penyet "Surabaya"
+**Lokasi:** Kudai area
+**Jam Buka:** 11:00-22:00
+- Menu: Ayam penyet, lele penyet, tempe
+- Sambal authentic pedas
+- Harga: 20-30 SAR
+- **Favorit:** Ayam penyet + es teh
+
+## Kedai Kopi & Jajanan Indonesia
+
+### 7. Warung Kopi Indonesia
+**Lokasi:** Aziziyah
+- Kopi tubruk, kopi susu
+- Gorengan: tahu, tempe, pisang
+- Indomie available!
+- Harga: 5-15 SAR
+
+### 8. Toko Oleh-Oleh Indonesia
+**Lokasi:** Beberapa lokasi di Aziziyah
+- Jual makanan instant Indonesia
+- Indomie, sambal ABC, kecap
+- Snack Indonesia
+- **Tips:** Beli kalau kangen banget
+
+## Tips Makan Indonesia di Makkah
+
+1. **Area Aziziyah** - Pusat kuliner Indonesia
+2. **Tanya supir/guide** - Mereka tau tempat terbaru
+3. **Review Google Maps** - Cek rating sebelum pergi
+4. **Jam makan** - Hindari 12:00-14:00 (ramai)
+5. **Bawa sambal sendiri** - Kalau mau lebih pedas
+"""
+
+MAKANAN_INDONESIA_MADINAH = """
+# Tempat Makan Selera Indonesia di Madinah
+
+Madinah juga punya banyak pilihan makanan Indonesia!
+
+## Restoran Indonesia
+
+### 1. Restoran Padang "Al Minang"
+**Lokasi:** King Fahd Road, dekat Masjid Nabawi
+**Jam Buka:** 10:00-23:00
+- Menu: Nasi Padang komplit
+- Rendang, ayam pop, gulai tunjang
+- Harga: 25-40 SAR
+- **Favorit:** Gulai kepala ikan
+- Walking distance dari hotel
+
+### 2. Warung Nusantara
+**Lokasi:** Quba Road
+**Jam Buka:** 11:00-22:00
+- Menu: Multi-regional Indonesia
+- Soto Betawi, rawon, sate
+- Harga: 20-35 SAR
+- **Tips:** Coba sate ayamnya
+
+### 3. RM Simpang Raya
+**Lokasi:** Central Madinah
+**Jam Buka:** 10:00-22:00
+- Menu: Masakan Padang
+- Dendeng balado, gulai otak
+- Sambal hijau fresh
+- Harga: 25-40 SAR
+
+### 4. Kedai Aceh Madinah
+**Lokasi:** Prince Sultan Road
+**Jam Buka:** 12:00-midnight
+- Menu: Mie Aceh, nasi goreng Aceh
+- Martabak, roti cane
+- Harga: 20-30 SAR
+- Buka sampai malam
+
+### 5. Sate Madura "Pak Haji"
+**Lokasi:** Sekitar Baqi
+**Jam Buka:** 17:00-23:00
+- Menu: Sate ayam, sate kambing
+- Bumbu kacang homemade
+- Harga: 20-30 SAR
+- **Favorit:** Sate campur + lontong
+
+### 6. Warung Jawa Timur
+**Lokasi:** Area Uhud
+**Jam Buka:** 10:00-21:00
+- Menu: Rawon, soto, rujak cingur
+- Authentic rasa Surabaya
+- Harga: 20-30 SAR
+- **Tips:** Pesan rawon + tempe bacem
+
+## Makanan Halal Lainnya (Selera Indonesia)
+
+### 7. Al Baik - Ayam Goreng
+**Lokasi:** Banyak cabang
+- Mirip KFC tapi lebih enak
+- Favorit orang Indonesia
+- Harga: 15-25 SAR
+- Wajib coba sekali!
+
+### 8. Shawarma ala Indonesia
+**Lokasi:** Jarwal area
+- Shawarma besar porsi Indonesia
+- Bisa request kurangi bawang
+- Harga: 8-15 SAR
+
+### 9. Nasi Bukhari/Kabsa
+**Lokasi:** Restoran lokal mana saja
+- Nasi Arab mirip nasi kebuli
+- Rasanya cocok lidah Indonesia
+- Harga: 20-35 SAR
+- **Tips:** Minta sambal tambahan
+
+## Tips Makan Indonesia di Madinah
+
+1. **Lebih banyak pilihan** dari Makkah
+2. **Area Quba & King Fahd Road** - Pusat kuliner
+3. **Delivery available** - Banyak pakai Jahez/Hungerstation
+4. **Grup WhatsApp jamaah** - Sering share info tempat makan
+5. **Makan bersama** - Lebih hemat pesan porsi besar
+
+## Menu Favorit Jamaah Indonesia
+
+| Menu | Restoran | Harga |
+|------|----------|-------|
+| Rendang | Padang Al Minang | 35 SAR |
+| Mie Aceh | Kedai Aceh | 25 SAR |
+| Soto Ayam | Warung Nusantara | 20 SAR |
+| Sate Campur | Pak Haji | 25 SAR |
+| Al Baik | Al Baik | 18 SAR |
+| Ayam Penyet | Surabaya | 25 SAR |
+"""
+
+# Combine oleh-oleh dan makanan
+OLEH_OLEH = {
+    "makkah": OLEH_OLEH_MAKKAH,
+    "madinah": OLEH_OLEH_MADINAH,
+}
+
+MAKANAN_INDONESIA = {
+    "makkah": MAKANAN_INDONESIA_MAKKAH,
+    "madinah": MAKANAN_INDONESIA_MADINAH,
+}
+
+
+# =============================================================================
+# TIPS ZIARAH
+# =============================================================================
+
+TIPS_ZIARAH = """
 ## Tips Ziarah Hidden Gems
 
 1. **Sewa Mobil/Taksi** - Lebih efisien untuk keliling
