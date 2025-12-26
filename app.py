@@ -153,6 +153,25 @@ except ImportError:
     HAS_ANALYTICS = False
     def render_analytics_dashboard(): st.warning("⚠️ Fitur Analytics Dashboard belum tersedia")
 
+# User Auth & Management
+try:
+    from ui.pages.auth_page import (
+        render_auth_page,
+        render_login_widget,
+        render_user_badge,
+    )
+    from ui.pages.user_analytics import render_user_analytics_page
+    from services.user.user_service import get_current_user, is_logged_in
+    HAS_USER_MANAGEMENT = True
+except ImportError:
+    HAS_USER_MANAGEMENT = False
+    def render_auth_page(): st.warning("⚠️ Fitur User Management belum tersedia")
+    def render_login_widget(): pass
+    def render_user_badge(): pass
+    def render_user_analytics_page(): st.warning("⚠️ Fitur User Analytics belum tersedia")
+    def get_current_user(): return None
+    def is_logged_in(): return False
+
 # WhatsApp Integration
 try:
     from services.whatsapp import (
@@ -216,7 +235,9 @@ def init_session_state():
         
         # Authentication
         "user": None,
+        "user_role": None,
         "is_authenticated": False,
+        "auth_mode": "login",
         
         # Chat
         "chat_messages": [],
@@ -394,7 +415,12 @@ def render_sidebar():
         """, unsafe_allow_html=True)
         
         st.markdown("---")
-        
+
+        # User Login Widget
+        if HAS_USER_MANAGEMENT:
+            render_login_widget()
+            st.markdown("")
+
         # SOS Emergency Button (Always Visible)
         if HAS_SOS:
             if st.button("🆘 DARURAT / SOS", key="sos_sidebar_main", use_container_width=True, type="primary"):
@@ -436,14 +462,25 @@ def render_sidebar():
             ("📊", "Prediksi Keramaian", "crowd", HAS_CROWD_PREDICTION),
             ("📍", "Group Tracking", "tracking", HAS_TRACKING),
             ("🗓️", "AI Itinerary", "itinerary", HAS_ITINERARY),
-            ("📋", "Smart Checklist", "checklist", HAS_CHECKLIST),  # 🆕 NEW!
+            ("📋", "Smart Checklist", "checklist", HAS_CHECKLIST),
             ("🕋", "Manasik 3D", "manasik", HAS_MANASIK),
             ("🤲", "Doa & Dzikir", "doa", HAS_DOA_PLAYER),
             ("🔍", "Bandingkan Paket", "compare", HAS_COMPARISON),
             ("📱", "WhatsApp", "whatsapp", HAS_WHATSAPP),
             ("📈", "Analytics", "analytics", HAS_ANALYTICS),
+            ("👤", "Akun Saya", "auth", HAS_USER_MANAGEMENT),
             ("📲", "Install App", "install", HAS_PWA),
         ]
+
+        # Admin Features (only for logged in admin)
+        if HAS_USER_MANAGEMENT and is_logged_in():
+            user = get_current_user()
+            if user and user.role.value == "admin":
+                st.markdown("---")
+                st.markdown("### 🔐 Admin")
+                if st.button("👥 User Analytics", key="nav_user_analytics", use_container_width=True):
+                    st.session_state.current_page = "user_analytics"
+                    st.rerun()
         
         for icon, label, page_key, is_available in new_features:
             if is_available:
@@ -529,7 +566,7 @@ def render_page():
         except:
             pass
     
-    # 🆕 UPDATED: Added checklist page
+    # Page routing map
     page_map = {
         # Core pages
         "home": render_home_page,
@@ -538,10 +575,10 @@ def render_page():
         "umrah_mandiri": render_umrah_mandiri_page,
         "umrah_bareng": render_umrah_bareng_page,
         "booking": render_booking_page,
-        
+
         # New feature pages
         "itinerary": render_itinerary_builder_page,
-        "checklist": render_smart_checklist_page,  # 🆕 NEW!
+        "checklist": render_smart_checklist_page,
         "crowd": render_crowd_prediction_page,
         "sos": render_sos_page,
         "tracking": render_group_tracking_page,
@@ -551,6 +588,10 @@ def render_page():
         "whatsapp": render_whatsapp_settings,
         "doa": render_doa_player_page,
         "install": render_pwa_settings_page,
+
+        # User management pages
+        "auth": render_auth_page,
+        "user_analytics": render_user_analytics_page,
     }
     
     renderer = page_map.get(page, render_home_page)

@@ -12,12 +12,12 @@ from typing import Dict, Any
 # =============================================================================
 
 MAJOR = 7
-MINOR = 1
+MINOR = 2
 PATCH = 0
 RELEASE_TYPE = "stable"  # stable, beta, alpha, dev
 
 # Build info
-BUILD_DATE = "2024-12-26"
+BUILD_DATE = "2025-12-26"
 BUILD_NUMBER = 1
 
 # =============================================================================
@@ -75,6 +75,17 @@ APP_TAGLINE = "Platform Umrah Cerdas Indonesia"
 # =============================================================================
 
 CHANGELOG = [
+    {
+        "version": "7.2.0",
+        "date": "2025-12-26",
+        "changes": [
+            "User registration and login system",
+            "User access levels (Guest, Free, Premium, Partner, Admin)",
+            "User analytics dashboard for tracking potential customers",
+            "Database storage for user management",
+            "Profile management with Umrah preferences",
+        ]
+    },
     {
         "version": "7.1.0",
         "date": "2024-12-26",
