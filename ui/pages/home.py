@@ -1,17 +1,24 @@
 """
-LABBAIK AI v6.0 - Home Page (COMPLETE FIXED VERSION)
-====================================================
-Fixed: Aggressive database detection + debug widget
-All changes marked with # 🔧 FIX
+LABBAIK AI - Home Page
+======================
+Platform Umrah Cerdas Indonesia
 """
 
 import streamlit as st
 from datetime import datetime, date, timedelta
 import random
 import os
-import logging  # 🔧 FIX: Added logging
+import logging
 
-logger = logging.getLogger(__name__)  # 🔧 FIX: Added logger
+logger = logging.getLogger(__name__)
+
+# Import dynamic version
+try:
+    from core.version import get_display_version, APP_VERSION
+except ImportError:
+    def get_display_version():
+        return "v7.1.0"
+    APP_VERSION = "7.1.0"
 
 # =============================================================================
 # VISITOR ANALYTICS - AGGRESSIVE DATABASE DETECTION
@@ -681,13 +688,13 @@ def render_hero_section():
     """, unsafe_allow_html=True)
     
     # Hero content
-    st.markdown("""
+    st.markdown(f"""
     <div class="hero-section-v6">
         <div class="arabic-calligraphy-v6">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</div>
         <div class="brand-name-v6">L A B B A I K</div>
         <div class="tagline-v6">Panggilan-Nya, Langkahmu</div>
         <div class="subtitle-v6">Platform Perencanaan Umrah AI #1 Indonesia</div>
-        <div class="version-badge-v6">v6.0.0 - Super Boom Edition</div>
+        <div class="version-badge-v6">{get_display_version()} - Platform Umrah Cerdas</div>
     </div>
     """, unsafe_allow_html=True)
     

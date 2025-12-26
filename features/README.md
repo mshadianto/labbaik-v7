@@ -1,8 +1,8 @@
-# LABBAIK AI v6.0 - Enhanced Features Package
+# LABBAIK AI - Enhanced Features Package
 
-## 🎯 Inspired by PilgrimPal & Leading Hajj/Umrah Apps
+## 🎯 Advanced Features for Umrah Planning
 
-Package ini berisi fitur-fitur baru yang terinspirasi dari PilgrimPal dan app-app terbaik untuk jamaah Hajj/Umrah, dioptimasi untuk Streamlit.
+Package ini berisi fitur-fitur canggih untuk membantu jamaah merencanakan perjalanan Umrah, dioptimasi untuk Streamlit.
 
 ---
 
@@ -235,13 +235,12 @@ Optional for enhanced 3D:
 
 ## 🤝 Credits
 
-Features inspired by:
-- PilgrimPal (pilgrimpal.net)
-- Nusuk (nusuk.sa)
-- PilgrimApp (pilgrimapp.com)
-- HajjGuide.AI (hajjguide.ai)
+Features developed based on:
+- Official Ministry of Hajj and Umrah guidelines (Nusuk)
+- Indonesian PPIU best practices
+- User feedback from Indonesian jamaah
 
-Developed for LABBAIK AI by Claude (Anthropic).
+Developed for LABBAIK AI by MS Hadianto with Claude (Anthropic).
 
 ---
 
