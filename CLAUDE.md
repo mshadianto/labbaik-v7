@@ -91,6 +91,25 @@ service = get_cost_integration_service()
 price = service.get_hotel_price("Makkah", star_rating=4)
 ```
 
+### Umrah Crawler (`umrah-crawler/`)
+
+Separate FastAPI backend for data crawling with job queue:
+
+```bash
+# Run API server
+cd umrah-crawler && uvicorn app.main:app --reload
+
+# Run job scheduler
+python -m app.jobs
+```
+
+**API Endpoints:**
+- `GET /search_hotels` - Search hotels by city/dates
+- `GET /hotel/{id}/offers` - Get offers for a hotel
+- `GET /transport/makkah-madinah` - Transport options
+
+**Database Tables:** `hotels_master`, `offers`, `provider_hotel_map`, `transport_schedule`, `crawl_jobs`
+
 ### Database
 
 PostgreSQL with connection pooling via `DatabaseConnection` singleton. The `BaseRepository` class provides CRUD operations. Key repositories:
