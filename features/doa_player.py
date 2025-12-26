@@ -18,6 +18,16 @@ from dataclasses import dataclass
 from enum import Enum
 import json
 import base64
+import io
+import os
+import tempfile
+
+# Try to import gTTS for audio generation
+try:
+    from gtts import gTTS
+    HAS_GTTS = True
+except ImportError:
+    HAS_GTTS = False
 
 # =============================================================================
 # DOA DATABASE
@@ -514,39 +524,119 @@ TTS_HTML_TEMPLATE = AUDIO_PLAYER_HTML
 
 
 # =============================================================================
+# AUDIO GENERATION
+# =============================================================================
+
+@st.cache_data(ttl=3600)
+def generate_audio(text: str, lang: str = "ar") -> bytes:
+    """Generate audio from text using gTTS."""
+    if not HAS_GTTS:
+        return None
+
+    try:
+        tts = gTTS(text=text, lang=lang, slow=True)
+        audio_buffer = io.BytesIO()
+        tts.write_to_fp(audio_buffer)
+        audio_buffer.seek(0)
+        return audio_buffer.read()
+    except Exception as e:
+        st.error(f"Error generating audio: {e}")
+        return None
+
+
+def get_audio_player_html(audio_base64: str, doa_id: str) -> str:
+    """Generate HTML for custom audio player."""
+    return f"""
+    <div style="background: rgba(212, 175, 55, 0.1); padding: 1rem; border-radius: 15px; margin: 1rem 0;">
+        <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <audio id="audio-{doa_id}" style="display: none;">
+                <source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3">
+            </audio>
+
+            <button onclick="document.getElementById('audio-{doa_id}').play()"
+                    style="background: #d4af37; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 1.5rem;">
+                ▶️
+            </button>
+            <button onclick="document.getElementById('audio-{doa_id}').pause()"
+                    style="background: #333; border: 1px solid #d4af37; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
+                ⏸️
+            </button>
+            <button onclick="var a=document.getElementById('audio-{doa_id}'); a.pause(); a.currentTime=0;"
+                    style="background: #333; border: 1px solid #d4af37; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
+                ⏹️
+            </button>
+
+            <select onchange="document.getElementById('audio-{doa_id}').playbackRate=this.value"
+                    style="background: #333; color: white; border: 1px solid #d4af37; padding: 5px 10px; border-radius: 8px;">
+                <option value="0.5">0.5x Lambat</option>
+                <option value="0.75" selected>0.75x Normal</option>
+                <option value="1.0">1.0x Cepat</option>
+            </select>
+
+            <span style="color: #888; font-size: 0.8rem;">🔊 Audio Ready</span>
+        </div>
+    </div>
+    """
+
+
+# =============================================================================
 # RENDER FUNCTIONS
 # =============================================================================
 
 def render_doa_card(doa: Doa, show_audio: bool = True, enhanced: bool = True):
     """Render a single doa card with audio player."""
 
-    wajib_badge = ""
-    if doa.is_wajib:
-        wajib_badge = '<span style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 5px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">⚠️ WAJIB</span>'
+    with st.container():
+        # Header with name and badge
+        col1, col2 = st.columns([4, 1])
 
-    if enhanced and show_audio:
-        # Use enhanced HTML audio player
-        html = AUDIO_PLAYER_HTML.format(
-            doa_id=doa.id.replace("-", "_"),
-            name=doa.name,
-            category=doa.category.value.title(),
-            when_to_read=doa.when_to_read,
-            arabic=doa.arabic,
-            latin=doa.latin,
-            translation=doa.translation,
-            wajib_badge=wajib_badge
-        )
-        st.components.v1.html(html, height=420)
+        with col1:
+            st.markdown(f"### 🤲 {doa.name}")
+            st.caption(f"📂 {doa.category.value.title()} • 🕐 {doa.when_to_read}")
 
-        # Bookmark button (Streamlit native)
+        with col2:
+            if doa.is_wajib:
+                st.error("WAJIB", icon="⚠️")
+
+        # Arabic text with beautiful styling
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 1.5rem; border-radius: 15px; margin: 1rem 0; border: 1px solid #d4af37;">
+            <div style="direction: rtl; text-align: right; font-family: 'Amiri', 'Traditional Arabic', serif; font-size: 2rem; line-height: 2.5; color: #d4af37;">
+                {doa.arabic}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Audio player using gTTS
+        if show_audio and HAS_GTTS:
+            with st.expander("🔊 Putar Audio", expanded=False):
+                # Generate audio
+                audio_data = generate_audio(doa.arabic, lang="ar")
+                if audio_data:
+                    st.audio(audio_data, format="audio/mp3")
+                    st.caption("💡 Klik tombol play untuk mendengarkan bacaan doa")
+                else:
+                    st.warning("Audio tidak tersedia. Pastikan koneksi internet aktif.")
+        elif show_audio:
+            st.info("💡 Install gTTS untuk audio: `pip install gtts`")
+
+        # Latin transliteration
+        st.markdown(f"**Latin:** *{doa.latin}*")
+
+        # Translation
+        st.markdown(f"**Artinya:** {doa.translation}")
+
+        # Bookmark button
         bookmarks = st.session_state.get("doa_bookmarks", set())
         is_bookmarked = doa.id in bookmarks
 
-        col1, col2 = st.columns([1, 4])
+        col1, col2, col3 = st.columns([1, 1, 3])
+
         with col1:
             if st.button(
                 "❤️ Favorit" if is_bookmarked else "🤍 Simpan",
-                key=f"bookmark_{doa.id}"
+                key=f"bookmark_{doa.id}",
+                use_container_width=True
             ):
                 if is_bookmarked:
                     bookmarks.discard(doa.id)
@@ -556,61 +646,6 @@ def render_doa_card(doa: Doa, show_audio: bool = True, enhanced: bool = True):
                     st.toast("Ditambahkan ke favorit!")
                 st.session_state.doa_bookmarks = bookmarks
                 st.rerun()
-    else:
-        # Fallback to simple Streamlit components
-        with st.container():
-            col1, col2 = st.columns([3, 1])
-
-            with col1:
-                st.markdown(f"### {doa.name}")
-                st.caption(f"{doa.category.value.title()} • {doa.when_to_read}")
-
-            with col2:
-                if doa.is_wajib:
-                    st.error("WAJIB", icon="⚠️")
-
-            st.markdown(f"""
-            <div style="background: #0a0a0a; padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border: 1px solid #333;">
-                <div style="direction: rtl; text-align: right; font-family: 'Traditional Arabic', 'Amiri', serif; font-size: 1.8rem; line-height: 2.2; color: #d4af37;">
-                    {doa.arabic}
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-            st.markdown(f"*{doa.latin}*")
-            st.markdown(f"**Artinya:** {doa.translation}")
-
-            if show_audio:
-                col1, col2, col3 = st.columns([1, 1, 2])
-
-                with col1:
-                    if st.button("🔊 Play", key=f"play_{doa.id}"):
-                        st.components.v1.html(f"""
-                        <script>
-                            const text = `{doa.arabic}`;
-                            const utterance = new SpeechSynthesisUtterance(text);
-                            utterance.lang = 'ar-SA';
-                            utterance.rate = 0.7;
-                            window.speechSynthesis.speak(utterance);
-                        </script>
-                        """, height=0)
-                        st.toast("🔊 Memutar doa...", icon="🕋")
-
-                with col2:
-                    bookmarks = st.session_state.get("doa_bookmarks", set())
-                    is_bookmarked = doa.id in bookmarks
-
-                    if st.button(
-                        "❤️" if is_bookmarked else "🤍",
-                        key=f"bookmark_{doa.id}"
-                    ):
-                        if is_bookmarked:
-                            bookmarks.discard(doa.id)
-                            st.toast("Dihapus dari favorit")
-                        else:
-                            bookmarks.add(doa.id)
-                            st.toast("Ditambahkan ke favorit!")
-                        st.session_state.doa_bookmarks = bookmarks
 
         st.divider()
 
@@ -793,4 +828,6 @@ __all__ = [
     "render_doa_mini_widget",
     "render_voice_chat",
     "search_doa",
+    "generate_audio",
+    "HAS_GTTS",
 ]
