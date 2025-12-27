@@ -11,6 +11,7 @@ from app.providers.saptco import fetch_saptco_schedule
 from app.providers.amadeus import refresh_amadeus_offers
 from app.providers.xotelo import refresh_xotelo_prices
 from app.providers.makcorps import refresh_makcorps_prices
+from app.providers.agoda import refresh_agoda_snapshot, refresh_agoda_all_cities
 
 scheduler = AsyncIOScheduler(timezone="Asia/Jakarta")
 
@@ -59,6 +60,10 @@ async def dequeue_and_run(batch: int = 10):
                 await refresh_makcorps_prices(p)
             elif t == "offers_amadeus":
                 await refresh_amadeus_offers(p)
+            elif t == "agoda_snapshot":
+                await refresh_agoda_snapshot(p)
+            elif t == "agoda_all_cities":
+                await refresh_agoda_all_cities(p)
             else:
                 raise ValueError(f"unknown job type: {t}")
 
@@ -93,6 +98,10 @@ async def bootstrap_jobs():
     # Availability confirm (expensive) - 1x/day
     await enqueue_job("offers_amadeus", {"city": "MAKKAH", "days_ahead": 60})
     await enqueue_job("offers_amadeus", {"city": "MADINAH", "days_ahead": 60})
+
+    # Agoda snapshot - 1x/day for each city
+    await enqueue_job("agoda_snapshot", {"city": "MAKKAH", "days_ahead": 30})
+    await enqueue_job("agoda_snapshot", {"city": "MADINAH", "days_ahead": 30})
 
 
 def start_scheduler():
