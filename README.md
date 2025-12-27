@@ -209,12 +209,23 @@ WAHA_API_URL = "http://localhost:3000"
 WAHA_SESSION = "Labbaik"
 ```
 
-### Admin Credentials
+### Admin Setup
 
-| Field | Value |
-|-------|-------|
-| Email | `mshadianto.v1@gmail.com` |
-| Password | `Labbaik2025!` |
+Jalankan script untuk setup admin:
+
+```bash
+python scripts/init_admin.py
+```
+
+Atau set via environment variables:
+
+```toml
+# .streamlit/secrets.toml
+ADMIN_EMAIL = "your_email@example.com"
+ADMIN_PASSWORD = "your_secure_password"
+```
+
+> **Security Note:** Jangan commit credentials ke repository!
 
 ---
 
