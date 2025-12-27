@@ -1,5 +1,8 @@
 from fastapi import FastAPI, Query, HTTPException
 from datetime import date
+import os
+from typing import Optional
+
 from app.db import init_db, get_session, is_db_configured
 from app.crud import (
     search_hotels, get_hotel_offers, get_calendar, get_transport
@@ -7,6 +10,24 @@ from app.crud import (
 from app.jobs import bootstrap_jobs, dequeue_and_run, start_scheduler
 
 app = FastAPI(title="Umrah Hotel & Transport API")
+
+# =============================================================================
+# AMADEUS API (Optional - requires AMADEUS_CLIENT_ID/SECRET)
+# =============================================================================
+
+_amadeus_client = None
+
+
+def get_amadeus_client():
+    """Get or create Amadeus client (lazy initialization)."""
+    global _amadeus_client
+    if _amadeus_client is None:
+        if not os.getenv("AMADEUS_CLIENT_ID"):
+            return None
+        from app.amadeus.auth import AmadeusAuth
+        from app.amadeus.client import AmadeusClient
+        _amadeus_client = AmadeusClient(AmadeusAuth())
+    return _amadeus_client
 
 
 @app.on_event("startup")
@@ -83,3 +104,67 @@ async def api_run_jobs(batch: int = 10):
         raise HTTPException(status_code=503, detail="Database not configured")
     await dequeue_and_run(batch)
     return {"status": "processed", "batch_size": batch}
+
+
+# =============================================================================
+# AMADEUS DIRECT API ENDPOINTS
+# =============================================================================
+
+@app.get("/amadeus/hotels")
+async def amadeus_hotels(
+    city: str = Query(..., pattern="^(MAKKAH|MADINAH)$"),
+    checkin: date = Query(...),
+    checkout: date = Query(...),
+    adults: int = 2,
+    radius_km: int = 6,
+):
+    """
+    Search hotels via Amadeus API (direct, no DB).
+    Returns hotels sorted by distance to Haram/Nabawi.
+    """
+    client = get_amadeus_client()
+    if not client:
+        raise HTTPException(status_code=503, detail="Amadeus API not configured")
+
+    from app.amadeus.hotels import hotel_search_by_city
+    return await hotel_search_by_city(
+        client, city, str(checkin), str(checkout), adults=adults, radius_km=radius_km
+    )
+
+
+@app.get("/amadeus/flights")
+async def amadeus_flights(
+    origin: str = Query(..., description="Origin airport code (e.g., CGK, JKT)"),
+    dest: str = Query(..., description="Destination airport code (e.g., JED, MED)"),
+    depart: date = Query(...),
+    ret: Optional[date] = Query(None, description="Return date for round trip"),
+    adults: int = 2,
+    currency: str = "SAR",
+):
+    """
+    Search flights via Amadeus API.
+    """
+    client = get_amadeus_client()
+    if not client:
+        raise HTTPException(status_code=503, detail="Amadeus API not configured")
+
+    from app.amadeus.flights import flight_offers_search
+    return await flight_offers_search(
+        client, origin, dest, str(depart),
+        ret=str(ret) if ret else None,
+        adults=adults,
+        currency=currency,
+    )
+
+
+@app.get("/amadeus/status")
+async def amadeus_status():
+    """Check Amadeus API configuration status."""
+    client_id = os.getenv("AMADEUS_CLIENT_ID")
+    env = os.getenv("AMADEUS_ENV", "test")
+
+    return {
+        "configured": bool(client_id),
+        "environment": env,
+        "client_id_prefix": client_id[:8] + "..." if client_id else None,
+    }
