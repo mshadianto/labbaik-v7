@@ -122,6 +122,66 @@ class UserRepository:
 
             conn.commit()
 
+            # Auto-create admin from secrets
+            self._ensure_admin_exists()
+
+    def _ensure_admin_exists(self):
+        """Auto-create admin user from Streamlit secrets if not exists"""
+        import hashlib
+        import secrets as sec
+
+        try:
+            # Try to get admin credentials from Streamlit secrets
+            admin_email = None
+            admin_password = None
+            admin_name = "Admin"
+
+            if hasattr(st, 'secrets'):
+                admin_email = st.secrets.get("ADMIN_EMAIL")
+                admin_password = st.secrets.get("ADMIN_PASSWORD")
+                admin_name = st.secrets.get("ADMIN_NAME", "Admin")
+
+            # Also check environment variables
+            if not admin_email:
+                admin_email = os.environ.get("ADMIN_EMAIL")
+            if not admin_password:
+                admin_password = os.environ.get("ADMIN_PASSWORD")
+
+            if not admin_email or not admin_password:
+                return  # No admin credentials configured
+
+            admin_email = admin_email.lower().strip()
+
+            # Check if admin already exists
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT id FROM users WHERE email = ?", (admin_email,))
+                if cursor.fetchone():
+                    return  # Admin already exists
+
+                # Hash password
+                salt = sec.token_hex(16)
+                hash_obj = hashlib.pbkdf2_hmac(
+                    'sha256',
+                    admin_password.encode('utf-8'),
+                    salt.encode('utf-8'),
+                    100000
+                )
+                password_hash = f"{salt}${hash_obj.hex()}"
+
+                # Create admin user
+                now = datetime.now().isoformat()
+                cursor.execute("""
+                    INSERT INTO users (email, name, password_hash, role, status, created_at, updated_at, login_count, source)
+                    VALUES (?, ?, ?, 'admin', 'active', ?, ?, 0, 'system')
+                """, (admin_email, admin_name, password_hash, now, now))
+                conn.commit()
+                print(f"[AUTO] Admin user created: {admin_email}")
+
+        except Exception as e:
+            # Silently fail - don't break app startup
+            print(f"[WARN] Auto-admin creation failed: {e}")
+
     def _row_to_user(self, row: sqlite3.Row) -> User:
         """Convert database row to User object"""
         return User(
