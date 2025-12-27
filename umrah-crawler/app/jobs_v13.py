@@ -50,6 +50,9 @@ JOB_TYPES = {
     "transport_haramain_v13": "Haramain train schedule (JSON-first)",
     "transport_saptco_v13": "SAPTCO bus schedule (JSON-first)",
 
+    # Transport (V1.3 - Portlet/Real API)
+    "transport_haramain_portlet": "Haramain train via Liferay portlet (REAL)",
+
     # FX (V1.3)
     "fx_ecb_refresh": "ECB exchange rate refresh",
 
@@ -190,6 +193,51 @@ async def run_job(job_type: str, payload: dict) -> dict:
         total_rows = sum(r.rows.__len__() for r in results.values())
         write_metric("HARAMAIN", "transport_rows", float(total_rows))
         return {"routes": len(results), "total_rows": total_rows}
+
+    # V1.3 Transport (Portlet - REAL API)
+    elif job_type == "transport_haramain_portlet":
+        from datetime import date
+        from app.providers.haramain_portlet import fetch_haramain_portlet
+
+        from_city = payload.get("from_city", "MAKKAH")
+        to_city = payload.get("to_city", "MADINAH")
+        days_ahead = payload.get("days_ahead", 7)
+        cookies = payload.get("cookies")
+
+        total_trips = 0
+        results_summary = []
+
+        # Fetch for multiple dates
+        for d in [1, 3, 7, 14][:max(1, min(days_ahead, 4))]:
+            target_date = date.today() + timedelta(days=d)
+            result = await fetch_haramain_portlet(
+                from_city=from_city,
+                to_city=to_city,
+                departure_date=target_date,
+                cookies=cookies
+            )
+
+            if result.success and result.trips:
+                total_trips += len(result.trips)
+                results_summary.append({
+                    "date": target_date.isoformat(),
+                    "trips": len(result.trips),
+                    "status": "OK"
+                })
+            else:
+                results_summary.append({
+                    "date": target_date.isoformat(),
+                    "trips": 0,
+                    "status": result.error or "NO_DATA",
+                    "raw_preview": result.raw_response[:200] if result.raw_response else None
+                })
+
+        write_metric("HARAMAIN_PORTLET", "transport_trips", float(total_trips))
+        return {
+            "total_trips": total_trips,
+            "dates_fetched": len(results_summary),
+            "results": results_summary
+        }
 
     elif job_type == "transport_saptco_v13":
         results = await fetch_saptco_all()
