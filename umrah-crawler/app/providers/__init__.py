@@ -1,6 +1,6 @@
 """
-LABBAIK AI - Data Providers V1.3
-================================
+LABBAIK AI - Data Providers V1.3.1
+==================================
 Hotel, transport, and FX data providers.
 """
 
@@ -10,6 +10,15 @@ from app.providers.xotelo import refresh_xotelo_prices
 from app.providers.makcorps import refresh_makcorps_prices
 from app.providers.haramain import fetch_haramain_timetable
 from app.providers.saptco import fetch_saptco_schedule
+
+# V1.3.1 Agoda (RapidAPI)
+from app.providers.agoda import (
+    fetch_agoda_hotels,
+    refresh_agoda_snapshot,
+    refresh_agoda_all_cities,
+    AgodaHotel,
+    AGODA_CITY_IDS,
+)
 
 # V1.3 Transport (JSON-first)
 from app.providers.transport_engine import (
@@ -45,6 +54,13 @@ __all__ = [
     "refresh_makcorps_prices",
     "fetch_haramain_timetable",
     "fetch_saptco_schedule",
+
+    # V1.3.1 Agoda
+    "fetch_agoda_hotels",
+    "refresh_agoda_snapshot",
+    "refresh_agoda_all_cities",
+    "AgodaHotel",
+    "AGODA_CITY_IDS",
 
     # V1.3 Transport Engine
     "TransportEngine",
