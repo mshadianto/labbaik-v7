@@ -1,0 +1,108 @@
+# =============================================================================
+# LABBAIK AI v7.5 - Price Aggregation Configuration
+# =============================================================================
+# Configuration for real-time price aggregation system
+
+# Feature toggles
+enabled: true
+enable_apis: true
+enable_scrapers: true
+enable_partner_feeds: true
+
+# API Sources
+apis:
+  amadeus:
+    enabled: true
+    cache_ttl_hours: 2
+  xotelo:
+    enabled: true
+    cache_ttl_hours: 1
+  makcorps:
+    enabled: true
+    cache_ttl_hours: 2
+
+# OTA Scrapers
+scrapers:
+  traveloka:
+    enabled: true
+    rate_limit_per_minute: 5
+    rate_limit_per_hour: 60
+    min_delay_seconds: 3
+  tiket:
+    enabled: true
+    rate_limit_per_minute: 5
+    rate_limit_per_hour: 60
+    min_delay_seconds: 3
+  pegipegi:
+    enabled: false  # Not implemented yet
+    rate_limit_per_minute: 5
+    rate_limit_per_hour: 60
+    min_delay_seconds: 3
+
+# Partner Price Feeds
+partner_feeds:
+  enabled: true
+  require_approval: true
+  auto_approve_trusted: false
+  max_feeds_per_partner: 50
+  price_validation:
+    min_price_idr: 10000000  # 10 juta
+    max_price_idr: 500000000  # 500 juta
+    min_duration_days: 5
+    max_duration_days: 45
+
+# Scheduler
+scheduler:
+  enabled: true
+  jobs:
+    api_refresh:
+      enabled: true
+      interval_hours: 2
+    ota_scraping:
+      enabled: true
+      interval_hours: 6
+    partner_sync:
+      enabled: true
+      interval_hours: 1
+    cache_cleanup:
+      enabled: true
+      interval_hours: 4
+    history_snapshot:
+      enabled: true
+      interval_hours: 4
+
+# Cache Settings
+cache:
+  memory:
+    enabled: true
+    ttl_seconds: 300  # 5 minutes
+    max_entries: 1000
+  source_specific:
+    amadeus_ttl_seconds: 7200    # 2 hours
+    xotelo_ttl_seconds: 3600     # 1 hour
+    makcorps_ttl_seconds: 7200   # 2 hours
+    traveloka_ttl_seconds: 21600 # 6 hours
+    tiket_ttl_seconds: 21600     # 6 hours
+    partner_ttl_seconds: 3600    # 1 hour
+    demo_ttl_seconds: 86400      # 24 hours
+
+# Deduplication Settings
+deduplication:
+  enabled: true
+  similarity_threshold: 0.85
+  keep_all_sources: true  # Keep one per source for same hotel
+
+# Price Normalization
+normalization:
+  default_currency: IDR
+  sar_to_idr_rate: 4250.0
+  normalize_names: true
+  normalize_cities: true
+  validate_star_ratings: true
+
+# Logging
+logging:
+  level: INFO
+  log_api_calls: true
+  log_scraper_calls: true
+  log_partner_submissions: true

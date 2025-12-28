@@ -228,6 +228,17 @@ except ImportError:
     def render_crm_broadcast_page(): st.warning("⚠️ CRM Broadcast belum tersedia")
     def render_crm_competitors_page(): st.warning("⚠️ CRM Competitors belum tersedia")
 
+# =============================================================================
+# v7.5 Price Aggregation System
+# =============================================================================
+try:
+    from ui.pages.price_comparison import render_price_comparison_page, render_best_prices_widget
+    HAS_PRICE_AGGREGATION = True
+except ImportError:
+    HAS_PRICE_AGGREGATION = False
+    def render_price_comparison_page(): st.warning("⚠️ Price Comparison belum tersedia")
+    def render_best_prices_widget(): pass
+
 # WhatsApp Integration
 try:
     from services.whatsapp import (
@@ -521,6 +532,7 @@ def render_sidebar():
         # Format: (icon, label, page_key, is_available, is_premium)
         new_features = [
             ("📊", "Prediksi Keramaian", "crowd", HAS_CROWD_PREDICTION, False),
+            ("💰", "Perbandingan Harga", "price_comparison", HAS_PRICE_AGGREGATION, False),  # v7.5
             ("📍", "Group Tracking", "tracking", HAS_TRACKING, True),  # Premium
             ("🗓️", "AI Itinerary", "itinerary", HAS_ITINERARY, True),  # Premium
             ("📋", "Smart Checklist", "checklist", HAS_CHECKLIST, False),
@@ -738,6 +750,9 @@ def render_page():
         "crm_quotes": render_crm_quotes_page,
         "crm_broadcast": render_crm_broadcast_page,
         "crm_competitors": render_crm_competitors_page,
+
+        # v7.5 Price Aggregation
+        "price_comparison": render_price_comparison_page,
     }
     
     renderer = page_map.get(page, render_home_page)
