@@ -179,34 +179,151 @@ def render_pricing_cards(data: dict):
 
 
 def render_comparison_table(data: dict):
-    """Render feature comparison table."""
+    """Render enhanced feature comparison table."""
     batches = data["batches"]
 
-    st.markdown("## Perbandingan Fitur")
+    st.markdown("""
+    <style>
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.95rem;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .comparison-table th {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: #d4af37;
+        padding: 1rem;
+        text-align: center;
+        font-weight: 600;
+        border: none;
+    }
+    .comparison-table th.highlight {
+        background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+        color: #1a1a2e;
+    }
+    .comparison-table td {
+        padding: 0.875rem 1rem;
+        text-align: center;
+        border-bottom: 1px solid #e0e0e0;
+        background: #fff;
+    }
+    .comparison-table tr:nth-child(even) td {
+        background: #f8f9fa;
+    }
+    .comparison-table tr:hover td {
+        background: #fff3cd;
+    }
+    .comparison-table td:first-child {
+        text-align: left;
+        font-weight: 500;
+        background: #f0f0f0 !important;
+        color: #333;
+    }
+    .comparison-table .feature-icon {
+        margin-right: 0.5rem;
+    }
+    .comparison-table .check {
+        color: #28a745;
+        font-weight: bold;
+    }
+    .comparison-table .cross {
+        color: #dc3545;
+    }
+    .comparison-table .highlight-cell {
+        background: #fff9e6 !important;
+        font-weight: 600;
+        color: #856404;
+    }
+    .comparison-table .gold-text {
+        color: #d4af37;
+        font-weight: 600;
+    }
+    .comparison-table .free-badge {
+        background: #28a745;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-    # Build comparison data
+    st.markdown("### Perbandingan Lengkap Antar Paket")
+
+    # Build enhanced comparison data with icons
     features = [
-        ("Setup Fee", [b.setup_fee_display for b in batches]),
-        ("Status", [b.status for b in batches]),
-        ("Durasi Status", [f"{b.status_duration_months} bulan" if b.status_duration_months else "Selamanya" for b in batches]),
-        ("Komisi", [b.commission_display for b in batches]),
-        ("Komisi Locked", ["Ya" if b.commission_locked else "Tidak" for b in batches]),
-        ("Tipe Setup", [b.setup_type_display for b in batches]),
+        ("💰", "Setup Fee", [
+            f"<span class='free-badge'>GRATIS</span>" if b.setup_fee == 0 else b.setup_fee_display
+            for b in batches
+        ]),
+        ("⭐", "Status Member", [b.status for b in batches]),
+        ("⏱️", "Durasi Status", [
+            "<span class='gold-text'>Selamanya</span>" if not b.status_duration_months else f"{b.status_duration_months} bulan"
+            for b in batches
+        ]),
+        ("📊", "Komisi Bagi Hasil", [
+            f"<span class='gold-text'>{b.commission_display}</span>" if b.commission_locked else b.commission_display
+            for b in batches
+        ]),
+        ("🔒", "Komisi Terlindungi", [
+            "<span class='check'>✓ Locked Selamanya</span>" if b.commission_locked else "<span class='cross'>✗</span>"
+            for b in batches
+        ]),
+        ("🛠️", "Tipe Onboarding", [b.setup_type_display for b in batches]),
+        ("👥", "Kuota Partner", [
+            f"<strong>{b.max_partners}</strong> partner" if b.max_partners else "Unlimited"
+            for b in batches
+        ]),
+        ("📞", "Support Level", [
+            "Priority 24/7" if b.setup_type == "white_glove" else "Jam Kerja" if idx < 2 else "Email"
+            for idx, b in enumerate(batches)
+        ]),
+        ("🎓", "Training", [
+            "1-on-1 Konsultasi" if b.setup_type == "white_glove" else "2 Sesi Online" if idx == 1 else "Video Tutorial"
+            for idx, b in enumerate(batches)
+        ]),
+        ("🚀", "Akses Fitur Beta", [
+            "<span class='check'>✓</span>" if b.setup_type == "white_glove" else "<span class='cross'>✗</span>"
+            for b in batches
+        ]),
     ]
 
-    # Create table
-    header = ["Fitur"] + [b.name for b in batches]
+    # Build HTML table
+    html = "<table class='comparison-table'>"
 
-    table_data = []
-    for feature_name, values in features:
-        row = [feature_name] + values
-        table_data.append(row)
+    # Header row
+    html += "<tr><th>Fitur</th>"
+    for idx, b in enumerate(batches):
+        highlight = "highlight" if b.highlight else ""
+        html += f"<th class='{highlight}'>{b.name}</th>"
+    html += "</tr>"
 
-    # Display as markdown table
-    st.markdown("| " + " | ".join(header) + " |")
-    st.markdown("| " + " | ".join(["---"] * len(header)) + " |")
-    for row in table_data:
-        st.markdown("| " + " | ".join(row) + " |")
+    # Data rows
+    for icon, feature_name, values in features:
+        html += "<tr>"
+        html += f"<td><span class='feature-icon'>{icon}</span>{feature_name}</td>"
+        for idx, val in enumerate(values):
+            cell_class = "highlight-cell" if batches[idx].highlight else ""
+            html += f"<td class='{cell_class}'>{val}</td>"
+        html += "</tr>"
+
+    html += "</table>"
+
+    st.markdown(html, unsafe_allow_html=True)
+
+    # Legend
+    st.markdown("""
+    <div style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; font-size: 0.85rem;">
+        <strong>Keterangan:</strong><br>
+        <span style="color: #28a745;">✓</span> = Tersedia &nbsp;&nbsp;
+        <span style="color: #dc3545;">✗</span> = Tidak Tersedia &nbsp;&nbsp;
+        <span style="color: #d4af37;">●</span> = Keunggulan Batch 1
+    </div>
+    """, unsafe_allow_html=True)
 
 
 def render_faq_section(faq_list: list):
@@ -222,47 +339,123 @@ def render_faq_section(faq_list: list):
 
 
 def render_contact_section(contact: dict):
-    """Render contact/CTA section."""
-    st.markdown("## Hubungi Kami")
+    """Render enhanced contact/CTA section."""
 
-    col1, col2, col3 = st.columns(3)
+    st.markdown("""
+    <style>
+    .contact-section {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        border-radius: 16px;
+        padding: 2rem;
+        margin: 1rem 0;
+    }
+    .contact-title {
+        color: #d4af37;
+        font-size: 1.75rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+    .contact-subtitle {
+        color: #aaa;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .contact-cards {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .contact-card {
+        flex: 1;
+        min-width: 200px;
+        max-width: 280px;
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        text-decoration: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .contact-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .contact-card-wa {
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    }
+    .contact-card-email {
+        background: linear-gradient(135deg, #EA4335 0%, #C5221F 100%);
+    }
+    .contact-card-calendly {
+        background: linear-gradient(135deg, #006BFF 0%, #0052CC 100%);
+    }
+    .contact-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.75rem;
+    }
+    .contact-label {
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+    }
+    .contact-value {
+        color: rgba(255,255,255,0.9);
+        font-size: 0.95rem;
+    }
+    .contact-cta {
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .contact-cta-text {
+        color: #888;
+        font-size: 0.9rem;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-    with col1:
-        wa = contact.get("whatsapp", "")
-        if wa:
-            wa_link = f"https://wa.me/{wa.replace('+', '')}"
-            st.markdown(f"""
-            <a href="{wa_link}" target="_blank" style="text-decoration: none;">
-                <div style="background: #25D366; color: white; padding: 1rem; border-radius: 10px; text-align: center;">
-                    <strong>WhatsApp</strong><br>
-                    {wa}
-                </div>
+    wa = contact.get("whatsapp", "")
+    wa_display = contact.get("whatsapp_display", wa)
+    email = contact.get("email", "")
+    calendly = contact.get("calendly", "")
+
+    wa_link = f"https://wa.me/{wa.replace('+', '').replace('-', '')}" if wa else "#"
+
+    html = f"""
+    <div class="contact-section">
+        <div class="contact-title">Siap Bergabung?</div>
+        <div class="contact-subtitle">Hubungi kami untuk konsultasi gratis dan mulai perjalanan digital Anda</div>
+
+        <div class="contact-cards">
+            <a href="{wa_link}" target="_blank" class="contact-card contact-card-wa">
+                <div class="contact-icon">📱</div>
+                <div class="contact-label">WhatsApp</div>
+                <div class="contact-value">{wa_display}</div>
             </a>
-            """, unsafe_allow_html=True)
 
-    with col2:
-        email = contact.get("email", "")
-        if email:
-            st.markdown(f"""
-            <a href="mailto:{email}" style="text-decoration: none;">
-                <div style="background: #EA4335; color: white; padding: 1rem; border-radius: 10px; text-align: center;">
-                    <strong>Email</strong><br>
-                    {email}
-                </div>
+            <a href="mailto:{email}" class="contact-card contact-card-email">
+                <div class="contact-icon">📧</div>
+                <div class="contact-label">Email</div>
+                <div class="contact-value">{email}</div>
             </a>
-            """, unsafe_allow_html=True)
 
-    with col3:
-        calendly = contact.get("calendly", "")
-        if calendly:
-            st.markdown(f"""
-            <a href="{calendly}" target="_blank" style="text-decoration: none;">
-                <div style="background: #006BFF; color: white; padding: 1rem; border-radius: 10px; text-align: center;">
-                    <strong>Jadwalkan Meeting</strong><br>
-                    Calendly
-                </div>
+            <a href="{calendly}" target="_blank" class="contact-card contact-card-calendly">
+                <div class="contact-icon">📅</div>
+                <div class="contact-label">Jadwalkan Meeting</div>
+                <div class="contact-value">Pilih waktu yang cocok</div>
             </a>
-            """, unsafe_allow_html=True)
+        </div>
+
+        <div class="contact-cta">
+            <div class="contact-cta-text">
+                Respon cepat dalam waktu 1x24 jam kerja
+            </div>
+        </div>
+    </div>
+    """
+
+    st.markdown(html, unsafe_allow_html=True)
 
 
 def render_registration_form(data: dict):
