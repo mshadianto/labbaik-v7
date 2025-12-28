@@ -1185,24 +1185,25 @@ def render_quick_chat():
 
 
 def render_partners():
-    """Render partners/trust badges section."""
-    
+    """Render technology & compliance badges section."""
+
     st.markdown("---")
-    st.markdown("## 🤝 Dipercaya Oleh")
-    
-    partners = [
-        "✈️ Garuda Indonesia",
-        "🏨 Accor Hotels",
-        "🕋 Saudi Airlines",
-        "🏦 Bank Syariah Indonesia",
-        "📋 Kemenag RI",
+    st.markdown("## 🛡️ Teknologi & Keamanan")
+
+    badges = [
+        ("🤖", "AI-Powered", "Groq & OpenAI"),
+        ("🔒", "Data Aman", "Enkripsi End-to-End"),
+        ("📱", "Multi-Platform", "Web & Mobile Ready"),
+        ("🇮🇩", "Server Indonesia", "Latensi Rendah"),
+        ("✅", "Sesuai Syariah", "Panduan Kemenag"),
     ]
-    
+
     cols = st.columns(5)
-    
-    for col, partner in zip(cols, partners):
+
+    for col, (icon, title, desc) in zip(cols, badges):
         with col:
-            st.markdown(f"**{partner}**")
+            st.markdown(f"**{icon} {title}**")
+            st.caption(desc)
 
 
 def render_newsletter():
