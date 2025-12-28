@@ -50,20 +50,33 @@ except ImportError:
 # =============================================================================
 
 SOURCE_BADGES = {
+    # API Sources
     "amadeus": ("🌐 API", "#4CAF50"),
     "xotelo": ("🌐 API", "#4CAF50"),
     "makcorps": ("🌐 API", "#4CAF50"),
+    # n8n Price Intelligence Sources
+    "booking": ("🏨 n8n", "#673AB7"),
+    "aviationstack": ("✈️ n8n", "#673AB7"),
+    "cheria-travel": ("🤝 Travel", "#FF9800"),
+    "alhijaz": ("🤝 Travel", "#FF9800"),
+    "patuna": ("🤝 Travel", "#FF9800"),
+    "maktour": ("🤝 Travel", "#FF9800"),
+    "arminareka": ("🤝 Travel", "#FF9800"),
+    # OTA Sources
     "traveloka": ("🛒 OTA", "#2196F3"),
     "tiket": ("🛒 OTA", "#2196F3"),
     "pegipegi": ("🛒 OTA", "#2196F3"),
+    # Partner & Demo
     "partner": ("🤝 Partner", "#FF9800"),
     "demo": ("📋 Demo", "#9E9E9E"),
+    "n8n": ("⚡ n8n", "#673AB7"),
 }
 
 CITIES = ["Semua Kota", "Makkah", "Madinah"]
 OFFER_TYPES = {
     "Semua": None,
     "Hotel": "hotel",
+    "Penerbangan": "flight",
     "Paket Umrah": "package",
 }
 SORT_OPTIONS = {
@@ -153,16 +166,22 @@ def render_price_comparison_page():
         # Source filter
         st.markdown("**Sumber Data**")
         use_api = st.checkbox("API (Amadeus, Xotelo)", value=True)
+        use_n8n = st.checkbox("n8n Price Intelligence", value=True)
         use_ota = st.checkbox("OTA (Traveloka, Tiket)", value=True)
-        use_partner = st.checkbox("Partner", value=True)
+        use_partner = st.checkbox("Travel Agent & Partner", value=True)
 
         sources = []
         if use_api:
             sources.extend(["amadeus", "xotelo", "makcorps"])
+        if use_n8n:
+            sources.extend(["booking", "aviationstack", "n8n"])
         if use_ota:
             sources.extend(["traveloka", "tiket", "pegipegi"])
         if use_partner:
-            sources.append("partner")
+            sources.extend([
+                "partner", "cheria-travel", "alhijaz",
+                "patuna", "maktour", "arminareka"
+            ])
 
         if not sources:
             sources = None  # Show all
@@ -260,17 +279,24 @@ def render_offers_table(offers: List[AggregatedOffer], offer_type: str = None):
     if offer_type is None:
         # Use string comparison for safety
         hotels = [o for o in offers if getattr(o.offer_type, 'value', o.offer_type) == "hotel"]
+        flights = [o for o in offers if getattr(o.offer_type, 'value', o.offer_type) == "flight"]
         packages = [o for o in offers if getattr(o.offer_type, 'value', o.offer_type) == "package"]
 
         if hotels:
             st.subheader("🏨 Hotel")
             render_hotel_cards(hotels, best_price)
 
+        if flights:
+            st.subheader("✈️ Penerbangan")
+            render_flight_cards(flights, best_price)
+
         if packages:
             st.subheader("📦 Paket Umrah")
             render_package_cards(packages, best_price)
     elif offer_type == "hotel":
         render_hotel_cards(offers, best_price)
+    elif offer_type == "flight":
+        render_flight_cards(offers, best_price)
     else:
         render_package_cards(offers, best_price)
 
@@ -328,6 +354,63 @@ def render_hotel_cards(hotels: List[AggregatedOffer], best_price: float):
                     st.error("Sold Out")
                 elif hotel.rooms_left and hotel.rooms_left < 5:
                     st.warning(f"Sisa {hotel.rooms_left} kamar!")
+
+            st.divider()
+
+
+def render_flight_cards(flights: List[AggregatedOffer], best_price: float):
+    """Render flight offer cards."""
+    for idx, flight in enumerate(flights):
+        is_best = flight.price_idr == best_price and best_price > 0
+
+        with st.container():
+            col1, col2, col3 = st.columns([3, 2, 2])
+
+            with col1:
+                # Flight name (airline + route)
+                st.markdown(f"**{flight.name}**")
+
+                # Route details
+                details = []
+                if flight.departure_city:
+                    details.append(f"🛫 dari {flight.departure_city}")
+                if flight.city:
+                    details.append(f"🛬 ke {flight.city}")
+                if flight.airline:
+                    details.append(f"✈️ {flight.airline}")
+
+                st.caption(" | ".join(details))
+
+                # Check-in date
+                if flight.check_in_date:
+                    st.caption(f"📅 {flight.check_in_date}")
+
+            with col2:
+                # Source badge
+                badge_label, badge_color = get_source_badge(flight.source_name)
+                st.markdown(
+                    f"<span style='background-color:{badge_color};color:white;"
+                    f"padding:2px 8px;border-radius:4px;font-size:11px;'>{badge_label}</span>",
+                    unsafe_allow_html=True
+                )
+
+                # Inclusions (Direct/Transit, Class)
+                if flight.inclusions:
+                    inclusions_text = ", ".join(flight.inclusions[:3])
+                    st.caption(f"✅ {inclusions_text}")
+
+            with col3:
+                # Price
+                price_display = format_price(flight.price_idr)
+                if is_best:
+                    st.markdown(f"### 🏆 {price_display}")
+                    st.caption("Harga Terbaik!")
+                else:
+                    st.markdown(f"### {price_display}")
+
+                # Availability
+                if not flight.is_available:
+                    st.error("Sold Out")
 
             st.divider()
 

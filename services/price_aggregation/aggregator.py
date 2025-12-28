@@ -16,6 +16,7 @@ from services.price_aggregation.models import (
 from services.price_aggregation.normalizer import PriceNormalizer, OfferDeduplicator
 from services.price_aggregation.cache_manager import get_price_cache, get_source_cache
 from services.price_aggregation.repository import get_aggregated_price_repository
+from services.price_aggregation.n8n_adapter import get_n8n_adapter
 
 logger = logging.getLogger(__name__)
 
@@ -26,20 +27,23 @@ class PriceAggregator:
 
     Sources:
     1. Existing APIs (Amadeus, Xotelo, MakCorps) via HybridUmrahDataManager
-    2. OTA Scrapers (Traveloka, Tiket, PegiPegi) - future
-    3. Partner Price Feeds - future
-    4. Demo Data (fallback)
+    2. n8n Price Intelligence (hotels, flights, packages from n8n workflow)
+    3. OTA Scrapers (Traveloka, Tiket, PegiPegi) - future
+    4. Partner Price Feeds
+    5. Database Cache (fallback)
     """
 
     def __init__(
         self,
         use_apis: bool = True,
+        use_n8n: bool = True,
         use_scrapers: bool = False,
         use_partner_feeds: bool = True,
         use_cache: bool = True,
         save_to_db: bool = True
     ):
         self.use_apis = use_apis
+        self.use_n8n = use_n8n
         self.use_scrapers = use_scrapers
         self.use_partner_feeds = use_partner_feeds
         self.use_cache = use_cache
@@ -56,6 +60,7 @@ class PriceAggregator:
         # Data manager will be set externally or created lazily
         self._data_manager = None
         self._scraper_manager = None
+        self._n8n_adapter = None
 
     @property
     def repository(self):
@@ -71,6 +76,13 @@ class PriceAggregator:
     def set_scraper_manager(self, manager):
         """Set the ScraperManager instance."""
         self._scraper_manager = manager
+
+    @property
+    def n8n_adapter(self):
+        """Lazy-load n8n adapter."""
+        if self._n8n_adapter is None:
+            self._n8n_adapter = get_n8n_adapter()
+        return self._n8n_adapter
 
     def aggregate(
         self,
@@ -143,7 +155,21 @@ class PriceAggregator:
                 logger.error(f"API fetch failed: {e}")
                 errors.append(f"API: {str(e)}")
 
-        # 2. Fetch from scrapers (future)
+        # 2. Fetch from n8n Price Intelligence
+        if self.use_n8n:
+            try:
+                n8n_offers, n8n_stats = self._fetch_from_n8n(
+                    city=city,
+                    offer_type=offer_type,
+                    min_stars=min_stars
+                )
+                all_offers.extend(n8n_offers)
+                source_stats.update(n8n_stats)
+            except Exception as e:
+                logger.error(f"n8n fetch failed: {e}")
+                errors.append(f"n8n: {str(e)}")
+
+        # 3. Fetch from OTA scrapers (future)
         if self.use_scrapers and self._scraper_manager:
             try:
                 scraper_offers, scraper_stats = self._fetch_from_scrapers(
@@ -344,6 +370,40 @@ class PriceAggregator:
         except Exception as e:
             logger.warning(f"Failed to convert hotel offer: {e}")
             return None
+
+    def _fetch_from_n8n(
+        self,
+        city: str = None,
+        offer_type: str = None,
+        min_stars: int = None
+    ) -> tuple[List[AggregatedOffer], Dict[str, int]]:
+        """
+        Fetch from n8n Price Intelligence tables.
+
+        Sources:
+        - prices_hotels: Hotel data from Booking.com simulation
+        - prices_flights: Flight data from AviationStack simulation
+        - prices_packages: Package data from travel agents
+        """
+        offers = []
+        stats = {}
+
+        try:
+            n8n_offers, n8n_stats = self.n8n_adapter.fetch_all(
+                city=city,
+                offer_type=offer_type,
+                min_stars=min_stars,
+                limit=50
+            )
+            offers.extend(n8n_offers)
+            stats.update(n8n_stats)
+
+            logger.info(f"Fetched {len(offers)} offers from n8n Price Intelligence")
+
+        except Exception as e:
+            logger.error(f"Failed to fetch from n8n: {e}")
+
+        return offers, stats
 
     def _fetch_from_scrapers(
         self,

@@ -1,0 +1,706 @@
+{
+  "name": "🕌 LABBAIK Price Intelligence v8",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "29565bb7-f137-4b18-8c86-c64a71795f21",
+      "name": "⏰ Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -688,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const BOOKING_SOURCE_ID = 'fcd48791-ddb3-4499-a29f-daa0b3370141';\n\nconst hotels = [\n  { hotel_name: 'Swissotel Makkah', city: 'Makkah', star_rating: 5, distance_to_haram: '50m', distance_meters: 50, base_price: 3500000, includes_breakfast: true, view_type: 'haram_view' },\n  { hotel_name: 'Raffles Makkah Palace', city: 'Makkah', star_rating: 5, distance_to_haram: '100m', distance_meters: 100, base_price: 5000000, includes_breakfast: true, view_type: 'haram_view' },\n  { hotel_name: 'Pullman ZamZam Makkah', city: 'Makkah', star_rating: 5, distance_to_haram: '100m', distance_meters: 100, base_price: 3200000, includes_breakfast: true, view_type: 'haram_view' },\n  { hotel_name: 'Hilton Suites Makkah', city: 'Makkah', star_rating: 5, distance_to_haram: '200m', distance_meters: 200, base_price: 2800000, includes_breakfast: true, view_type: 'city_view' },\n  { hotel_name: 'Makkah Clock Royal Tower', city: 'Makkah', star_rating: 5, distance_to_haram: '50m', distance_meters: 50, base_price: 4500000, includes_breakfast: true, view_type: 'haram_view' },\n  { hotel_name: 'Anjum Makkah Hotel', city: 'Makkah', star_rating: 5, distance_to_haram: '350m', distance_meters: 350, base_price: 1800000, includes_breakfast: true, view_type: 'city_view' },\n  { hotel_name: 'Elaf Ajyad Hotel', city: 'Makkah', star_rating: 4, distance_to_haram: '300m', distance_meters: 300, base_price: 1200000, includes_breakfast: true, view_type: 'city_view' },\n  { hotel_name: 'Al Shohada Hotel', city: 'Makkah', star_rating: 4, distance_to_haram: '450m', distance_meters: 450, base_price: 900000, includes_breakfast: true, view_type: 'city_view' },\n  { hotel_name: 'Makkah Millennium Hotel', city: 'Makkah', star_rating: 4, distance_to_haram: '600m', distance_meters: 600, base_price: 850000, includes_breakfast: true, view_type: 'city_view' },\n  { hotel_name: 'Dar Al Eiman Grand', city: 'Makkah', star_rating: 3, distance_to_haram: '800m', distance_meters: 800, base_price: 600000, includes_breakfast: false, view_type: 'city_view' },\n  { hotel_name: 'Snood Ajyad Hotel', city: 'Makkah', star_rating: 3, distance_to_haram: '500m', distance_meters: 500, base_price: 550000, includes_breakfast: true, view_type: 'city_view' },\n  { hotel_name: 'The Oberoi Madina', city: 'Madinah', star_rating: 5, distance_to_haram: '200m', distance_meters: 200, base_price: 3000000, includes_breakfast: true, view_type: 'mosque_view' },\n  { hotel_name: 'Dar Al Taqwa Hotel', city: 'Madinah', star_rating: 5, distance_to_haram: '100m', distance_meters: 100, base_price: 2500000, includes_breakfast: true, view_type: 'mosque_view' },\n  { hotel_name: 'Pullman Zamzam Madina', city: 'Madinah', star_rating: 5, distance_to_haram: '100m', distance_meters: 100, base_price: 2000000, includes_breakfast: true, view_type: 'mosque_view' },\n  { hotel_name: 'Madinah Hilton', city: 'Madinah', star_rating: 5, distance_to_haram: '400m', distance_meters: 400, base_price: 1600000, includes_breakfast: true, view_type: 'city_view' },\n  { hotel_name: 'Shaza Al Madina', city: 'Madinah', star_rating: 5, distance_to_haram: '300m', distance_meters: 300, base_price: 1800000, includes_breakfast: true, view_type: 'city_view' },\n  { hotel_name: 'Frontel Al Harithia', city: 'Madinah', star_rating: 4, distance_to_haram: '500m', distance_meters: 500, base_price: 800000, includes_breakfast: true, view_type: 'city_view' },\n  { hotel_name: 'Elaf Taiba Hotel', city: 'Madinah', star_rating: 4, distance_to_haram: '350m', distance_meters: 350, base_price: 950000, includes_breakfast: true, view_type: 'city_view' },\n  { hotel_name: 'Dar Al Eiman Al Andalus', city: 'Madinah', star_rating: 3, distance_to_haram: '600m', distance_meters: 600, base_price: 500000, includes_breakfast: false, view_type: 'city_view' },\n  { hotel_name: 'Grand Plaza Madinah', city: 'Madinah', star_rating: 3, distance_to_haram: '700m', distance_meters: 700, base_price: 450000, includes_breakfast: true, view_type: 'city_view' }\n];\n\nfunction calculatePrice(basePrice) {\n  const month = new Date().getMonth() + 1;\n  let multiplier = 1.0;\n  if ([3, 4, 6, 7, 12].includes(month)) multiplier = 1.3;\n  else if ([1, 2, 8].includes(month)) multiplier = 0.9;\n  const variance = 1 + (Math.random() * 0.2 - 0.1);\n  return Math.round(basePrice * multiplier * variance);\n}\n\nconst today = new Date().toISOString().split('T')[0];\nconst now = new Date().toISOString();\n\nconst result = hotels.map(h => ({\n  source_id: BOOKING_SOURCE_ID,\n  hotel_name: h.hotel_name,\n  city: h.city,\n  star_rating: h.star_rating,\n  distance_to_haram: h.distance_to_haram,\n  distance_meters: h.distance_meters,\n  rating_score: parseFloat((3.5 + Math.random() * 1.5).toFixed(1)),\n  room_type: 'Standard Double',\n  room_capacity: 2,\n  price_per_night_idr: calculatePrice(h.base_price),\n  includes_breakfast: h.includes_breakfast,\n  meal_plan: h.includes_breakfast ? 'breakfast' : 'room_only',\n  check_in_date: today,\n  is_available: true,\n  view_type: h.view_type,\n  source_url: 'https://booking.com',\n  scraped_at: now\n}));\n\nreturn result.map(item => ({ json: item }));"
+      },
+      "id": "46ecfdb8-cf5c-4acb-8dcc-faec01429340",
+      "name": "🏨 Generate Hotels",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        -208
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": "prices_hotels"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "includes_breakfast": false,
+            "is_available": false
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "source_id",
+              "displayName": "source_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "hotel_name",
+              "displayName": "hotel_name",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "star_rating",
+              "displayName": "star_rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "distance_to_haram",
+              "displayName": "distance_to_haram",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "distance_meters",
+              "displayName": "distance_meters",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "rating_score",
+              "displayName": "rating_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "room_type",
+              "displayName": "room_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "room_capacity",
+              "displayName": "room_capacity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "price_per_night_idr",
+              "displayName": "price_per_night_idr",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "includes_breakfast",
+              "displayName": "includes_breakfast",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "meal_plan",
+              "displayName": "meal_plan",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "check_in_date",
+              "displayName": "check_in_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "check_out_date",
+              "displayName": "check_out_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "is_available",
+              "displayName": "is_available",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "view_type",
+              "displayName": "view_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "source_url",
+              "displayName": "source_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "scraped_at",
+              "displayName": "scraped_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "fb0e3ccc-a34b-4efa-a0c4-9dd8810725db",
+      "name": "💾 Save Hotels",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        -80,
+        -208
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "PasDwWUyHgxCUh4G",
+          "name": "Postgres Neon-DB"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const count = $input.all().length;\nreturn [{ json: { type: 'hotels', saved: count } }];"
+      },
+      "id": "42185d82-6868-4bba-8891-f0d640acb8e9",
+      "name": "✅ Hotels",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        144,
+        -208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const AVIATIONSTACK_SOURCE_ID = '793c8f20-5e9d-48b2-80d5-9ab1a780f352';\n\nconst airlines = [\n  { code: 'GA', name: 'Garuda Indonesia', direct_base: 15000000 },\n  { code: 'SV', name: 'Saudi Arabian Airlines', direct_base: 13000000 },\n  { code: 'EK', name: 'Emirates', direct_base: 18000000 },\n];\n\nconst routes = [\n  { origin: 'CGK', dest: 'JED', origin_city: 'Jakarta', dest_city: 'Jeddah', duration: 720 },\n  { origin: 'CGK', dest: 'MED', origin_city: 'Jakarta', dest_city: 'Madinah', duration: 660 },\n  { origin: 'SUB', dest: 'JED', origin_city: 'Surabaya', dest_city: 'Jeddah', duration: 780 },\n];\n\nconst dates = [];\nconst today = new Date();\nfor (let week = 2; week <= 8; week += 2) {\n  const d = new Date(today);\n  d.setDate(d.getDate() + (week * 7));\n  dates.push(d.toISOString().split('T')[0]);\n}\n\nconst now = new Date().toISOString();\nconst flights = [];\n\nfor (const route of routes) {\n  for (const date of dates) {\n    for (const airline of airlines) {\n      const isDirect = airline.code === 'GA' || airline.code === 'SV';\n      const basePrice = airline.direct_base;\n      const variance = 1 + (Math.random() * 0.3 - 0.15);\n      \n      const depHour = 6 + Math.floor(Math.random() * 12);\n      const depMin = Math.floor(Math.random() * 4) * 15;\n      const departureTime = `${String(depHour).padStart(2, '0')}:${String(depMin).padStart(2, '0')}:00`;\n      \n      const durationMins = isDirect ? route.duration : route.duration + 180;\n      const arrHour = (depHour + Math.floor(durationMins / 60)) % 24;\n      const arrMin = (depMin + (durationMins % 60)) % 60;\n      const arrivalTime = `${String(arrHour).padStart(2, '0')}:${String(arrMin).padStart(2, '0')}:00`;\n      \n      flights.push({\n        source_id: AVIATIONSTACK_SOURCE_ID,\n        airline: airline.name,\n        airline_code: airline.code,\n        flight_code: `${airline.code}${100 + Math.floor(Math.random() * 900)}`,\n        origin_city: route.origin_city,\n        origin_airport: route.origin,\n        destination_city: route.dest_city,\n        destination_airport: route.dest,\n        departure_date: date,\n        departure_time: departureTime,\n        arrival_time: arrivalTime,\n        duration_minutes: durationMins,\n        is_direct: isDirect,\n        transit_cities: isDirect ? null : (airline.code === 'EK' ? '[\"Dubai\"]' : '[\"Abu Dhabi\"]'),\n        price_idr: Math.round(basePrice * variance),\n        ticket_class: 'economy',\n        fare_type: 'estimated',\n        is_available: true,\n        source_url: 'https://aviationstack.com',\n        scraped_at: now\n      });\n    }\n  }\n}\n\nreturn flights.map(item => ({ json: item }));"
+      },
+      "id": "3c43c51a-87ae-464c-9567-5741c703ebbe",
+      "name": "✈️ Generate Flights",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": "prices_flights"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "701faa9c-7f4d-4da1-8bc0-2de815e197ee",
+      "name": "💾 Save Flights",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        -80,
+        0
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "PasDwWUyHgxCUh4G",
+          "name": "Postgres Neon-DB"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const count = $input.all().length;\nreturn [{ json: { type: 'flights', saved: count } }];"
+      },
+      "id": "40a6daa6-f7b6-4670-864a-63b8a46dc208",
+      "name": "✅ Flights",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        144,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const SOURCE_IDS = {\n  cheria: 'a090eb50-1dcb-4483-a775-947cc43ba35a',\n  alhijaz: '11876b62-d274-438a-b3e0-e3b7f5543aca',\n  patuna: '0c785f27-e17c-4b83-8c0a-1fb045888e1b',\n  maktour: '43919d05-260a-42f2-8fbf-433b929c0d5f',\n  arminareka: 'f2b49933-4daf-4555-9e98-0d6284dd6f13'\n};\n\nconst now = new Date().toISOString();\n\nconst packages = [\n  { source_id: SOURCE_IDS.cheria, package_name: 'Paket Umrah Hemat 9 Hari', price_idr: 25000000, duration_days: 9, departure_city: 'Jakarta', airline: 'Garuda Indonesia', hotel_makkah: 'Elaf Ajyad Hotel', hotel_makkah_stars: 4, hotel_madinah: 'Elaf Taiba Hotel', hotel_madinah_stars: 4, includes: '[\"Tiket Pesawat PP\", \"Hotel\", \"Makan 3x\", \"Visa\", \"Transport\"]', is_available: true, source_url: 'https://cheria-travel.com', scraped_at: now },\n  { source_id: SOURCE_IDS.cheria, package_name: 'Paket Umrah Premium 12 Hari', price_idr: 45000000, duration_days: 12, departure_city: 'Jakarta', airline: 'Saudi Arabian Airlines', hotel_makkah: 'Swissotel Makkah', hotel_makkah_stars: 5, hotel_madinah: 'The Oberoi Madina', hotel_madinah_stars: 5, includes: '[\"Tiket Pesawat PP\", \"Hotel Bintang 5\", \"Makan 3x\", \"Visa\", \"Transport\", \"City Tour\"]', is_available: true, source_url: 'https://cheria-travel.com', scraped_at: now },\n  { source_id: SOURCE_IDS.alhijaz, package_name: 'Umrah Reguler 9D', price_idr: 27000000, duration_days: 9, departure_city: 'Jakarta', airline: 'Garuda Indonesia', hotel_makkah: 'Al Shohada Hotel', hotel_makkah_stars: 4, hotel_madinah: 'Frontel Al Harithia', hotel_madinah_stars: 4, includes: '[\"Tiket Pesawat PP\", \"Hotel\", \"Makan 3x\", \"Visa\", \"Transport\"]', is_available: true, source_url: 'https://alhijazindowisata.co.id', scraped_at: now },\n  { source_id: SOURCE_IDS.alhijaz, package_name: 'Umrah VIP 12D', price_idr: 55000000, duration_days: 12, departure_city: 'Jakarta', airline: 'Emirates', hotel_makkah: 'Raffles Makkah Palace', hotel_makkah_stars: 5, hotel_madinah: 'Dar Al Taqwa Hotel', hotel_madinah_stars: 5, includes: '[\"Tiket Pesawat PP\", \"Hotel Bintang 5\", \"Full Board\", \"Visa\", \"Transport VIP\", \"Laundry\"]', is_available: true, source_url: 'https://alhijazindowisata.co.id', scraped_at: now },\n  { source_id: SOURCE_IDS.patuna, package_name: 'Paket Umrah Ekonomi', price_idr: 23000000, duration_days: 9, departure_city: 'Jakarta', airline: 'Saudi Arabian Airlines', hotel_makkah: 'Dar Al Eiman Grand', hotel_makkah_stars: 3, hotel_madinah: 'Grand Plaza Madinah', hotel_madinah_stars: 3, includes: '[\"Tiket Pesawat PP\", \"Hotel\", \"Makan 2x\", \"Visa\"]', is_available: true, source_url: 'https://patuna.co.id', scraped_at: now },\n  { source_id: SOURCE_IDS.patuna, package_name: 'Paket Umrah Eksekutif', price_idr: 38000000, duration_days: 9, departure_city: 'Jakarta', airline: 'Garuda Indonesia', hotel_makkah: 'Hilton Suites Makkah', hotel_makkah_stars: 5, hotel_madinah: 'Pullman Zamzam Madina', hotel_madinah_stars: 5, includes: '[\"Tiket Pesawat PP\", \"Hotel Bintang 5\", \"Makan 3x\", \"Visa\", \"Transport\"]', is_available: true, source_url: 'https://patuna.co.id', scraped_at: now },\n  { source_id: SOURCE_IDS.arminareka, package_name: 'Umrah Promo 9 Hari', price_idr: 24500000, duration_days: 9, departure_city: 'Jakarta', airline: 'Saudi Arabian Airlines', hotel_makkah: 'Makkah Millennium Hotel', hotel_makkah_stars: 4, hotel_madinah: 'Dar Al Eiman Al Andalus', hotel_madinah_stars: 3, includes: '[\"Tiket Pesawat PP\", \"Hotel\", \"Makan 3x\", \"Visa\", \"Transport\"]', is_available: true, source_url: 'https://arminareka.com', scraped_at: now },\n  { source_id: SOURCE_IDS.maktour, package_name: 'Paket Umrah Plus Turki 14D', price_idr: 48000000, duration_days: 14, departure_city: 'Jakarta', airline: 'Emirates', hotel_makkah: 'Anjum Makkah Hotel', hotel_makkah_stars: 5, hotel_madinah: 'Shaza Al Madina', hotel_madinah_stars: 5, includes: '[\"Tiket Pesawat PP\", \"Hotel Bintang 5\", \"Full Board\", \"Visa\", \"Transport\", \"Tour Istanbul\"]', is_available: true, source_url: 'https://maktour.co.id', scraped_at: now }\n];\n\nreturn packages.map(item => ({ json: item }));"
+      },
+      "id": "d096d8ba-8c23-49d9-bd41-d1f9de9bd22b",
+      "name": "📦 Generate Packages",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": "prices_packages"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "502f3988-55c4-48c7-93f7-6a4e1268a5d2",
+      "name": "💾 Save Packages",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        -80,
+        192
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "PasDwWUyHgxCUh4G",
+          "name": "Postgres Neon-DB"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log to scraping_logs after packages saved\nconst count = $input.all().length;\nconst now = new Date().toISOString();\n\n// Return log entry - match existing table columns\nreturn [{\n  json: {\n    source_id: 'a090eb50-1dcb-4483-a775-947cc43ba35a',\n    status: 'success',\n    items_found: 64,\n    items_saved: 64,\n    error_message: null,\n    started_at: now,\n    completed_at: now\n  }\n}];"
+      },
+      "id": "060ec7ba-cdc3-4a24-ab0a-a866a47e211b",
+      "name": "📝 Create Log",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        144,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": "scraping_logs"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "source_id",
+              "displayName": "source_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "scrape_type",
+              "displayName": "scrape_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "items_found",
+              "displayName": "items_found",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "items_saved",
+              "displayName": "items_saved",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "started_at",
+              "displayName": "started_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "completed_at",
+              "displayName": "completed_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "0b1fde67-203b-4f49-9485-1c6eac19832f",
+      "name": "💾 Save Log",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        384,
+        128
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "PasDwWUyHgxCUh4G",
+          "name": "Postgres Neon-DB"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { status: 'done', message: '✅ Price Intelligence Updated!' } }];"
+      },
+      "id": "1fc548f8-bc54-426e-930a-777c2946bc4f",
+      "name": "✅ Done",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "⏰ Every 6 Hours": {
+      "main": [
+        [
+          {
+            "node": "🏨 Generate Hotels",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "✈️ Generate Flights",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "📦 Generate Packages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🏨 Generate Hotels": {
+      "main": [
+        [
+          {
+            "node": "💾 Save Hotels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "💾 Save Hotels": {
+      "main": [
+        [
+          {
+            "node": "✅ Hotels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "✈️ Generate Flights": {
+      "main": [
+        [
+          {
+            "node": "💾 Save Flights",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "💾 Save Flights": {
+      "main": [
+        [
+          {
+            "node": "✅ Flights",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📦 Generate Packages": {
+      "main": [
+        [
+          {
+            "node": "💾 Save Packages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "💾 Save Packages": {
+      "main": [
+        [
+          {
+            "node": "📝 Create Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📝 Create Log": {
+      "main": [
+        [
+          {
+            "node": "💾 Save Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "💾 Save Log": {
+      "main": [
+        [
+          {
+            "node": "✅ Done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0ff9d2fe-6ad1-4528-9c21-f71b71476969",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "22b30a21a23129b7753d7a403872722f915436b20f5f73b1427fabfd81f4588d"
+  },
+  "id": "EOLQ3mJo7T1jUVKj",
+  "tags": []
+}

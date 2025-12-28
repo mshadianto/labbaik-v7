@@ -5,6 +5,7 @@ Multi-source price aggregation system.
 
 Data Sources:
 - APIs: Amadeus, Xotelo, MakCorps
+- n8n: Price Intelligence workflow (hotels, flights, packages)
 - Scrapers: Traveloka, Tiket.com, PegiPegi (future)
 - Partners: REST API for travel agent partners
 
@@ -85,6 +86,12 @@ from services.price_aggregation.scheduler import (
     stop_price_scheduler,
 )
 
+# n8n Adapter
+from services.price_aggregation.n8n_adapter import (
+    N8nPriceAdapter,
+    get_n8n_adapter,
+)
+
 __all__ = [
     # Models
     "AggregatedOffer",
@@ -121,4 +128,7 @@ __all__ = [
     "get_price_scheduler",
     "start_price_scheduler",
     "stop_price_scheduler",
+    # n8n Adapter
+    "N8nPriceAdapter",
+    "get_n8n_adapter",
 ]
