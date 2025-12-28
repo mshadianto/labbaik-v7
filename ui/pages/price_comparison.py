@@ -11,9 +11,15 @@ Features:
 - Filtering by city, stars, price range, source
 """
 
+from __future__ import annotations
+
 import streamlit as st
 from datetime import date, datetime, timedelta
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, TYPE_CHECKING
+
+# Type checking imports (not executed at runtime)
+if TYPE_CHECKING:
+    from services.price_aggregation import AggregatedOffer
 
 # Try to import price aggregation services
 try:
@@ -27,6 +33,9 @@ try:
     HAS_PRICE_AGGREGATION = True
 except ImportError:
     HAS_PRICE_AGGREGATION = False
+    AggregatedOffer = None
+    SourceType = None
+    OfferType = None
 
 # Try to import data manager for API integration
 try:
@@ -249,8 +258,9 @@ def render_offers_table(offers: List[AggregatedOffer], offer_type: str = None):
 
     # Group by type if showing all
     if offer_type is None:
-        hotels = [o for o in offers if o.offer_type == OfferType.HOTEL]
-        packages = [o for o in offers if o.offer_type == OfferType.PACKAGE]
+        # Use string comparison for safety
+        hotels = [o for o in offers if getattr(o.offer_type, 'value', o.offer_type) == "hotel"]
+        packages = [o for o in offers if getattr(o.offer_type, 'value', o.offer_type) == "package"]
 
         if hotels:
             st.subheader("🏨 Hotel")
