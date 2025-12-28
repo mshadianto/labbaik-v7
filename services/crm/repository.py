@@ -14,6 +14,12 @@ from .models import (
     Lead, LeadActivity, Jamaah, Booking, Payment,
     Document, Quote, Invoice, Broadcast, CompetitorPrice, CRMStats
 )
+from .security import (
+    validate_column_names, validate_uuid,
+    ALLOWED_LEAD_COLUMNS, ALLOWED_JAMAAH_COLUMNS,
+    ALLOWED_BOOKING_COLUMNS, ALLOWED_DOCUMENT_COLUMNS,
+    sanitize_for_logging
+)
 
 logger = logging.getLogger(__name__)
 
@@ -129,12 +135,18 @@ class CRMRepository:
         return [Lead(**r) for r in results]
 
     def update_lead(self, lead_id: str, updates: Dict[str, Any]) -> bool:
-        """Update lead."""
+        """Update lead with SQL injection prevention."""
         if not updates:
             return False
 
-        set_clause = ", ".join([f"{k} = %s" for k in updates.keys()])
-        params = list(updates.values()) + [lead_id]
+        # Validate column names against whitelist (SQL injection prevention)
+        safe_updates = validate_column_names(updates, ALLOWED_LEAD_COLUMNS)
+        if not safe_updates:
+            logger.warning(f"No valid columns to update for lead {lead_id}")
+            return False
+
+        set_clause = ", ".join([f"{k} = %s" for k in safe_updates.keys()])
+        params = list(safe_updates.values()) + [lead_id]
 
         query = f"UPDATE leads SET {set_clause}, updated_at = NOW() WHERE id = %s"
         self._execute(query, tuple(params))
@@ -256,12 +268,18 @@ class CRMRepository:
         return [Jamaah(**r) for r in results]
 
     def update_jamaah(self, jamaah_id: str, updates: Dict[str, Any]) -> bool:
-        """Update jamaah."""
+        """Update jamaah with SQL injection prevention."""
         if not updates:
             return False
 
-        set_clause = ", ".join([f"{k} = %s" for k in updates.keys()])
-        params = list(updates.values()) + [jamaah_id]
+        # Validate column names against whitelist (SQL injection prevention)
+        safe_updates = validate_column_names(updates, ALLOWED_JAMAAH_COLUMNS)
+        if not safe_updates:
+            logger.warning(f"No valid columns to update for jamaah {jamaah_id}")
+            return False
+
+        set_clause = ", ".join([f"{k} = %s" for k in safe_updates.keys()])
+        params = list(safe_updates.values()) + [jamaah_id]
 
         query = f"UPDATE jamaah SET {set_clause}, updated_at = NOW() WHERE id = %s"
         self._execute(query, tuple(params))
@@ -369,12 +387,18 @@ class CRMRepository:
         return [Booking(**r) for r in results]
 
     def update_booking(self, booking_id: str, updates: Dict[str, Any]) -> bool:
-        """Update booking."""
+        """Update booking with SQL injection prevention."""
         if not updates:
             return False
 
-        set_clause = ", ".join([f"{k} = %s" for k in updates.keys()])
-        params = list(updates.values()) + [booking_id]
+        # Validate column names against whitelist (SQL injection prevention)
+        safe_updates = validate_column_names(updates, ALLOWED_BOOKING_COLUMNS)
+        if not safe_updates:
+            logger.warning(f"No valid columns to update for booking {booking_id}")
+            return False
+
+        set_clause = ", ".join([f"{k} = %s" for k in safe_updates.keys()])
+        params = list(safe_updates.values()) + [booking_id]
 
         query = f"UPDATE bookings SET {set_clause}, updated_at = NOW() WHERE id = %s"
         self._execute(query, tuple(params))
@@ -514,12 +538,18 @@ class CRMRepository:
         return [Document(**r) for r in results]
 
     def update_document(self, doc_id: str, updates: Dict[str, Any]) -> bool:
-        """Update document."""
+        """Update document with SQL injection prevention."""
         if not updates:
             return False
 
-        set_clause = ", ".join([f"{k} = %s" for k in updates.keys()])
-        params = list(updates.values()) + [doc_id]
+        # Validate column names against whitelist (SQL injection prevention)
+        safe_updates = validate_column_names(updates, ALLOWED_DOCUMENT_COLUMNS)
+        if not safe_updates:
+            logger.warning(f"No valid columns to update for document {doc_id}")
+            return False
+
+        set_clause = ", ".join([f"{k} = %s" for k in safe_updates.keys()])
+        params = list(safe_updates.values()) + [doc_id]
 
         query = f"UPDATE documents SET {set_clause}, updated_at = NOW() WHERE id = %s"
         self._execute(query, tuple(params))

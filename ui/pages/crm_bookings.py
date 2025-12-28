@@ -245,12 +245,19 @@ def render_add_booking_form():
             else:
                 try:
                     from services.crm import CRMRepository, Booking, Jamaah
+                    from services.crm.security import validate_phone
                     repo = CRMRepository()
 
+                    # Input validation
+                    validated_phone = validate_phone(jamaah_phone)
+                    if not validated_phone:
+                        st.error("Format nomor telepon tidak valid! Gunakan format 08xx atau +628xx")
+                        st.stop()
+
                     # Check or create jamaah
-                    jamaah = repo.find_jamaah_by_phone(jamaah_phone)
+                    jamaah = repo.find_jamaah_by_phone(validated_phone)
                     if not jamaah:
-                        jamaah = Jamaah(full_name=jamaah_name, phone=jamaah_phone)
+                        jamaah = Jamaah(full_name=jamaah_name.strip(), phone=validated_phone)
                         jamaah_id = repo.create_jamaah(jamaah)
                     else:
                         jamaah_id = jamaah.id

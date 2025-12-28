@@ -7,8 +7,16 @@ UI for managing leads and sales pipeline.
 import streamlit as st
 from datetime import datetime, timedelta
 import logging
+import html
 
 logger = logging.getLogger(__name__)
+
+
+def escape_html(text: str) -> str:
+    """Escape HTML to prevent XSS."""
+    if text is None:
+        return ""
+    return html.escape(str(text))
 
 
 def format_rupiah(amount: int) -> str:
@@ -114,11 +122,15 @@ def render_pipeline_view():
 
                 for lead in leads:
                     with st.container():
+                        # XSS Prevention: Escape all user-provided data
+                        safe_name = escape_html(lead.name)
+                        safe_phone = escape_html(lead.phone)
+                        safe_package = escape_html(lead.interested_package) if lead.interested_package else 'Belum ada paket'
                         st.markdown(f"""
                         <div style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 8px; border-left: 4px solid {status['color']};">
-                            <strong>{get_priority_emoji(lead.priority)} {lead.name}</strong><br>
-                            <small>{lead.phone}</small><br>
-                            <small style="color: #666;">{lead.interested_package or 'Belum ada paket'}</small>
+                            <strong>{get_priority_emoji(lead.priority)} {safe_name}</strong><br>
+                            <small>{safe_phone}</small><br>
+                            <small style="color: #666;">{safe_package}</small>
                         </div>
                         """, unsafe_allow_html=True)
 
@@ -304,13 +316,27 @@ def render_add_lead_form():
             else:
                 try:
                     from services.crm import CRMRepository, Lead
+                    from services.crm.security import validate_phone, validate_email
                     repo = CRMRepository()
 
+                    # Input validation
+                    validated_phone = validate_phone(phone)
+                    if not validated_phone:
+                        st.error("Format nomor telepon tidak valid! Gunakan format 08xx atau +628xx")
+                        st.stop()
+
+                    validated_email = None
+                    if email:
+                        validated_email = validate_email(email)
+                        if not validated_email:
+                            st.error("Format email tidak valid!")
+                            st.stop()
+
                     lead = Lead(
-                        name=name,
-                        phone=phone,
-                        email=email if email else None,
-                        whatsapp=whatsapp if whatsapp else phone,
+                        name=name.strip(),
+                        phone=validated_phone,
+                        email=validated_email,
+                        whatsapp=whatsapp.strip() if whatsapp else validated_phone,
                         source=source,
                         priority=priority,
                         interested_package=interested_package if interested_package else None,

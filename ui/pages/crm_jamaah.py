@@ -168,16 +168,44 @@ def render_add_jamaah_form():
             else:
                 try:
                     from services.crm import CRMRepository, Jamaah
+                    from services.crm.security import validate_phone, validate_email, validate_nik, validate_passport
                     repo = CRMRepository()
 
+                    # Input validation
+                    validated_phone = validate_phone(phone)
+                    if not validated_phone:
+                        st.error("Format nomor telepon tidak valid! Gunakan format 08xx atau +628xx")
+                        st.stop()
+
+                    validated_email = None
+                    if email:
+                        validated_email = validate_email(email)
+                        if not validated_email:
+                            st.error("Format email tidak valid!")
+                            st.stop()
+
+                    validated_nik = None
+                    if nik:
+                        validated_nik = validate_nik(nik)
+                        if not validated_nik:
+                            st.error("NIK harus 16 digit angka!")
+                            st.stop()
+
+                    validated_passport = None
+                    if passport_number:
+                        validated_passport = validate_passport(passport_number)
+                        if not validated_passport:
+                            st.error("Format nomor paspor tidak valid!")
+                            st.stop()
+
                     jamaah = Jamaah(
-                        full_name=full_name,
-                        nik=nik if nik else None,
-                        passport_number=passport_number if passport_number else None,
+                        full_name=full_name.strip(),
+                        nik=validated_nik,
+                        passport_number=validated_passport,
                         passport_expiry=passport_expiry,
-                        phone=phone,
-                        whatsapp=whatsapp if whatsapp else phone,
-                        email=email if email else None,
+                        phone=validated_phone,
+                        whatsapp=whatsapp.strip() if whatsapp else validated_phone,
+                        email=validated_email,
                         address=address if address else None,
                         city=city if city else None,
                         province=province if province else None,
