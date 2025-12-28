@@ -18,7 +18,6 @@ from typing import Dict, Any, Optional, Callable, List
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
 from enum import Enum
-import schedule
 
 logger = logging.getLogger(__name__)
 

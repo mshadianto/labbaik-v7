@@ -532,3 +532,7 @@ def get_price_repository() -> AggregatedPriceRepository:
     if _repository is None:
         _repository = AggregatedPriceRepository()
     return _repository
+
+
+# Alias for backward compatibility
+get_aggregated_price_repository = get_price_repository
