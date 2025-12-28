@@ -179,151 +179,58 @@ def render_pricing_cards(data: dict):
 
 
 def render_comparison_table(data: dict):
-    """Render enhanced feature comparison table."""
-    batches = data["batches"]
+    """Render feature comparison table using native Streamlit."""
+    import pandas as pd
 
-    st.markdown("""
-    <style>
-    .comparison-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 1rem 0;
-        font-size: 0.95rem;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .comparison-table th {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        color: #d4af37;
-        padding: 1rem;
-        text-align: center;
-        font-weight: 600;
-        border: none;
-    }
-    .comparison-table th.highlight {
-        background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
-        color: #1a1a2e;
-    }
-    .comparison-table td {
-        padding: 0.875rem 1rem;
-        text-align: center;
-        border-bottom: 1px solid #e0e0e0;
-        background: #fff;
-    }
-    .comparison-table tr:nth-child(even) td {
-        background: #f8f9fa;
-    }
-    .comparison-table tr:hover td {
-        background: #fff3cd;
-    }
-    .comparison-table td:first-child {
-        text-align: left;
-        font-weight: 500;
-        background: #f0f0f0 !important;
-        color: #333;
-    }
-    .comparison-table .feature-icon {
-        margin-right: 0.5rem;
-    }
-    .comparison-table .check {
-        color: #28a745;
-        font-weight: bold;
-    }
-    .comparison-table .cross {
-        color: #dc3545;
-    }
-    .comparison-table .highlight-cell {
-        background: #fff9e6 !important;
-        font-weight: 600;
-        color: #856404;
-    }
-    .comparison-table .gold-text {
-        color: #d4af37;
-        font-weight: 600;
-    }
-    .comparison-table .free-badge {
-        background: #28a745;
-        color: white;
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-weight: 600;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+    batches = data["batches"]
 
     st.markdown("### Perbandingan Lengkap Antar Paket")
 
-    # Build enhanced comparison data with icons
-    features = [
-        ("💰", "Setup Fee", [
-            f"<span class='free-badge'>GRATIS</span>" if b.setup_fee == 0 else b.setup_fee_display
-            for b in batches
-        ]),
-        ("⭐", "Status Member", [b.status for b in batches]),
-        ("⏱️", "Durasi Status", [
-            "<span class='gold-text'>Selamanya</span>" if not b.status_duration_months else f"{b.status_duration_months} bulan"
-            for b in batches
-        ]),
-        ("📊", "Komisi Bagi Hasil", [
-            f"<span class='gold-text'>{b.commission_display}</span>" if b.commission_locked else b.commission_display
-            for b in batches
-        ]),
-        ("🔒", "Komisi Terlindungi", [
-            "<span class='check'>✓ Locked Selamanya</span>" if b.commission_locked else "<span class='cross'>✗</span>"
-            for b in batches
-        ]),
-        ("🛠️", "Tipe Onboarding", [b.setup_type_display for b in batches]),
-        ("👥", "Kuota Partner", [
-            f"<strong>{b.max_partners}</strong> partner" if b.max_partners else "Unlimited"
-            for b in batches
-        ]),
-        ("📞", "Support Level", [
-            "Priority 24/7" if b.setup_type == "white_glove" else "Jam Kerja" if idx < 2 else "Email"
-            for idx, b in enumerate(batches)
-        ]),
-        ("🎓", "Training", [
-            "1-on-1 Konsultasi" if b.setup_type == "white_glove" else "2 Sesi Online" if idx == 1 else "Video Tutorial"
-            for idx, b in enumerate(batches)
-        ]),
-        ("🚀", "Akses Fitur Beta", [
-            "<span class='check'>✓</span>" if b.setup_type == "white_glove" else "<span class='cross'>✗</span>"
-            for b in batches
-        ]),
-    ]
+    # Build comparison data
+    comparison_data = {
+        "Fitur": [
+            "💰 Setup Fee",
+            "⭐ Status Member",
+            "⏱️ Durasi Status",
+            "📊 Komisi Bagi Hasil",
+            "🔒 Komisi Terlindungi",
+            "🛠️ Tipe Onboarding",
+            "👥 Kuota Partner",
+            "📞 Support Level",
+            "🎓 Training",
+            "🚀 Akses Fitur Beta",
+        ]
+    }
 
-    # Build HTML table
-    html = "<table class='comparison-table'>"
-
-    # Header row
-    html += "<tr><th>Fitur</th>"
     for idx, b in enumerate(batches):
-        highlight = "highlight" if b.highlight else ""
-        html += f"<th class='{highlight}'>{b.name}</th>"
-    html += "</tr>"
+        comparison_data[b.name] = [
+            "✅ GRATIS" if b.setup_fee == 0 else b.setup_fee_display,
+            b.status,
+            "🌟 Selamanya" if not b.status_duration_months else f"{b.status_duration_months} bulan",
+            f"🔒 {b.commission_display}" if b.commission_locked else b.commission_display,
+            "✅ Ya, Locked!" if b.commission_locked else "❌ Tidak",
+            b.setup_type_display,
+            f"{b.max_partners} partner" if b.max_partners else "Unlimited",
+            "Priority 24/7" if b.setup_type == "white_glove" else ("Jam Kerja" if idx < 2 else "Email"),
+            "1-on-1 Konsultasi" if b.setup_type == "white_glove" else ("2 Sesi Online" if idx == 1 else "Video Tutorial"),
+            "✅ Ya" if b.setup_type == "white_glove" else "❌ Tidak",
+        ]
 
-    # Data rows
-    for icon, feature_name, values in features:
-        html += "<tr>"
-        html += f"<td><span class='feature-icon'>{icon}</span>{feature_name}</td>"
-        for idx, val in enumerate(values):
-            cell_class = "highlight-cell" if batches[idx].highlight else ""
-            html += f"<td class='{cell_class}'>{val}</td>"
-        html += "</tr>"
+    df = pd.DataFrame(comparison_data)
 
-    html += "</table>"
-
-    st.markdown(html, unsafe_allow_html=True)
+    # Display with styling
+    st.dataframe(
+        df,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "Fitur": st.column_config.TextColumn("Fitur", width="medium"),
+            batches[0].name: st.column_config.TextColumn(f"⭐ {batches[0].name}", width="medium"),
+        }
+    )
 
     # Legend
-    st.markdown("""
-    <div style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; font-size: 0.85rem;">
-        <strong>Keterangan:</strong><br>
-        <span style="color: #28a745;">✓</span> = Tersedia &nbsp;&nbsp;
-        <span style="color: #dc3545;">✗</span> = Tidak Tersedia &nbsp;&nbsp;
-        <span style="color: #d4af37;">●</span> = Keunggulan Batch 1
-    </div>
-    """, unsafe_allow_html=True)
+    st.info("✅ = Tersedia | ❌ = Tidak Tersedia | 🔒 = Terlindungi Selamanya | 🌟 = Lifetime")
 
 
 def render_faq_section(faq_list: list):
@@ -339,123 +246,53 @@ def render_faq_section(faq_list: list):
 
 
 def render_contact_section(contact: dict):
-    """Render enhanced contact/CTA section."""
-
-    st.markdown("""
-    <style>
-    .contact-section {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        border-radius: 16px;
-        padding: 2rem;
-        margin: 1rem 0;
-    }
-    .contact-title {
-        color: #d4af37;
-        font-size: 1.75rem;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 0.5rem;
-    }
-    .contact-subtitle {
-        color: #aaa;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-    .contact-cards {
-        display: flex;
-        gap: 1.5rem;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    .contact-card {
-        flex: 1;
-        min-width: 200px;
-        max-width: 280px;
-        padding: 1.5rem;
-        border-radius: 12px;
-        text-align: center;
-        text-decoration: none;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .contact-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-    .contact-card-wa {
-        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-    }
-    .contact-card-email {
-        background: linear-gradient(135deg, #EA4335 0%, #C5221F 100%);
-    }
-    .contact-card-calendly {
-        background: linear-gradient(135deg, #006BFF 0%, #0052CC 100%);
-    }
-    .contact-icon {
-        font-size: 2.5rem;
-        margin-bottom: 0.75rem;
-    }
-    .contact-label {
-        color: white;
-        font-weight: 600;
-        font-size: 1.1rem;
-        margin-bottom: 0.25rem;
-    }
-    .contact-value {
-        color: rgba(255,255,255,0.9);
-        font-size: 0.95rem;
-    }
-    .contact-cta {
-        margin-top: 2rem;
-        text-align: center;
-    }
-    .contact-cta-text {
-        color: #888;
-        font-size: 0.9rem;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+    """Render contact/CTA section using native Streamlit components."""
 
     wa = contact.get("whatsapp", "")
     wa_display = contact.get("whatsapp_display", wa)
     email = contact.get("email", "")
     calendly = contact.get("calendly", "")
-
     wa_link = f"https://wa.me/{wa.replace('+', '').replace('-', '')}" if wa else "#"
 
-    html = f"""
-    <div class="contact-section">
-        <div class="contact-title">Siap Bergabung?</div>
-        <div class="contact-subtitle">Hubungi kami untuk konsultasi gratis dan mulai perjalanan digital Anda</div>
+    # Header
+    st.markdown("---")
+    st.markdown("## Siap Bergabung?")
+    st.caption("Hubungi kami untuk konsultasi gratis dan mulai perjalanan digital Anda")
 
-        <div class="contact-cards">
-            <a href="{wa_link}" target="_blank" class="contact-card contact-card-wa">
-                <div class="contact-icon">📱</div>
-                <div class="contact-label">WhatsApp</div>
-                <div class="contact-value">{wa_display}</div>
-            </a>
+    # Contact cards using columns
+    col1, col2, col3 = st.columns(3)
 
-            <a href="mailto:{email}" class="contact-card contact-card-email">
-                <div class="contact-icon">📧</div>
-                <div class="contact-label">Email</div>
-                <div class="contact-value">{email}</div>
-            </a>
-
-            <a href="{calendly}" target="_blank" class="contact-card contact-card-calendly">
-                <div class="contact-icon">📅</div>
-                <div class="contact-label">Jadwalkan Meeting</div>
-                <div class="contact-value">Pilih waktu yang cocok</div>
-            </a>
+    with col1:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #25D366, #128C7E); padding: 1.5rem; border-radius: 12px; text-align: center;">
+            <div style="font-size: 2rem;">📱</div>
+            <div style="color: white; font-weight: 600; margin: 0.5rem 0;">WhatsApp</div>
+            <div style="color: rgba(255,255,255,0.9);">""" + wa_display + """</div>
         </div>
+        """, unsafe_allow_html=True)
+        st.link_button("Chat Sekarang", wa_link, use_container_width=True)
 
-        <div class="contact-cta">
-            <div class="contact-cta-text">
-                Respon cepat dalam waktu 1x24 jam kerja
-            </div>
+    with col2:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #EA4335, #C5221F); padding: 1.5rem; border-radius: 12px; text-align: center;">
+            <div style="font-size: 2rem;">📧</div>
+            <div style="color: white; font-weight: 600; margin: 0.5rem 0;">Email</div>
+            <div style="color: rgba(255,255,255,0.9);">""" + email + """</div>
         </div>
-    </div>
-    """
+        """, unsafe_allow_html=True)
+        st.link_button("Kirim Email", f"mailto:{email}", use_container_width=True)
 
-    st.markdown(html, unsafe_allow_html=True)
+    with col3:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #006BFF, #0052CC); padding: 1.5rem; border-radius: 12px; text-align: center;">
+            <div style="font-size: 2rem;">📅</div>
+            <div style="color: white; font-weight: 600; margin: 0.5rem 0;">Meeting</div>
+            <div style="color: rgba(255,255,255,0.9);">Pilih waktu</div>
+        </div>
+        """, unsafe_allow_html=True)
+        st.link_button("Jadwalkan", calendly, use_container_width=True)
+
+    st.caption("Respon cepat dalam waktu 1x24 jam kerja")
 
 
 def render_registration_form(data: dict):
