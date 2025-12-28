@@ -1,0 +1,106 @@
+# =============================================================================
+# LABBAIK PIONEER 2026 - Partnership Pricing Configuration
+# =============================================================================
+# Single Source of Truth untuk semua data pricing kemitraan.
+# Perubahan di sini akan otomatis tercermin di UI tanpa ubah kode Python.
+#
+# PENTING: Jangan hapus batch yang sudah ada mitra terdaftar!
+# Data komisi mitra disimpan permanen di database saat pendaftaran.
+# =============================================================================
+
+pioneer_2026:
+  program_name: "Labbaik Pioneer 2026"
+  program_description: "Program kemitraan eksklusif untuk travel umrah yang ingin bertransformasi digital bersama Labbaik AI."
+
+  # Timeline program (untuk validasi batch)
+  start_date: "2025-01-01"
+
+  batches:
+    batch_1:
+      name: "The Founding 10"
+      tagline: "Jadilah 10 Pionir Pertama"
+      day_start: 0
+      day_end: 30
+      max_partners: 10
+      setup_fee: 0
+      setup_fee_display: "GRATIS"
+      status: "Lifetime Gold"
+      status_duration_months: null  # null = lifetime
+      commission_rate: 0.15
+      commission_display: "15%"
+      commission_locked: true  # Tidak bisa diturunkan
+      setup_type: "white_glove"
+      setup_type_display: "Full White-Glove Setup"
+      benefits:
+        - "Tim kami yang input semua data awal"
+        - "Priority 24/7 WhatsApp Support"
+        - "Akses fitur beta sebelum rilis"
+        - "Logo di halaman 'Founding Partners'"
+        - "Konsultasi strategi digital 1-on-1"
+      highlight: true
+      badge_color: "#FFD700"  # Gold
+
+    batch_2:
+      name: "Early Adopters"
+      tagline: "Bergabung Lebih Awal, Untung Lebih Besar"
+      day_start: 31
+      day_end: 90
+      max_partners: 50
+      setup_fee: 7500000
+      setup_fee_display: "Rp 7.500.000"
+      status: "Gold"
+      status_duration_months: 12
+      commission_rate: 0.15
+      commission_display: "15%"
+      commission_locked: false
+      setup_type: "self_service"
+      setup_type_display: "Self-service Setup"
+      benefits:
+        - "Panduan setup lengkap"
+        - "WhatsApp Support (jam kerja)"
+        - "Akses semua fitur standar"
+        - "Training online 2 sesi"
+      highlight: false
+      badge_color: "#C0C0C0"  # Silver-ish
+
+    batch_3:
+      name: "Standard Partners"
+      tagline: "Mulai Transformasi Digital Anda"
+      day_start: 91
+      day_end: null  # null = ongoing
+      max_partners: null  # null = unlimited
+      setup_fee: 15000000
+      setup_fee_display: "Rp 15.000.000"
+      status: "Silver"
+      status_duration_months: 12
+      commission_rate: 0.10
+      commission_display: "10%"
+      commission_locked: false
+      setup_type: "self_service"
+      setup_type_display: "Self-service Setup"
+      benefits:
+        - "Panduan setup online"
+        - "Email Support"
+        - "Akses fitur standar"
+      highlight: false
+      badge_color: "#A0A0A0"  # Gray
+
+  # FAQ untuk halaman kemitraan
+  faq:
+    - question: "Apa itu komisi 'Locked'?"
+      answer: "Komisi locked berarti persentase bagi hasil Anda tidak akan pernah diturunkan, meskipun kami mengubah struktur komisi di masa depan. Ini adalah jaminan permanen untuk Founding Partners."
+
+    - question: "Apa perbedaan White-Glove vs Self-service?"
+      answer: "White-Glove: Tim Labbaik yang akan menginput semua data paket umrah, hotel, dan konfigurasi awal Anda. Self-service: Anda akan menggunakan dashboard admin untuk input data sendiri dengan panduan lengkap."
+
+    - question: "Bagaimana sistem bagi hasil bekerja?"
+      answer: "Setiap booking umrah yang terjadi melalui platform Labbaik AI akan dihitung. Komisi dibayarkan setiap bulan berdasarkan total transaksi yang berhasil."
+
+    - question: "Apakah ada biaya bulanan?"
+      answer: "Tidak ada biaya bulanan. Anda hanya membayar setup fee di awal. Selanjutnya, kami mengambil bagian dari komisi transaksi saja."
+
+  # Contact untuk pendaftaran
+  contact:
+    whatsapp: "+6281234567890"
+    email: "partnership@labbaik.ai"
+    calendly: "https://calendly.com/labbaik/partnership"

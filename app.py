@@ -194,12 +194,15 @@ except ImportError:
 
 # Partner System
 try:
-    from ui.pages.partner_landing import render_partner_landing_page
+    from ui.pages.partnership import render_partnership_page
     from ui.pages.partner_dashboard import render_partner_dashboard
     from ui.pages.api_docs import render_api_docs_page
     HAS_PARTNER_SYSTEM = True
+    # Alias for backward compatibility
+    render_partner_landing_page = render_partnership_page
 except ImportError:
     HAS_PARTNER_SYSTEM = False
+    def render_partnership_page(): st.warning("⚠️ Partnership Portal belum tersedia")
     def render_partner_landing_page(): st.warning("⚠️ Partner Landing belum tersedia")
     def render_partner_dashboard(): st.warning("⚠️ Partner Dashboard belum tersedia")
     def render_api_docs_page(): st.warning("⚠️ API Docs belum tersedia")
@@ -506,6 +509,7 @@ def render_sidebar():
             ("👤", "Akun Saya", "auth", HAS_USER_MANAGEMENT, False),
             ("⭐", "Upgrade Premium", "subscription", HAS_SUBSCRIPTION, False),
             ("🎁", "Referral", "referral", HAS_SUBSCRIPTION, False),
+            ("🤝", "Kemitraan", "partner", HAS_PARTNER_SYSTEM, False),
             ("📲", "Install App", "install", HAS_PWA, False),
         ]
 
