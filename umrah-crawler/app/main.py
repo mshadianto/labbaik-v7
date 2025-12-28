@@ -157,6 +157,27 @@ async def amadeus_flights(
     )
 
 
+@app.get("/amadeus/transfers")
+async def amadeus_transfers(
+    city: str = Query(..., pattern="^(MAKKAH|MADINAH)$"),
+    pickup: str = Query(..., description="Pickup datetime ISO format (e.g., 2026-01-09T10:00:00)"),
+    passengers: int = 2,
+    transfer_type: str = Query("PRIVATE", pattern="^(PRIVATE|SHARED)$"),
+):
+    """
+    Search airport transfers via Amadeus API.
+    Returns transfer offers from airport (JED/MED) to city center (Haram/Nabawi).
+    """
+    client = get_amadeus_client()
+    if not client:
+        raise HTTPException(status_code=503, detail="Amadeus API not configured")
+
+    from app.amadeus.transfers import transfer_search_to_city
+    return await transfer_search_to_city(
+        client, city, pickup, passengers=passengers, transfer_type=transfer_type
+    )
+
+
 @app.get("/amadeus/status")
 async def amadeus_status():
     """Check Amadeus API configuration status."""
