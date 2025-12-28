@@ -196,13 +196,37 @@ except ImportError:
 try:
     from ui.pages.partnership import render_partnership_page
     from ui.pages.partner_dashboard import render_partner_dashboard
+    from ui.pages.package_builder import render_package_builder_page
     from ui.pages.api_docs import render_api_docs_page
     HAS_PARTNER_SYSTEM = True
 except ImportError:
     HAS_PARTNER_SYSTEM = False
     def render_partnership_page(): st.warning("⚠️ Partnership Portal belum tersedia")
     def render_partner_dashboard(): st.warning("⚠️ Partner Dashboard belum tersedia")
+    def render_package_builder_page(): st.warning("⚠️ Package Builder belum tersedia")
     def render_api_docs_page(): st.warning("⚠️ API Docs belum tersedia")
+
+# =============================================================================
+# CRM & Travel Operations System
+# =============================================================================
+try:
+    from ui.pages.crm_leads import render_crm_leads_page
+    from ui.pages.crm_bookings import render_crm_bookings_page
+    from ui.pages.crm_jamaah import render_crm_jamaah_page
+    from ui.pages.crm_quotes import render_crm_quotes_page
+    from ui.pages.crm_analytics import render_crm_analytics_page
+    from ui.pages.crm_broadcast import render_crm_broadcast_page
+    from ui.pages.crm_competitors import render_crm_competitors_page
+    HAS_CRM = True
+except ImportError:
+    HAS_CRM = False
+    def render_crm_leads_page(): st.warning("⚠️ CRM Leads belum tersedia")
+    def render_crm_bookings_page(): st.warning("⚠️ CRM Bookings belum tersedia")
+    def render_crm_jamaah_page(): st.warning("⚠️ CRM Jamaah belum tersedia")
+    def render_crm_quotes_page(): st.warning("⚠️ CRM Quotes belum tersedia")
+    def render_crm_analytics_page(): st.warning("⚠️ CRM Analytics belum tersedia")
+    def render_crm_broadcast_page(): st.warning("⚠️ CRM Broadcast belum tersedia")
+    def render_crm_competitors_page(): st.warning("⚠️ CRM Competitors belum tersedia")
 
 # WhatsApp Integration
 try:
@@ -520,6 +544,9 @@ def render_sidebar():
                     if st.button("📊 Partner Dashboard", key="nav_partner_dash", use_container_width=True):
                         st.session_state.current_page = "partner_dashboard"
                         st.rerun()
+                    if st.button("📦 Package Builder", key="nav_package_builder", use_container_width=True):
+                        st.session_state.current_page = "package_builder"
+                        st.rerun()
                     if st.button("📖 API Docs", key="nav_api_docs", use_container_width=True):
                         st.session_state.current_page = "api_docs"
                         st.rerun()
@@ -535,6 +562,33 @@ def render_sidebar():
                 if st.button("📱 WhatsApp", key="nav_whatsapp_admin", use_container_width=True):
                     st.session_state.current_page = "whatsapp"
                     st.rerun()
+
+                # CRM Menu for Partners/Admins
+                if HAS_CRM:
+                    st.markdown("---")
+                    st.markdown("### 💼 CRM Travel")
+
+                    if st.button("📊 Dashboard CRM", key="nav_crm_analytics", use_container_width=True):
+                        st.session_state.current_page = "crm_analytics"
+                        st.rerun()
+                    if st.button("👥 Manajemen Lead", key="nav_crm_leads", use_container_width=True):
+                        st.session_state.current_page = "crm_leads"
+                        st.rerun()
+                    if st.button("📅 Booking & Bayar", key="nav_crm_bookings", use_container_width=True):
+                        st.session_state.current_page = "crm_bookings"
+                        st.rerun()
+                    if st.button("👤 Database Jamaah", key="nav_crm_jamaah", use_container_width=True):
+                        st.session_state.current_page = "crm_jamaah"
+                        st.rerun()
+                    if st.button("📋 Quote & Invoice", key="nav_crm_quotes", use_container_width=True):
+                        st.session_state.current_page = "crm_quotes"
+                        st.rerun()
+                    if st.button("📢 WA Broadcast", key="nav_crm_broadcast", use_container_width=True):
+                        st.session_state.current_page = "crm_broadcast"
+                        st.rerun()
+                    if st.button("📈 Monitor Kompetitor", key="nav_crm_competitors", use_container_width=True):
+                        st.session_state.current_page = "crm_competitors"
+                        st.rerun()
 
         # Partner CTA for non-partners
         if not user or (user and user.role.value not in ["partner", "admin"]):
@@ -673,7 +727,17 @@ def render_page():
         # Partner System
         "partner": render_partnership_page,
         "partner_dashboard": render_partner_dashboard,
+        "package_builder": render_package_builder_page,
         "api_docs": render_api_docs_page,
+
+        # CRM System
+        "crm_analytics": render_crm_analytics_page,
+        "crm_leads": render_crm_leads_page,
+        "crm_bookings": render_crm_bookings_page,
+        "crm_jamaah": render_crm_jamaah_page,
+        "crm_quotes": render_crm_quotes_page,
+        "crm_broadcast": render_crm_broadcast_page,
+        "crm_competitors": render_crm_competitors_page,
     }
     
     renderer = page_map.get(page, render_home_page)

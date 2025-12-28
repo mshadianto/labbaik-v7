@@ -1,0 +1,552 @@
+"""
+LABBAIK AI - CRM Lead Management
+==================================
+UI for managing leads and sales pipeline.
+"""
+
+import streamlit as st
+from datetime import datetime, timedelta
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def format_rupiah(amount: int) -> str:
+    """Format as Rupiah."""
+    if amount is None:
+        return "-"
+    return f"Rp {amount:,.0f}".replace(",", ".")
+
+
+def format_date(dt) -> str:
+    """Format datetime."""
+    if dt is None:
+        return "-"
+    if isinstance(dt, str):
+        return dt
+    return dt.strftime("%d %b %Y")
+
+
+def get_status_color(status: str) -> str:
+    """Get status badge color."""
+    colors = {
+        "new": "blue",
+        "contacted": "violet",
+        "interested": "orange",
+        "negotiating": "orange",
+        "won": "green",
+        "lost": "red",
+    }
+    return colors.get(status, "gray")
+
+
+def get_priority_emoji(priority: str) -> str:
+    """Get priority emoji."""
+    emojis = {
+        "urgent": "🔴",
+        "high": "🟠",
+        "medium": "🟡",
+        "low": "🟢",
+    }
+    return emojis.get(priority, "⚪")
+
+
+def init_session_state():
+    """Initialize session state."""
+    if "crm_view" not in st.session_state:
+        st.session_state.crm_view = "list"
+    if "crm_selected_lead" not in st.session_state:
+        st.session_state.crm_selected_lead = None
+    if "crm_filter_status" not in st.session_state:
+        st.session_state.crm_filter_status = None
+
+
+def render_lead_stats():
+    """Render lead statistics."""
+    try:
+        from services.crm import CRMRepository
+        repo = CRMRepository()
+        stats = repo.get_crm_stats()
+
+        col1, col2, col3, col4 = st.columns(4)
+
+        with col1:
+            st.metric("Total Leads", stats.total_leads)
+        with col2:
+            st.metric("Lead Baru", stats.new_leads)
+        with col3:
+            st.metric("Conversion Rate", f"{stats.conversion_rate:.1f}%")
+        with col4:
+            followups = repo.get_leads_for_followup(days_ahead=1)
+            st.metric("Perlu Follow-up", len(followups))
+
+    except Exception as e:
+        logger.error(f"Failed to load stats: {e}")
+        # Show demo stats
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Total Leads", 0)
+        with col2:
+            st.metric("Lead Baru", 0)
+        with col3:
+            st.metric("Conversion Rate", "0%")
+        with col4:
+            st.metric("Perlu Follow-up", 0)
+
+
+def render_pipeline_view():
+    """Render kanban-style pipeline view."""
+    st.markdown("### Pipeline View")
+
+    try:
+        from services.crm import CRMRepository
+        from services.crm.config import get_lead_statuses
+        repo = CRMRepository()
+        statuses = get_lead_statuses()
+
+        # Create columns for each status
+        cols = st.columns(len(statuses))
+
+        for i, status in enumerate(statuses):
+            with cols[i]:
+                st.markdown(f"**{status['label']}**")
+                leads = repo.get_leads(status=status['code'], limit=10)
+
+                for lead in leads:
+                    with st.container():
+                        st.markdown(f"""
+                        <div style="padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 8px; border-left: 4px solid {status['color']};">
+                            <strong>{get_priority_emoji(lead.priority)} {lead.name}</strong><br>
+                            <small>{lead.phone}</small><br>
+                            <small style="color: #666;">{lead.interested_package or 'Belum ada paket'}</small>
+                        </div>
+                        """, unsafe_allow_html=True)
+
+                        if st.button("Detail", key=f"lead_{lead.id}", use_container_width=True):
+                            st.session_state.crm_selected_lead = lead.id
+                            st.session_state.crm_view = "detail"
+                            st.rerun()
+
+                if not leads:
+                    st.caption("Tidak ada lead")
+
+    except Exception as e:
+        logger.error(f"Pipeline view error: {e}")
+        st.info("Belum ada data lead")
+
+
+def render_lead_list():
+    """Render lead list view."""
+    st.markdown("### Daftar Lead")
+
+    # Filters
+    col1, col2, col3, col4 = st.columns([2, 1, 1, 1])
+
+    with col1:
+        search = st.text_input("Cari nama/nomor", placeholder="Ketik untuk mencari...")
+
+    with col2:
+        status_filter = st.selectbox(
+            "Status",
+            options=["Semua", "new", "contacted", "interested", "negotiating", "won", "lost"],
+            format_func=lambda x: {
+                "Semua": "Semua Status",
+                "new": "Baru",
+                "contacted": "Sudah Dihubungi",
+                "interested": "Tertarik",
+                "negotiating": "Negosiasi",
+                "won": "Deal",
+                "lost": "Tidak Jadi"
+            }.get(x, x)
+        )
+
+    with col3:
+        source_filter = st.selectbox(
+            "Sumber",
+            options=["Semua", "direct", "referral", "social", "ads", "website", "whatsapp"],
+            format_func=lambda x: {
+                "Semua": "Semua Sumber",
+                "direct": "Langsung",
+                "referral": "Referensi",
+                "social": "Media Sosial",
+                "ads": "Iklan",
+                "website": "Website",
+                "whatsapp": "WhatsApp"
+            }.get(x, x)
+        )
+
+    with col4:
+        priority_filter = st.selectbox(
+            "Prioritas",
+            options=["Semua", "urgent", "high", "medium", "low"],
+            format_func=lambda x: {
+                "Semua": "Semua",
+                "urgent": "🔴 Urgent",
+                "high": "🟠 Tinggi",
+                "medium": "🟡 Sedang",
+                "low": "🟢 Rendah"
+            }.get(x, x)
+        )
+
+    try:
+        from services.crm import CRMRepository
+        repo = CRMRepository()
+
+        leads = repo.get_leads(
+            status=status_filter if status_filter != "Semua" else None,
+            source=source_filter if source_filter != "Semua" else None,
+            priority=priority_filter if priority_filter != "Semua" else None,
+            search=search if search else None,
+            limit=50
+        )
+
+        if leads:
+            for lead in leads:
+                with st.container():
+                    col1, col2, col3, col4, col5 = st.columns([3, 2, 2, 2, 1])
+
+                    with col1:
+                        st.markdown(f"**{get_priority_emoji(lead.priority)} {lead.name}**")
+                        st.caption(lead.phone)
+
+                    with col2:
+                        st.markdown(f":{get_status_color(lead.status)}[{lead.status.upper()}]")
+
+                    with col3:
+                        st.caption(lead.interested_package or "-")
+                        if lead.budget_max:
+                            st.caption(format_rupiah(lead.budget_max))
+
+                    with col4:
+                        if lead.next_followup_date:
+                            followup_date = lead.next_followup_date
+                            if isinstance(followup_date, str):
+                                st.caption(f"Follow-up: {followup_date[:10]}")
+                            else:
+                                st.caption(f"Follow-up: {followup_date.strftime('%d %b')}")
+
+                    with col5:
+                        if st.button("📝", key=f"edit_{lead.id}", help="Detail"):
+                            st.session_state.crm_selected_lead = lead.id
+                            st.session_state.crm_view = "detail"
+                            st.rerun()
+
+                    st.divider()
+        else:
+            st.info("Belum ada lead. Klik 'Tambah Lead' untuk menambahkan lead baru.")
+
+    except Exception as e:
+        logger.error(f"Failed to load leads: {e}")
+        st.info("Belum ada data lead atau database belum terhubung.")
+
+
+def render_add_lead_form():
+    """Render add lead form."""
+    st.markdown("### Tambah Lead Baru")
+
+    with st.form("add_lead_form"):
+        col1, col2 = st.columns(2)
+
+        with col1:
+            name = st.text_input("Nama Lengkap *", placeholder="Nama calon jamaah")
+            phone = st.text_input("No. Telepon *", placeholder="08xxxxxxxxxx")
+            email = st.text_input("Email", placeholder="email@example.com")
+            whatsapp = st.text_input("WhatsApp", placeholder="Sama dengan telepon jika kosong")
+
+        with col2:
+            source = st.selectbox(
+                "Sumber Lead",
+                options=["direct", "referral", "social", "ads", "website", "whatsapp", "event"],
+                format_func=lambda x: {
+                    "direct": "Langsung",
+                    "referral": "Referensi",
+                    "social": "Media Sosial",
+                    "ads": "Iklan",
+                    "website": "Website",
+                    "whatsapp": "WhatsApp",
+                    "event": "Event/Pameran"
+                }.get(x, x)
+            )
+
+            priority = st.selectbox(
+                "Prioritas",
+                options=["medium", "low", "high", "urgent"],
+                format_func=lambda x: {
+                    "low": "🟢 Rendah",
+                    "medium": "🟡 Sedang",
+                    "high": "🟠 Tinggi",
+                    "urgent": "🔴 Urgent"
+                }.get(x, x)
+            )
+
+            interested_package = st.text_input("Paket yang Diminati", placeholder="Contoh: Paket 9 Hari Bintang 4")
+
+            group_size = st.number_input("Jumlah Jamaah", min_value=1, max_value=50, value=1)
+
+        st.markdown("**Budget**")
+        col1, col2 = st.columns(2)
+        with col1:
+            budget_min = st.number_input("Budget Minimum", min_value=0, value=20000000, step=1000000)
+        with col2:
+            budget_max = st.number_input("Budget Maximum", min_value=0, value=35000000, step=1000000)
+
+        preferred_month = st.text_input("Bulan Keberangkatan yang Diinginkan", placeholder="Contoh: Maret 2025")
+
+        notes = st.text_area("Catatan", placeholder="Catatan tambahan tentang lead ini...")
+
+        next_followup = st.date_input("Jadwal Follow-up Berikutnya", value=datetime.now().date() + timedelta(days=1))
+
+        submitted = st.form_submit_button("Simpan Lead", type="primary", use_container_width=True)
+
+        if submitted:
+            if not name or not phone:
+                st.error("Nama dan nomor telepon wajib diisi!")
+            else:
+                try:
+                    from services.crm import CRMRepository, Lead
+                    repo = CRMRepository()
+
+                    lead = Lead(
+                        name=name,
+                        phone=phone,
+                        email=email if email else None,
+                        whatsapp=whatsapp if whatsapp else phone,
+                        source=source,
+                        priority=priority,
+                        interested_package=interested_package if interested_package else None,
+                        group_size=group_size,
+                        budget_min=budget_min,
+                        budget_max=budget_max,
+                        preferred_month=preferred_month if preferred_month else None,
+                        notes=notes if notes else None,
+                        next_followup_date=datetime.combine(next_followup, datetime.min.time())
+                    )
+
+                    lead_id = repo.create_lead(lead)
+                    if lead_id:
+                        st.success(f"Lead berhasil ditambahkan!")
+                        st.session_state.crm_view = "list"
+                        st.rerun()
+                    else:
+                        st.error("Gagal menyimpan lead. Silakan coba lagi.")
+
+                except Exception as e:
+                    logger.error(f"Failed to create lead: {e}")
+                    st.error(f"Gagal menyimpan lead: {str(e)}")
+
+
+def render_lead_detail(lead_id: str):
+    """Render lead detail view."""
+    try:
+        from services.crm import CRMRepository
+        repo = CRMRepository()
+        lead = repo.get_lead(lead_id)
+
+        if not lead:
+            st.error("Lead tidak ditemukan")
+            return
+
+        # Header
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.markdown(f"## {get_priority_emoji(lead.priority)} {lead.name}")
+            st.caption(f"📞 {lead.phone} | 📧 {lead.email or '-'}")
+
+        with col2:
+            if st.button("← Kembali"):
+                st.session_state.crm_view = "list"
+                st.session_state.crm_selected_lead = None
+                st.rerun()
+
+        # Status update
+        st.markdown("---")
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            new_status = st.selectbox(
+                "Status",
+                options=["new", "contacted", "interested", "negotiating", "won", "lost"],
+                index=["new", "contacted", "interested", "negotiating", "won", "lost"].index(lead.status),
+                format_func=lambda x: {
+                    "new": "Baru",
+                    "contacted": "Sudah Dihubungi",
+                    "interested": "Tertarik",
+                    "negotiating": "Negosiasi",
+                    "won": "Deal",
+                    "lost": "Tidak Jadi"
+                }.get(x, x)
+            )
+
+            if new_status != lead.status:
+                if st.button("Update Status"):
+                    repo.update_lead_status(lead_id, new_status)
+                    st.success("Status diupdate!")
+                    st.rerun()
+
+        with col2:
+            st.markdown("**Paket Diminati**")
+            st.write(lead.interested_package or "-")
+
+        with col3:
+            st.markdown("**Budget**")
+            if lead.budget_min or lead.budget_max:
+                st.write(f"{format_rupiah(lead.budget_min or 0)} - {format_rupiah(lead.budget_max or 0)}")
+            else:
+                st.write("-")
+
+        # Details
+        st.markdown("### Detail")
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.markdown(f"**Sumber:** {lead.source}")
+            st.markdown(f"**Jumlah Jamaah:** {lead.group_size}")
+            st.markdown(f"**Bulan Preferensi:** {lead.preferred_month or '-'}")
+
+        with col2:
+            st.markdown(f"**Dibuat:** {format_date(lead.created_at)}")
+            st.markdown(f"**Kontak Terakhir:** {format_date(lead.last_contact_date)}")
+            st.markdown(f"**Follow-up:** {format_date(lead.next_followup_date)}")
+
+        if lead.notes:
+            st.markdown("**Catatan:**")
+            st.write(lead.notes)
+
+        # Activities
+        st.markdown("### Riwayat Aktivitas")
+
+        # Add activity form
+        with st.expander("Tambah Aktivitas"):
+            with st.form("add_activity"):
+                activity_type = st.selectbox(
+                    "Tipe",
+                    options=["call", "whatsapp", "email", "meeting", "note"],
+                    format_func=lambda x: {
+                        "call": "📞 Telepon",
+                        "whatsapp": "💬 WhatsApp",
+                        "email": "📧 Email",
+                        "meeting": "🤝 Meeting",
+                        "note": "📝 Catatan"
+                    }.get(x, x)
+                )
+
+                description = st.text_area("Deskripsi", placeholder="Apa yang terjadi?")
+
+                outcome = st.selectbox(
+                    "Hasil",
+                    options=["", "answered", "no_answer", "callback", "interested", "not_interested", "need_time"],
+                    format_func=lambda x: {
+                        "": "- Pilih -",
+                        "answered": "Dijawab",
+                        "no_answer": "Tidak Diangkat",
+                        "callback": "Minta Dihubungi Lagi",
+                        "interested": "Tertarik",
+                        "not_interested": "Tidak Tertarik",
+                        "need_time": "Butuh Waktu"
+                    }.get(x, x)
+                )
+
+                if st.form_submit_button("Simpan Aktivitas", type="primary"):
+                    from services.crm import LeadActivity
+                    activity = LeadActivity(
+                        lead_id=lead_id,
+                        activity_type=activity_type,
+                        description=description,
+                        outcome=outcome if outcome else None
+                    )
+                    repo.create_activity(activity)
+                    st.success("Aktivitas ditambahkan!")
+                    st.rerun()
+
+        # Activity history
+        activities = repo.get_lead_activities(lead_id)
+        if activities:
+            for act in activities:
+                icon = {
+                    "call": "📞",
+                    "whatsapp": "💬",
+                    "email": "📧",
+                    "meeting": "🤝",
+                    "note": "📝"
+                }.get(act.activity_type, "📌")
+
+                with st.container():
+                    st.markdown(f"**{icon} {act.activity_type.title()}** - {format_date(act.created_at)}")
+                    st.write(act.description or "-")
+                    if act.outcome:
+                        st.caption(f"Hasil: {act.outcome}")
+                    st.divider()
+        else:
+            st.info("Belum ada riwayat aktivitas")
+
+        # Actions
+        st.markdown("### Aksi")
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            if st.button("📋 Buat Quote", use_container_width=True):
+                st.session_state.quote_lead_id = lead_id
+                st.session_state.current_page = "quotes"
+                st.rerun()
+
+        with col2:
+            if st.button("📅 Buat Booking", use_container_width=True):
+                st.session_state.booking_lead_id = lead_id
+                st.session_state.current_page = "bookings"
+                st.rerun()
+
+        with col3:
+            if lead.whatsapp or lead.phone:
+                wa_number = (lead.whatsapp or lead.phone).replace("+", "").replace(" ", "")
+                if wa_number.startswith("0"):
+                    wa_number = "62" + wa_number[1:]
+                st.link_button("💬 WhatsApp", f"https://wa.me/{wa_number}", use_container_width=True)
+
+    except Exception as e:
+        logger.error(f"Failed to load lead detail: {e}")
+        st.error("Gagal memuat detail lead")
+
+
+def render_crm_leads_page():
+    """Main CRM leads page."""
+    try:
+        from services.analytics import track_page
+        track_page("crm_leads")
+    except:
+        pass
+
+    init_session_state()
+
+    # Header
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        st.markdown("# 👥 CRM - Manajemen Lead")
+    with col2:
+        if st.button("➕ Tambah Lead", type="primary", use_container_width=True):
+            st.session_state.crm_view = "add"
+            st.rerun()
+
+    st.markdown("---")
+
+    # Stats
+    render_lead_stats()
+
+    st.markdown("---")
+
+    # View switcher
+    if st.session_state.crm_view == "add":
+        render_add_lead_form()
+    elif st.session_state.crm_view == "detail" and st.session_state.crm_selected_lead:
+        render_lead_detail(st.session_state.crm_selected_lead)
+    else:
+        # View tabs
+        tab1, tab2 = st.tabs(["📋 List View", "📊 Pipeline"])
+
+        with tab1:
+            render_lead_list()
+
+        with tab2:
+            render_pipeline_view()
+
+
+__all__ = ["render_crm_leads_page"]

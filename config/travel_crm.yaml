@@ -1,0 +1,381 @@
+# =============================================================================
+# LABBAIK AI - Travel CRM & Operations Configuration
+# =============================================================================
+
+crm:
+  name: "Travel CRM"
+  version: "1.0"
+
+  # Lead Sources
+  lead_sources:
+    - code: "direct"
+      label: "Langsung"
+      icon: "phone"
+    - code: "referral"
+      label: "Referensi"
+      icon: "users"
+    - code: "social"
+      label: "Media Sosial"
+      icon: "share"
+    - code: "ads"
+      label: "Iklan"
+      icon: "megaphone"
+    - code: "website"
+      label: "Website"
+      icon: "globe"
+    - code: "whatsapp"
+      label: "WhatsApp"
+      icon: "message"
+    - code: "event"
+      label: "Event/Pameran"
+      icon: "calendar"
+
+  # Lead Statuses (Pipeline)
+  lead_statuses:
+    - code: "new"
+      label: "Baru"
+      color: "#3498db"
+      order: 1
+    - code: "contacted"
+      label: "Sudah Dihubungi"
+      color: "#9b59b6"
+      order: 2
+    - code: "interested"
+      label: "Tertarik"
+      color: "#f39c12"
+      order: 3
+    - code: "negotiating"
+      label: "Negosiasi"
+      color: "#e67e22"
+      order: 4
+    - code: "won"
+      label: "Deal/Booking"
+      color: "#27ae60"
+      order: 5
+    - code: "lost"
+      label: "Tidak Jadi"
+      color: "#e74c3c"
+      order: 6
+
+  # Lead Priorities
+  lead_priorities:
+    - code: "low"
+      label: "Rendah"
+      color: "#95a5a6"
+    - code: "medium"
+      label: "Sedang"
+      color: "#3498db"
+    - code: "high"
+      label: "Tinggi"
+      color: "#f39c12"
+    - code: "urgent"
+      label: "Urgent"
+      color: "#e74c3c"
+
+  # Activity Types
+  activity_types:
+    - code: "call"
+      label: "Telepon"
+      icon: "phone"
+    - code: "whatsapp"
+      label: "WhatsApp"
+      icon: "message-circle"
+    - code: "email"
+      label: "Email"
+      icon: "mail"
+    - code: "meeting"
+      label: "Meeting"
+      icon: "users"
+    - code: "note"
+      label: "Catatan"
+      icon: "file-text"
+
+  # Activity Outcomes
+  activity_outcomes:
+    - code: "answered"
+      label: "Dijawab"
+    - code: "no_answer"
+      label: "Tidak Diangkat"
+    - code: "callback"
+      label: "Minta Dihubungi Lagi"
+    - code: "interested"
+      label: "Tertarik"
+    - code: "not_interested"
+      label: "Tidak Tertarik"
+    - code: "need_time"
+      label: "Butuh Waktu"
+
+booking:
+  # Booking Statuses
+  statuses:
+    - code: "draft"
+      label: "Draft"
+      color: "#95a5a6"
+    - code: "confirmed"
+      label: "Dikonfirmasi"
+      color: "#3498db"
+    - code: "processing"
+      label: "Diproses"
+      color: "#f39c12"
+    - code: "completed"
+      label: "Selesai"
+      color: "#27ae60"
+    - code: "cancelled"
+      label: "Dibatalkan"
+      color: "#e74c3c"
+
+  # Payment Statuses
+  payment_statuses:
+    - code: "pending"
+      label: "Belum Bayar"
+      color: "#e74c3c"
+    - code: "dp_paid"
+      label: "DP Lunas"
+      color: "#f39c12"
+    - code: "partial"
+      label: "Cicilan"
+      color: "#3498db"
+    - code: "paid"
+      label: "Lunas"
+      color: "#27ae60"
+    - code: "refunded"
+      label: "Refund"
+      color: "#95a5a6"
+
+  # Package Types
+  package_types:
+    - code: "regular"
+      label: "Regular"
+      description: "Paket standar dengan fasilitas lengkap"
+    - code: "plus"
+      label: "Plus"
+      description: "Paket dengan hotel lebih dekat"
+    - code: "vip"
+      label: "VIP"
+      description: "Paket premium dengan layanan eksklusif"
+
+  # Room Types
+  room_types:
+    - code: "quad"
+      label: "Quad (4 orang)"
+      occupancy: 4
+    - code: "triple"
+      label: "Triple (3 orang)"
+      occupancy: 3
+    - code: "double"
+      label: "Double (2 orang)"
+      occupancy: 2
+    - code: "single"
+      label: "Single (1 orang)"
+      occupancy: 1
+
+payment:
+  # Payment Types
+  types:
+    - code: "dp"
+      label: "DP (Uang Muka)"
+      percentage: 30
+    - code: "installment"
+      label: "Cicilan"
+    - code: "final"
+      label: "Pelunasan"
+    - code: "additional"
+      label: "Biaya Tambahan"
+
+  # Payment Methods
+  methods:
+    - code: "transfer"
+      label: "Transfer Bank"
+      icon: "building"
+    - code: "cash"
+      label: "Tunai"
+      icon: "banknote"
+    - code: "qris"
+      label: "QRIS"
+      icon: "qr-code"
+    - code: "card"
+      label: "Kartu Kredit/Debit"
+      icon: "credit-card"
+
+  # Banks
+  banks:
+    - code: "bca"
+      name: "Bank BCA"
+      account: ""
+    - code: "mandiri"
+      name: "Bank Mandiri"
+      account: ""
+    - code: "bni"
+      name: "Bank BNI"
+      account: ""
+    - code: "bri"
+      name: "Bank BRI"
+      account: ""
+    - code: "bsi"
+      name: "Bank Syariah Indonesia"
+      account: ""
+
+  # Installment Options
+  installment_options:
+    - months: 3
+      label: "3 Bulan"
+      dp_percent: 30
+    - months: 6
+      label: "6 Bulan"
+      dp_percent: 25
+    - months: 9
+      label: "9 Bulan"
+      dp_percent: 20
+    - months: 12
+      label: "12 Bulan"
+      dp_percent: 20
+
+documents:
+  # Required Documents
+  required:
+    - code: "passport"
+      label: "Paspor"
+      description: "Paspor dengan masa berlaku min. 8 bulan"
+      required: true
+    - code: "ktp"
+      label: "KTP"
+      description: "Kartu Tanda Penduduk"
+      required: true
+    - code: "kk"
+      label: "Kartu Keluarga"
+      description: "Kartu Keluarga"
+      required: true
+    - code: "photo"
+      label: "Pas Foto"
+      description: "Pas foto 4x6 latar putih"
+      required: true
+    - code: "vaccine"
+      label: "Sertifikat Vaksin"
+      description: "Sertifikat vaksin meningitis"
+      required: true
+
+  # Additional Documents
+  optional:
+    - code: "akta_nikah"
+      label: "Akta Nikah"
+      description: "Untuk pasangan suami istri"
+    - code: "akta_lahir"
+      label: "Akta Kelahiran"
+      description: "Untuk anak di bawah umur"
+    - code: "surat_izin"
+      label: "Surat Izin Mahram"
+      description: "Untuk wanita tanpa mahram"
+
+  # Document Statuses
+  statuses:
+    - code: "pending"
+      label: "Belum Upload"
+      color: "#95a5a6"
+    - code: "uploaded"
+      label: "Sudah Upload"
+      color: "#3498db"
+    - code: "verified"
+      label: "Terverifikasi"
+      color: "#27ae60"
+    - code: "rejected"
+      label: "Ditolak"
+      color: "#e74c3c"
+
+broadcast:
+  # Message Templates
+  templates:
+    - code: "promo"
+      name: "Promo Umrah"
+      template: |
+        Assalamualaikum {name},
+
+        Kabar gembira! Kami punya promo spesial untuk Anda:
+
+        {promo_details}
+
+        Hubungi kami segera untuk informasi lebih lanjut!
+
+        Labbaik Travel
+    - code: "reminder_dp"
+      name: "Reminder DP"
+      template: |
+        Assalamualaikum {name},
+
+        Ini adalah pengingat untuk pembayaran DP paket umrah Anda:
+        - Paket: {package_name}
+        - Jumlah DP: {dp_amount}
+        - Jatuh Tempo: {due_date}
+
+        Silakan lakukan pembayaran sebelum jatuh tempo.
+
+        Terima kasih,
+        Labbaik Travel
+    - code: "reminder_payment"
+      name: "Reminder Cicilan"
+      template: |
+        Assalamualaikum {name},
+
+        Pengingat pembayaran cicilan ke-{installment_number}:
+        - Jumlah: {amount}
+        - Jatuh Tempo: {due_date}
+
+        Terima kasih,
+        Labbaik Travel
+    - code: "departure_reminder"
+      name: "Reminder Keberangkatan"
+      template: |
+        Assalamualaikum {name},
+
+        Persiapkan diri Anda! Keberangkatan umrah tinggal {days_left} hari lagi.
+
+        Tanggal: {departure_date}
+        Berkumpul: {meeting_point}
+
+        Pastikan semua dokumen sudah siap.
+
+        Labbaik Travel
+
+analytics:
+  # KPIs to track
+  kpis:
+    - code: "total_leads"
+      label: "Total Leads"
+      icon: "users"
+    - code: "conversion_rate"
+      label: "Conversion Rate"
+      icon: "percent"
+    - code: "total_bookings"
+      label: "Total Booking"
+      icon: "calendar"
+    - code: "total_revenue"
+      label: "Total Revenue"
+      icon: "dollar-sign"
+    - code: "avg_booking_value"
+      label: "Rata-rata Nilai Booking"
+      icon: "trending-up"
+    - code: "pending_payments"
+      label: "Pembayaran Tertunda"
+      icon: "clock"
+
+  # Chart periods
+  periods:
+    - code: "7d"
+      label: "7 Hari"
+    - code: "30d"
+      label: "30 Hari"
+    - code: "90d"
+      label: "3 Bulan"
+    - code: "365d"
+      label: "1 Tahun"
+
+competitors:
+  # Known competitors to monitor
+  list:
+    - name: "Al Hijaz"
+      website: "https://alhijaz.co.id"
+    - name: "Patuna Travel"
+      website: "https://patuna.co.id"
+    - name: "Al Azhar"
+      website: "https://alazhar-travel.com"
+    - name: "Arminareka"
+      website: "https://arminareka.com"
