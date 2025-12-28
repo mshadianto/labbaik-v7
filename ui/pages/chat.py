@@ -332,19 +332,51 @@ def render_quick_questions():
 
 def render_chat_messages():
     """Render chat message history."""
-    
+
     messages = st.session_state.chat_messages
-    
-    for msg in messages:
+    tts_enabled = st.session_state.get("tts_enabled", False)
+
+    for idx, msg in enumerate(messages):
         role = msg["role"]
         content = msg["content"]
-        
+
         if role == "user":
             with st.chat_message("user"):
                 st.markdown(content)
         else:
             with st.chat_message("assistant", avatar="🕋"):
                 st.markdown(content)
+
+                # TTS button for assistant messages (only last message to keep it clean)
+                if tts_enabled and idx == len(messages) - 1:
+                    render_tts_player(content, idx)
+
+
+def render_tts_player(text: str, message_idx: int):
+    """Render TTS audio player for a message."""
+    try:
+        from services.ai.speech_service import text_to_speech, is_tts_available
+
+        if not is_tts_available():
+            return
+
+        # Use session state to cache audio
+        cache_key = f"tts_audio_{message_idx}"
+
+        col1, col2 = st.columns([1, 4])
+        with col1:
+            if st.button("🔊 Dengar", key=f"tts_btn_{message_idx}", use_container_width=True):
+                with st.spinner("Membuat audio..."):
+                    audio_bytes = text_to_speech(text)
+                    if audio_bytes:
+                        st.session_state[cache_key] = audio_bytes
+
+        # Play cached audio if available
+        if cache_key in st.session_state and st.session_state[cache_key]:
+            st.audio(st.session_state[cache_key], format="audio/mp3")
+
+    except Exception as e:
+        pass  # Silently fail for TTS
 
 
 def render_follow_up_suggestions():
@@ -410,6 +442,32 @@ def render_chat_features():
 
             except Exception as e:
                 st.error(f"Gagal memproses audio: {str(e)}")
+
+        st.divider()
+
+        # TTS Toggle Section
+        st.markdown("##### 🔊 Voice Response")
+        tts_col1, tts_col2 = st.columns([3, 2])
+
+        with tts_col1:
+            tts_enabled = st.toggle(
+                "Aktifkan respon suara",
+                value=st.session_state.get("tts_enabled", False),
+                key="tts_toggle",
+                help="AI akan membacakan jawaban dengan suara"
+            )
+            st.session_state.tts_enabled = tts_enabled
+
+        with tts_col2:
+            if tts_enabled:
+                try:
+                    from services.ai.speech_service import is_tts_available
+                    if is_tts_available():
+                        st.success("✓ TTS Aktif", icon="🔊")
+                    else:
+                        st.warning("edge-tts belum terinstall")
+                except:
+                    st.warning("TTS tidak tersedia")
 
         st.divider()
 
