@@ -235,3 +235,215 @@ def sanitize_for_logging(data: Dict[str, Any]) -> Dict[str, Any]:
         else:
             sanitized[key] = value
     return sanitized
+
+
+# =============================================================================
+# CSRF PROTECTION
+# =============================================================================
+
+import secrets
+import hashlib
+import os
+
+def generate_csrf_token() -> str:
+    """Generate a new CSRF token."""
+    return secrets.token_urlsafe(32)
+
+
+def get_csrf_secret() -> str:
+    """Get CSRF secret key from environment or generate one."""
+    secret = os.getenv("CSRF_SECRET_KEY")
+    if not secret:
+        # Fallback to session-based secret (less secure but works without env var)
+        secret = "labbaik-csrf-fallback-key-change-in-production"
+        logger.warning("CSRF_SECRET_KEY not set, using fallback. Set this in production!")
+    return secret
+
+
+def create_csrf_token(session_id: str) -> str:
+    """Create a CSRF token tied to a session."""
+    secret = get_csrf_secret()
+    token_data = f"{session_id}:{secrets.token_urlsafe(16)}"
+    signature = hashlib.sha256(f"{token_data}:{secret}".encode()).hexdigest()[:16]
+    return f"{token_data}:{signature}"
+
+
+def verify_csrf_token(token: str, session_id: str) -> bool:
+    """Verify a CSRF token."""
+    if not token:
+        return False
+
+    try:
+        parts = token.rsplit(":", 2)
+        if len(parts) != 3:
+            return False
+
+        stored_session, random_part, signature = parts
+
+        # Verify session matches
+        if stored_session != session_id:
+            logger.warning(f"CSRF session mismatch")
+            return False
+
+        # Verify signature
+        secret = get_csrf_secret()
+        token_data = f"{stored_session}:{random_part}"
+        expected_sig = hashlib.sha256(f"{token_data}:{secret}".encode()).hexdigest()[:16]
+
+        if not secrets.compare_digest(signature, expected_sig):
+            logger.warning("CSRF signature mismatch")
+            return False
+
+        return True
+
+    except Exception as e:
+        logger.error(f"CSRF verification error: {e}")
+        return False
+
+
+# =============================================================================
+# AUDIT LOGGING
+# =============================================================================
+
+import json
+from typing import Optional as Opt
+
+# Audit log store (in production, use database or external service)
+_audit_log: list = []
+
+
+class AuditAction:
+    """Audit action types."""
+    CREATE = "CREATE"
+    UPDATE = "UPDATE"
+    DELETE = "DELETE"
+    LOGIN = "LOGIN"
+    LOGOUT = "LOGOUT"
+    VIEW = "VIEW"
+    EXPORT = "EXPORT"
+    PAYMENT = "PAYMENT"
+    STATUS_CHANGE = "STATUS_CHANGE"
+
+
+def audit_log(
+    action: str,
+    entity_type: str,
+    entity_id: Opt[str] = None,
+    user_id: Opt[str] = None,
+    user_email: Opt[str] = None,
+    details: Opt[Dict[str, Any]] = None,
+    ip_address: Opt[str] = None
+) -> None:
+    """
+    Log an audit event.
+
+    Args:
+        action: The action performed (CREATE, UPDATE, DELETE, etc.)
+        entity_type: Type of entity (lead, booking, jamaah, etc.)
+        entity_id: ID of the entity affected
+        user_id: ID of the user performing the action
+        user_email: Email of the user (for display)
+        details: Additional details about the action
+        ip_address: IP address of the request
+    """
+    audit_entry = {
+        "timestamp": datetime.now().isoformat(),
+        "action": action,
+        "entity_type": entity_type,
+        "entity_id": entity_id,
+        "user_id": user_id,
+        "user_email": user_email,
+        "details": sanitize_for_logging(details) if details else None,
+        "ip_address": ip_address
+    }
+
+    # Log to file/console
+    logger.info(f"AUDIT: {action} {entity_type} {entity_id or ''} by {user_email or 'anonymous'}")
+
+    # Store in memory (in production, write to database)
+    _audit_log.append(audit_entry)
+
+    # Keep only last 1000 entries in memory
+    if len(_audit_log) > 1000:
+        _audit_log.pop(0)
+
+    # Also try to write to database if available
+    try:
+        _write_audit_to_db(audit_entry)
+    except Exception as e:
+        logger.debug(f"Could not write audit to DB: {e}")
+
+
+def _write_audit_to_db(entry: Dict[str, Any]) -> None:
+    """Write audit entry to database."""
+    try:
+        from services.database import get_db_connection
+
+        db = get_db_connection()
+        if db and db.pool:
+            with db.pool.getconn() as conn:
+                with conn.cursor() as cur:
+                    cur.execute("""
+                        INSERT INTO crm_analytics (event_type, entity_type, entity_id, user_id, data)
+                        VALUES (%s, %s, %s, %s, %s)
+                    """, (
+                        f"audit_{entry['action'].lower()}",
+                        entry['entity_type'],
+                        entry['entity_id'],
+                        entry['user_id'],
+                        json.dumps(entry['details']) if entry['details'] else None
+                    ))
+                    conn.commit()
+                db.pool.putconn(conn)
+    except Exception:
+        pass  # Silently fail, audit is logged to console
+
+
+def get_audit_log(
+    entity_type: Opt[str] = None,
+    entity_id: Opt[str] = None,
+    user_id: Opt[str] = None,
+    limit: int = 100
+) -> list:
+    """Get recent audit log entries."""
+    filtered = _audit_log
+
+    if entity_type:
+        filtered = [e for e in filtered if e.get("entity_type") == entity_type]
+
+    if entity_id:
+        filtered = [e for e in filtered if e.get("entity_id") == entity_id]
+
+    if user_id:
+        filtered = [e for e in filtered if e.get("user_id") == user_id]
+
+    return list(reversed(filtered[-limit:]))
+
+
+# =============================================================================
+# STREAMLIT CSRF HELPER
+# =============================================================================
+
+def init_csrf_protection():
+    """Initialize CSRF protection in Streamlit session."""
+    import streamlit as st
+
+    if "csrf_token" not in st.session_state:
+        session_id = st.session_state.get("session_id", secrets.token_urlsafe(16))
+        st.session_state.session_id = session_id
+        st.session_state.csrf_token = create_csrf_token(session_id)
+
+    return st.session_state.csrf_token
+
+
+def validate_csrf():
+    """Validate CSRF token from Streamlit session."""
+    import streamlit as st
+
+    token = st.session_state.get("csrf_token")
+    session_id = st.session_state.get("session_id")
+
+    if not token or not session_id:
+        return False
+
+    return verify_csrf_token(token, session_id)

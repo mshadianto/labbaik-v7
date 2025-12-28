@@ -316,7 +316,17 @@ def render_add_lead_form():
             else:
                 try:
                     from services.crm import CRMRepository, Lead
-                    from services.crm.security import validate_phone, validate_email
+                    from services.crm.security import (
+                        validate_phone, validate_email, check_rate_limit,
+                        audit_log, AuditAction
+                    )
+
+                    # Rate limiting: max 10 leads per minute per session
+                    session_key = st.session_state.get("session_id", "anonymous")
+                    if not check_rate_limit(f"create_lead:{session_key}", max_requests=10, window_seconds=60):
+                        st.error("Terlalu banyak permintaan. Silakan tunggu sebentar.")
+                        st.stop()
+
                     repo = CRMRepository()
 
                     # Input validation
@@ -350,6 +360,16 @@ def render_add_lead_form():
 
                     lead_id = repo.create_lead(lead)
                     if lead_id:
+                        # Audit log
+                        user = st.session_state.get("user", {})
+                        audit_log(
+                            action=AuditAction.CREATE,
+                            entity_type="lead",
+                            entity_id=lead_id,
+                            user_id=user.get("id"),
+                            user_email=user.get("email"),
+                            details={"name": name.strip(), "phone": validated_phone, "source": source}
+                        )
                         st.success(f"Lead berhasil ditambahkan!")
                         st.session_state.crm_view = "list"
                         st.rerun()

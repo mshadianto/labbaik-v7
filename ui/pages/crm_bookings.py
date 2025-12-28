@@ -245,7 +245,16 @@ def render_add_booking_form():
             else:
                 try:
                     from services.crm import CRMRepository, Booking, Jamaah
-                    from services.crm.security import validate_phone
+                    from services.crm.security import (
+                        validate_phone, check_rate_limit, audit_log, AuditAction
+                    )
+
+                    # Rate limiting: max 5 bookings per minute per session
+                    session_key = st.session_state.get("session_id", "anonymous")
+                    if not check_rate_limit(f"create_booking:{session_key}", max_requests=5, window_seconds=60):
+                        st.error("Terlalu banyak permintaan. Silakan tunggu sebentar.")
+                        st.stop()
+
                     repo = CRMRepository()
 
                     # Input validation
@@ -285,6 +294,20 @@ def render_add_booking_form():
 
                     booking_id = repo.create_booking(booking)
                     if booking_id:
+                        # Audit log
+                        user = st.session_state.get("user", {})
+                        audit_log(
+                            action=AuditAction.CREATE,
+                            entity_type="booking",
+                            entity_id=booking_id,
+                            user_id=user.get("id"),
+                            user_email=user.get("email"),
+                            details={
+                                "package_name": package_name,
+                                "total_price": total_price,
+                                "jamaah_name": jamaah_name.strip()
+                            }
+                        )
                         st.success("Booking berhasil dibuat!")
                         st.session_state.booking_view = "list"
                         st.rerun()

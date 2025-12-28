@@ -168,7 +168,17 @@ def render_add_jamaah_form():
             else:
                 try:
                     from services.crm import CRMRepository, Jamaah
-                    from services.crm.security import validate_phone, validate_email, validate_nik, validate_passport
+                    from services.crm.security import (
+                        validate_phone, validate_email, validate_nik, validate_passport,
+                        check_rate_limit, audit_log, AuditAction
+                    )
+
+                    # Rate limiting: max 10 jamaah per minute per session
+                    session_key = st.session_state.get("session_id", "anonymous")
+                    if not check_rate_limit(f"create_jamaah:{session_key}", max_requests=10, window_seconds=60):
+                        st.error("Terlalu banyak permintaan. Silakan tunggu sebentar.")
+                        st.stop()
+
                     repo = CRMRepository()
 
                     # Input validation
@@ -222,6 +232,16 @@ def render_add_jamaah_form():
 
                     jamaah_id = repo.create_jamaah(jamaah)
                     if jamaah_id:
+                        # Audit log
+                        user = st.session_state.get("user", {})
+                        audit_log(
+                            action=AuditAction.CREATE,
+                            entity_type="jamaah",
+                            entity_id=jamaah_id,
+                            user_id=user.get("id"),
+                            user_email=user.get("email"),
+                            details={"full_name": full_name.strip(), "phone": validated_phone}
+                        )
                         st.success("Jamaah berhasil ditambahkan!")
                         st.session_state.jamaah_view = "list"
                         st.rerun()
