@@ -929,7 +929,7 @@ def render_features_showcase():
             "highlight": "24/7 AI Support"
         },
         {
-            "icon": "🐷",
+            "icon": "🕌",
             "title": "Tabungan Tracker",
             "description": "Set target tabungan umrah, track progress harian, dan dapatkan motivasi untuk mencapai goal Anda.",
             "highlight": "Goal Tracking"

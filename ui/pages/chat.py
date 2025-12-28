@@ -198,6 +198,12 @@ def init_chat_state():
         st.session_state.quick_question = None
         process_user_message(question)
 
+    # Check for voice message from voice input
+    if "voice_message" in st.session_state and st.session_state.voice_message:
+        voice_text = st.session_state.voice_message
+        st.session_state.voice_message = None
+        process_user_message(voice_text)
+
 
 def add_message(role: str, content: str):
     """Add message to chat."""
@@ -371,22 +377,53 @@ def render_chat_input():
 
 def render_chat_features():
     """Render additional chat features."""
-    
+
     with st.expander("🛠️ Fitur Tambahan", expanded=False):
-        col1, col2, col3, col4 = st.columns(4)
-        
-        with col1:
-            if st.button("🎤 Voice Input", use_container_width=True):
-                st.info("Fitur voice input akan segera hadir")
-        
+        # Voice Input Section
+        st.markdown("##### 🎤 Voice Input")
+        st.caption("Rekam suara Anda untuk bertanya (Bahasa Indonesia)")
+
+        audio_data = st.audio_input(
+            "Tekan untuk merekam",
+            key="voice_input",
+            label_visibility="collapsed"
+        )
+
+        if audio_data is not None:
+            # Process voice input
+            try:
+                from services.ai.speech_service import transcribe_audio
+
+                with st.spinner("🎧 Mengkonversi suara ke teks..."):
+                    audio_bytes = audio_data.read()
+                    transcribed_text = transcribe_audio(audio_bytes, language="id")
+
+                if transcribed_text:
+                    st.success(f"📝 Terdeteksi: **{transcribed_text}**")
+
+                    # Set as pending message to be sent
+                    if st.button("📤 Kirim Pertanyaan Ini", use_container_width=True, type="primary"):
+                        st.session_state.voice_message = transcribed_text
+                        st.rerun()
+                else:
+                    st.warning("Tidak ada suara terdeteksi. Coba rekam ulang.")
+
+            except Exception as e:
+                st.error(f"Gagal memproses audio: {str(e)}")
+
+        st.divider()
+
+        # Other features
+        col2, col3, col4 = st.columns(3)
+
         with col2:
             if st.button("📷 Upload Gambar", use_container_width=True):
                 st.info("Upload gambar untuk analisis")
-        
+
         with col3:
             if st.button("📄 Upload Dokumen", use_container_width=True):
                 st.info("Upload dokumen untuk review")
-        
+
         with col4:
             if st.button("🔗 Share Chat", use_container_width=True):
                 st.info("Bagikan chat ini")
