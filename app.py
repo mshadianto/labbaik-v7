@@ -198,12 +198,9 @@ try:
     from ui.pages.partner_dashboard import render_partner_dashboard
     from ui.pages.api_docs import render_api_docs_page
     HAS_PARTNER_SYSTEM = True
-    # Alias for backward compatibility
-    render_partner_landing_page = render_partnership_page
 except ImportError:
     HAS_PARTNER_SYSTEM = False
     def render_partnership_page(): st.warning("⚠️ Partnership Portal belum tersedia")
-    def render_partner_landing_page(): st.warning("⚠️ Partner Landing belum tersedia")
     def render_partner_dashboard(): st.warning("⚠️ Partner Dashboard belum tersedia")
     def render_api_docs_page(): st.warning("⚠️ API Docs belum tersedia")
 
@@ -549,7 +546,7 @@ def render_sidebar():
                     <div style="color: #333; font-size: 0.75rem;">Komisi hingga 15%</div>
                 </div>
             """, unsafe_allow_html=True)
-            if st.button("Daftar Mitra", key="nav_partner_cta", use_container_width=True):
+            if st.button("Gabung Mitra", key="nav_partner_cta", use_container_width=True):
                 st.session_state.current_page = "partner"
                 st.rerun()
 
@@ -674,7 +671,7 @@ def render_page():
         "referral": render_referral_page,
 
         # Partner System
-        "partner": render_partner_landing_page,
+        "partner": render_partnership_page,
         "partner_dashboard": render_partner_dashboard,
         "api_docs": render_api_docs_page,
     }
