@@ -14,15 +14,24 @@ debug: true
 # =============================================================================
 # DATABASE CONFIGURATION
 # =============================================================================
+# OPTIMIZED FOR NEON FREE TIER (0.25 CU, ~192 hours/month)
 database:
   # Database URL (override with DATABASE_URL env var)
+  # TIP: Use pooler endpoint: ep-xxx-pooler.neon.tech
   url: ""
-  
-  # Connection pool settings
-  pool_size: 5
-  max_overflow: 10
+
+  # Connection pool settings - Reduced for free tier
+  pool_size: 2           # Was 5, reduced to save connections
+  max_overflow: 3        # Was 10, reduced
   pool_timeout: 30
-  
+
+  # Query optimization
+  enable_query_cache: true
+  query_cache_ttl: 300   # 5 minutes
+
+  # Demo mode - Set USE_DEMO_MODE=true to bypass DB
+  demo_mode_fallback: true
+
   # SQL echo for debugging
   echo: false
 

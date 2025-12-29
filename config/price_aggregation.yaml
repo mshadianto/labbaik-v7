@@ -51,40 +51,47 @@ partner_feeds:
     min_duration_days: 5
     max_duration_days: 45
 
-# Scheduler
+# Scheduler - Optimized for Neon Free Tier
+# IMPORTANT: Reduce frequency to save compute hours
 scheduler:
   enabled: true
   jobs:
     api_refresh:
       enabled: true
-      interval_hours: 2
+      interval_hours: 6        # Was 2, now 6 (save compute)
     ota_scraping:
       enabled: true
-      interval_hours: 6
+      interval_hours: 12       # Was 6, now 12 (save compute)
     partner_sync:
       enabled: true
-      interval_hours: 1
+      interval_hours: 4        # Was 1, now 4 (save compute)
     cache_cleanup:
       enabled: true
-      interval_hours: 4
+      interval_hours: 6        # Was 4, now 6
     history_snapshot:
       enabled: true
-      interval_hours: 4
+      interval_hours: 12       # Was 4, now 12 (save compute)
+    data_cleanup:              # NEW: Remove old data
+      enabled: true
+      interval_hours: 24       # Daily cleanup
+      retention_days: 30       # Keep 30 days of data
 
-# Cache Settings
+# Cache Settings - Optimized for Neon Free Tier
+# IMPORTANT: Longer TTLs = fewer DB queries = less compute
 cache:
   memory:
     enabled: true
-    ttl_seconds: 300  # 5 minutes
+    ttl_seconds: 600   # Was 5 min, now 10 min
     max_entries: 1000
   source_specific:
-    amadeus_ttl_seconds: 7200    # 2 hours
-    xotelo_ttl_seconds: 3600     # 1 hour
-    makcorps_ttl_seconds: 7200   # 2 hours
-    traveloka_ttl_seconds: 21600 # 6 hours
-    tiket_ttl_seconds: 21600     # 6 hours
-    partner_ttl_seconds: 3600    # 1 hour
-    demo_ttl_seconds: 86400      # 24 hours
+    amadeus_ttl_seconds: 14400   # Was 2h, now 4h
+    xotelo_ttl_seconds: 7200     # Was 1h, now 2h
+    makcorps_ttl_seconds: 14400  # Was 2h, now 4h
+    traveloka_ttl_seconds: 43200 # Was 6h, now 12h
+    tiket_ttl_seconds: 43200     # Was 6h, now 12h
+    n8n_ttl_seconds: 21600       # NEW: 6h (n8n workflow)
+    partner_ttl_seconds: 7200    # Was 1h, now 2h
+    demo_ttl_seconds: 86400      # 24 hours (keep)
 
 # Deduplication Settings
 deduplication:
