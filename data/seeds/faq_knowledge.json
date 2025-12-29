@@ -1,0 +1,332 @@
+{
+  "metadata": {
+    "name": "FAQ & Knowledge Base Dataset",
+    "version": "1.0",
+    "description": "Comprehensive FAQ and knowledge base for Umrah planning",
+    "created_at": "2025-01-01",
+    "language": "id",
+    "total_categories": 10,
+    "total_questions": 50
+  },
+  "categories": [
+    {
+      "id": "cat-01",
+      "name": "Persiapan Umrah",
+      "icon": "checklist",
+      "order": 1
+    },
+    {
+      "id": "cat-02",
+      "name": "Dokumen & Visa",
+      "icon": "document",
+      "order": 2
+    },
+    {
+      "id": "cat-03",
+      "name": "Biaya & Pembayaran",
+      "icon": "money",
+      "order": 3
+    },
+    {
+      "id": "cat-04",
+      "name": "Manasik & Tata Cara",
+      "icon": "pray",
+      "order": 4
+    },
+    {
+      "id": "cat-05",
+      "name": "Kesehatan & Keamanan",
+      "icon": "health",
+      "order": 5
+    },
+    {
+      "id": "cat-06",
+      "name": "Hotel & Akomodasi",
+      "icon": "hotel",
+      "order": 6
+    },
+    {
+      "id": "cat-07",
+      "name": "Penerbangan",
+      "icon": "flight",
+      "order": 7
+    },
+    {
+      "id": "cat-08",
+      "name": "Tips & Saran",
+      "icon": "lightbulb",
+      "order": 8
+    },
+    {
+      "id": "cat-09",
+      "name": "Jamaah Khusus",
+      "icon": "people",
+      "order": 9
+    },
+    {
+      "id": "cat-10",
+      "name": "Labbaik App",
+      "icon": "app",
+      "order": 10
+    }
+  ],
+  "faqs": [
+    {
+      "id": "faq-001",
+      "category_id": "cat-01",
+      "question": "Apa saja yang perlu dipersiapkan sebelum berangkat umrah?",
+      "answer": "Persiapan umrah meliputi:\n\n**Dokumen:**\n- Paspor (minimal 8 bulan masa berlaku)\n- Visa umrah\n- Buku vaksin Meningitis\n- Kartu identitas\n\n**Fisik:**\n- Cek kesehatan\n- Vaksin Meningitis (wajib)\n- Latihan jalan kaki\n\n**Spiritual:**\n- Manasik umrah\n- Hafalan doa-doa\n- Tobat dan minta maaf\n- Melunasi hutang\n\n**Perlengkapan:**\n- Ihram (2 set)\n- Pakaian nyaman\n- Obat-obatan pribadi\n- Sandal nyaman\n- Tas kecil untuk ibadah",
+      "tags": ["persiapan", "dokumen", "perlengkapan"],
+      "helpful_count": 1256,
+      "order": 1
+    },
+    {
+      "id": "faq-002",
+      "category_id": "cat-01",
+      "question": "Kapan waktu terbaik untuk umrah?",
+      "answer": "Waktu terbaik tergantung kebutuhan:\n\n**Ramadhan (Maret-April):**\n- Pahala umrah = pahala haji\n- Sangat ramai\n- Harga lebih mahal\n\n**Musim Dingin (Nov-Feb):**\n- Cuaca sejuk (15-25°C)\n- Tidak terlalu ramai\n- Harga normal\n\n**Setelah Haji (Agustus-Oktober):**\n- Relatif sepi\n- Harga lebih murah\n- Cuaca panas\n\n**Liburan Sekolah (Juni-Juli):**\n- Cocok untuk keluarga\n- Agak ramai\n- Cuaca panas\n\nHindari: Musim haji (Dzulhijjah) karena sangat padat.",
+      "tags": ["waktu", "musim", "jadwal"],
+      "helpful_count": 987,
+      "order": 2
+    },
+    {
+      "id": "faq-003",
+      "category_id": "cat-02",
+      "question": "Bagaimana cara mengurus visa umrah?",
+      "answer": "Visa umrah diurus melalui travel agent yang terdaftar di Kemenag:\n\n**Persyaratan:**\n- Paspor asli (min. 8 bulan berlaku)\n- Pas foto 4x6 (background putih)\n- KTP asli\n- Buku nikah (untuk wanita <45 tahun)\n- Kartu keluarga\n- Sertifikat vaksin Meningitis\n\n**Proses:**\n1. Daftar di travel agent resmi\n2. Serahkan dokumen\n3. Travel agent mengurus ke KBSA\n4. Visa keluar dalam 5-7 hari kerja\n\n**Biaya:** Sudah termasuk dalam paket umrah\n\n**Catatan:** Wanita <45 tahun harus dengan mahram.",
+      "tags": ["visa", "dokumen", "persyaratan"],
+      "helpful_count": 1543,
+      "order": 1
+    },
+    {
+      "id": "faq-004",
+      "category_id": "cat-02",
+      "question": "Berapa lama masa berlaku paspor untuk umrah?",
+      "answer": "Paspor harus memiliki masa berlaku **minimal 8 bulan** dari tanggal keberangkatan.\n\n**Contoh:**\nJika berangkat 15 Maret 2025, paspor harus berlaku hingga minimal 15 November 2025.\n\n**Tips:**\n- Perpanjang paspor jika kurang dari 1 tahun\n- Proses perpanjangan memakan waktu 3-5 hari kerja\n- Biaya perpanjangan: Rp 350.000 (48 halaman) atau Rp 650.000 (e-passport)\n\n**Penting:** Nama di paspor harus sama persis dengan dokumen lain (KTP, ijazah).",
+      "tags": ["paspor", "dokumen", "persyaratan"],
+      "helpful_count": 876,
+      "order": 2
+    },
+    {
+      "id": "faq-005",
+      "category_id": "cat-03",
+      "question": "Berapa biaya umrah rata-rata?",
+      "answer": "Biaya umrah bervariasi tergantung paket:\n\n**Paket Ekonomis (Bintang 3):**\nRp 18-25 juta/orang\n- Hotel jarak 500-800m dari Haram\n- Makan 2-3x sehari\n- Durasi 7-9 hari\n\n**Paket Reguler (Bintang 4):**\nRp 25-35 juta/orang\n- Hotel jarak 200-500m dari Haram\n- Makan 3x sehari\n- Durasi 9-12 hari\n\n**Paket Premium (Bintang 5):**\nRp 35-55 juta/orang\n- Hotel <200m dari Haram\n- Makan prasmanan internasional\n- City tour lengkap\n\n**Paket VIP/First Class:**\nRp 70-150 juta/orang\n- Hotel view Haram\n- Business/First class\n- Personal muthawwif",
+      "tags": ["biaya", "harga", "paket"],
+      "helpful_count": 2345,
+      "order": 1
+    },
+    {
+      "id": "faq-006",
+      "category_id": "cat-03",
+      "question": "Apakah bisa cicilan untuk umrah?",
+      "answer": "Ya, banyak travel agent menawarkan cicilan:\n\n**Jenis Cicilan:**\n\n1. **Cicilan Bank (Kredit)**\n   - Tenor: 6-36 bulan\n   - Bunga: 0-1.5%/bulan\n   - Syarat: Kartu kredit atau slip gaji\n\n2. **Cicilan Travel Agent**\n   - DP: 20-30%\n   - Pelunasan: H-30 keberangkatan\n   - Tanpa bunga (beberapa travel)\n\n3. **Tabungan Umrah (Bank Syariah)**\n   - BSI, BNI Syariah, dll\n   - Tanpa bunga\n   - Fleksibel\n\n**Tips:**\n- Pilih cicilan tanpa bunga (riba)\n- Pastikan lunas sebelum berangkat\n- Baca syarat & ketentuan dengan teliti",
+      "tags": ["cicilan", "pembayaran", "kredit"],
+      "helpful_count": 1654,
+      "order": 2
+    },
+    {
+      "id": "faq-007",
+      "category_id": "cat-04",
+      "question": "Apa saja rukun umrah yang wajib dilakukan?",
+      "answer": "**5 Rukun Umrah (Wajib):**\n\n1. **Ihram dari Miqat**\n   - Niat umrah dalam hati\n   - Mengucapkan: \"Labbaikallahumma bi'umrah\"\n   - Memakai pakaian ihram\n\n2. **Tawaf (7 putaran)**\n   - Mengelilingi Ka'bah 7x\n   - Dimulai dari Hajar Aswad\n   - Searah jarum jam\n\n3. **Sa'i (7 kali)**\n   - Berjalan Shafa ke Marwah (4x)\n   - Marwah ke Shafa (3x)\n   - Total 7 kali\n\n4. **Tahallul (Cukur/Potong Rambut)**\n   - Pria: Dicukur/dipendekkan\n   - Wanita: Dipotong sedikit (3cm)\n\n5. **Tertib**\n   - Urutan harus sesuai\n\nJika satu rukun terlewat, umrah tidak sah.",
+      "tags": ["rukun", "tata cara", "wajib"],
+      "helpful_count": 3456,
+      "order": 1
+    },
+    {
+      "id": "faq-008",
+      "category_id": "cat-04",
+      "question": "Apa saja yang dilarang saat ihram?",
+      "answer": "**Larangan Ihram untuk Pria:**\n- Memakai pakaian berjahit\n- Menutup kepala dengan sesuatu yang menempel\n- Memakai sandal yang menutupi mata kaki\n\n**Larangan Ihram untuk Wanita:**\n- Memakai cadar/penutup wajah\n- Memakai sarung tangan\n\n**Larangan untuk Semua:**\n- Mencukur/mencabut rambut\n- Memotong kuku\n- Memakai wewangian\n- Berburu/membunuh binatang darat\n- Menikah/menikahkan\n- Berhubungan suami-istri\n- Mencaci/bertengkar\n\n**Jika Melanggar:**\n- Harus bayar dam (denda)\n- Jenis dam berbeda-beda",
+      "tags": ["ihram", "larangan", "hukum"],
+      "helpful_count": 2134,
+      "order": 2
+    },
+    {
+      "id": "faq-009",
+      "category_id": "cat-05",
+      "question": "Vaksin apa yang wajib untuk umrah?",
+      "answer": "**Vaksin Wajib:**\n\n1. **Meningitis Meningokokus**\n   - WAJIB untuk semua jamaah\n   - Berlaku 3 tahun\n   - Biaya: Rp 300.000-400.000\n   - Dilakukan di Kantor Kesehatan Pelabuhan (KKP)\n\n**Vaksin Direkomendasikan:**\n\n2. **Influenza**\n   - Sangat dianjurkan\n   - Berlaku 1 tahun\n\n3. **COVID-19**\n   - Sesuai ketentuan terbaru\n   - Minimal dosis lengkap\n\n4. **Pneumonia**\n   - Untuk lansia (>60 tahun)\n\n**Prosedur:**\n1. Datang ke KKP dengan paspor asli\n2. Isi formulir\n3. Vaksinasi\n4. Terima ICV (buku kuning)\n\n**Waktu:** Minimal 2 minggu sebelum berangkat",
+      "tags": ["vaksin", "kesehatan", "meningitis"],
+      "helpful_count": 1876,
+      "order": 1
+    },
+    {
+      "id": "faq-010",
+      "category_id": "cat-05",
+      "question": "Tips kesehatan selama umrah?",
+      "answer": "**Sebelum Berangkat:**\n- Medical checkup\n- Bawa obat rutin (stok cukup)\n- Bawa P3K pribadi\n- Istirahat cukup\n\n**Selama di Tanah Suci:**\n\n1. **Minum Air Zamzam**\n   - Minum banyak (min 2L/hari)\n   - Selalu bawa botol\n\n2. **Jaga Pola Makan**\n   - Makan teratur\n   - Hindari makanan mentah\n   - Cuci tangan sebelum makan\n\n3. **Istirahat Cukup**\n   - Jangan memaksakan diri\n   - Tidur min 6 jam/hari\n\n4. **Lindungi dari Cuaca**\n   - Pakai payung/topi\n   - Pakai sunscreen\n   - Pakai masker saat berdebu\n\n5. **Jaga Kebersihan**\n   - Sering cuci tangan\n   - Hindari kerumunan jika sakit\n\n**Obat Wajib Bawa:**\nParacetamol, obat flu, obat diare, plester, hand sanitizer",
+      "tags": ["kesehatan", "tips", "obat"],
+      "helpful_count": 2543,
+      "order": 2
+    },
+    {
+      "id": "faq-011",
+      "category_id": "cat-06",
+      "question": "Apa perbedaan hotel bintang 3, 4, dan 5 untuk umrah?",
+      "answer": "**Hotel Bintang 3:**\n- Jarak: 500-1000m dari Haram\n- Kamar: Standar (16-20 m2)\n- Kapasitas: Quad (4 orang)\n- Fasilitas: AC, TV, kamar mandi dalam\n- Makan: Di hotel atau luar\n- Harga: Rp 400.000-700.000/malam\n\n**Hotel Bintang 4:**\n- Jarak: 200-500m dari Haram\n- Kamar: Superior (22-28 m2)\n- Kapasitas: Triple (3 orang)\n- Fasilitas: + WiFi, minibar, safe deposit\n- Makan: Buffet di hotel\n- Harga: Rp 800.000-1.500.000/malam\n\n**Hotel Bintang 5:**\n- Jarak: <200m dari Haram\n- Kamar: Deluxe (30-40 m2)\n- Kapasitas: Double/Twin (2 orang)\n- Fasilitas: Premium, view Haram, lounge\n- Makan: Multiple restaurant, 24h room service\n- Harga: Rp 2.000.000-10.000.000/malam\n\n**Rekomendasi:**\n- Keluarga dengan anak: Bintang 4-5 (akses mudah)\n- Lansia: Bintang 5 (dekat, fasilitas lengkap)\n- Budget terbatas: Bintang 3 (tetap nyaman)",
+      "tags": ["hotel", "akomodasi", "bintang"],
+      "helpful_count": 1987,
+      "order": 1
+    },
+    {
+      "id": "faq-012",
+      "category_id": "cat-06",
+      "question": "Apakah penting hotel dekat Haram?",
+      "answer": "**Keuntungan Hotel Dekat Haram (<300m):**\n\n1. **Kemudahan Ibadah**\n   - Bisa sholat 5 waktu di Masjid\n   - Tidak capek jalan jauh\n   - Bisa bolak-balik dengan mudah\n\n2. **Hemat Waktu**\n   - Tidak perlu naik shuttle\n   - Lebih banyak waktu ibadah\n\n3. **Keamanan**\n   - Tidak perlu jalan malam jauh\n   - Mudah kembali jika lelah\n\n**Pertimbangan:**\n- Harga lebih mahal\n- Kamar biasanya lebih kecil\n- Bisa lebih berisik\n\n**Untuk Siapa Hotel Jauh OK?**\n- Jamaah muda & sehat\n- Yang ingin hemat biaya\n- Yang tidak keberatan naik shuttle\n\n**Untuk Siapa Harus Dekat?**\n- Lansia\n- Punya masalah kesehatan\n- Keluarga dengan anak kecil\n- Waktu umrah singkat",
+      "tags": ["hotel", "jarak", "haram"],
+      "helpful_count": 1654,
+      "order": 2
+    },
+    {
+      "id": "faq-013",
+      "category_id": "cat-07",
+      "question": "Maskapai apa saja yang terbang ke Arab Saudi?",
+      "answer": "**Penerbangan Langsung dari Indonesia:**\n\n1. **Garuda Indonesia (GA)**\n   - Rute: CGK-JED, CGK-MED, SUB-JED\n   - Kelebihan: Layanan Indonesia, halal\n   - Harga: Rp 14-18 juta\n\n2. **Saudi Arabian Airlines (SV)**\n   - Rute: CGK-JED, CGK-MED\n   - Kelebihan: Langsung, bagasi besar\n   - Harga: Rp 12-15 juta\n\n**Penerbangan Transit:**\n\n3. **Emirates (EK)** - via Dubai\n   - Layanan premium, harga Rp 17-20 juta\n\n4. **Qatar Airways (QR)** - via Doha\n   - Award-winning, Rp 16-19 juta\n\n5. **Turkish Airlines (TK)** - via Istanbul\n   - Bisa sekalian tour Turki, Rp 15-18 juta\n\n6. **Etihad (EY)** - via Abu Dhabi\n   - Rp 15-18 juta\n\n**Rekomendasi:**\n- Hemat waktu: Garuda/Saudia (langsung)\n- Layanan terbaik: Emirates/Qatar\n- Sekalian tour: Turkish (Turki), Emirates (Dubai)",
+      "tags": ["penerbangan", "maskapai", "airlines"],
+      "helpful_count": 1432,
+      "order": 1
+    },
+    {
+      "id": "faq-014",
+      "category_id": "cat-08",
+      "question": "Barang apa saja yang wajib dibawa saat umrah?",
+      "answer": "**Dokumen (PENTING!):**\n- Paspor asli + fotokopi\n- Visa print\n- Tiket pesawat print\n- Buku vaksin (ICV)\n- KTP + fotokopi\n- Pas foto cadangan\n- Kartu asuransi\n\n**Pakaian:**\n- Ihram 2 set (pria)\n- Mukena 2 set (wanita)\n- Baju harian (secukupnya)\n- Jaket/sweater (masjid AC)\n- Sandal nyaman\n- Sepatu untuk perjalanan\n\n**Perlengkapan Ibadah:**\n- Al-Quran kecil\n- Buku doa umrah\n- Tasbih\n- Sajadah travel\n- Kompas kiblat\n\n**Kesehatan:**\n- Obat pribadi (stok cukup)\n- Vitamin\n- Hand sanitizer\n- Masker\n- Plester\n- Sunscreen\n\n**Lainnya:**\n- Tas kecil untuk tawaf\n- Power bank\n- Adaptor colokan (type G)\n- Uang SAR secukupnya",
+      "tags": ["perlengkapan", "barang", "bawa"],
+      "helpful_count": 2876,
+      "order": 1
+    },
+    {
+      "id": "faq-015",
+      "category_id": "cat-08",
+      "question": "Tips agar tidak tersesat di Masjidil Haram?",
+      "answer": "**Sebelum Masuk:**\n1. Hafal nama gate masuk hotel (contoh: Gate King Fahd No. 79)\n2. Foto gate dan landmark sekitar\n3. Simpan nomor HP muthawwif\n4. Bawa kartu hotel\n\n**Saat di Dalam:**\n1. Perhatikan nomor pilar/tiang\n2. Ingat lokasi tempat sandal\n3. Pakai sandal yang unik/berbeda\n4. Jangan taruh sandal sembarangan\n\n**Jika Terpisah:**\n1. Jangan panik\n2. Ke meeting point yang sudah disepakati\n3. Hubungi muthawwif via HP\n4. Minta tolong petugas (Mutawwifin)\n5. Cari papan informasi\n\n**Tips Tambahan:**\n- Selalu bawa HP dengan baterai cukup\n- Install aplikasi maps offline\n- Simpan foto Ka'bah sebagai patokan arah\n- Jalan bersama minimal 2-3 orang\n- Pakai gelang identitas",
+      "tags": ["tips", "masjid", "keamanan"],
+      "helpful_count": 1765,
+      "order": 2
+    },
+    {
+      "id": "faq-016",
+      "category_id": "cat-09",
+      "question": "Apakah lansia bisa ikut umrah?",
+      "answer": "**Ya, lansia bisa umrah dengan persiapan khusus:**\n\n**Persyaratan Tambahan:**\n- Surat keterangan sehat dari dokter\n- Daftar obat rutin yang dikonsumsi\n- Asuransi kesehatan perjalanan\n- Pendamping (mahram) yang sehat\n\n**Pilih Paket yang Tepat:**\n- Hotel bintang 5 sangat dekat Haram (<200m)\n- Kamar double (2 orang)\n- Ada pendamping medis\n- Jadwal santai, banyak istirahat\n- Tersedia wheelchair\n\n**Fasilitas di Masjidil Haram:**\n- Wheelchair gratis tersedia\n- Lantai khusus lansia\n- Toilet khusus disable\n- Petugas siap membantu\n\n**Tips:**\n- Pilih waktu cuaca sejuk (Nov-Feb)\n- Hindari musim ramai (Ramadhan, libur)\n- Bawa obat lebih dari cukup\n- Jangan memaksakan diri\n- Minta bantuan petugas",
+      "tags": ["lansia", "senior", "khusus"],
+      "helpful_count": 1234,
+      "order": 1
+    },
+    {
+      "id": "faq-017",
+      "category_id": "cat-09",
+      "question": "Bagaimana aturan mahram untuk wanita umrah?",
+      "answer": "**Ketentuan Mahram:**\n\n**Wanita < 45 tahun:**\n- WAJIB ditemani mahram\n- Mahram = suami, ayah, anak laki-laki, saudara kandung, paman, dll\n\n**Wanita >= 45 tahun:**\n- Boleh tanpa mahram\n- Dengan rombongan resmi\n- Ada surat izin dari mahram\n\n**Dokumen Mahram:**\n- Buku nikah (jika dengan suami)\n- Kartu keluarga\n- Akta kelahiran (jika dengan ayah/anak)\n\n**Paket Khusus Wanita:**\n- Beberapa travel menyediakan paket khusus\n- Grup khusus wanita dengan muthawwifah\n- Kamar khusus wanita\n\n**Catatan:**\n- Aturan dari Kerajaan Saudi Arabia\n- Travel agent akan membantu dokumen\n- Jika ragu, konsultasikan dengan travel agent",
+      "tags": ["mahram", "wanita", "aturan"],
+      "helpful_count": 2345,
+      "order": 2
+    },
+    {
+      "id": "faq-018",
+      "category_id": "cat-09",
+      "question": "Bisakah membawa anak kecil untuk umrah?",
+      "answer": "**Ya, anak bisa ikut umrah dengan ketentuan:**\n\n**Usia Ideal:**\n- Minimal 5-7 tahun (sudah bisa jalan sendiri)\n- Idealnya sudah baligh (umrah dihitung)\n\n**Persiapan Khusus:**\n1. Pilih paket family-friendly\n2. Hotel dengan family room\n3. Jadwal yang tidak terlalu padat\n4. Bawa stroller jika perlu\n\n**Tips Umrah dengan Anak:**\n- Jelaskan tentang umrah dengan bahasa sederhana\n- Latih anak jalan jauh sebelum berangkat\n- Bawa snack kesukaan anak\n- Bawa obat anak lengkap\n- Bawa mainan kecil untuk di pesawat\n- Kenalkan anak dengan rombongan\n\n**Di Masjidil Haram:**\n- Stroller boleh masuk\n- Ada area untuk keluarga\n- Fasilitas toilet anak tersedia\n- Anak di bawah 7 tahun tidak wajib umrah\n\n**Catatan:**\n- Umrah anak sebelum baligh = pahala untuk orang tua\n- Perlu kesabaran ekstra",
+      "tags": ["anak", "keluarga", "balita"],
+      "helpful_count": 1543,
+      "order": 3
+    },
+    {
+      "id": "faq-019",
+      "category_id": "cat-10",
+      "question": "Apa itu Labbaik AI dan fiturnya?",
+      "answer": "**Labbaik AI** adalah platform berbasis AI untuk membantu perencanaan umrah.\n\n**Fitur Utama:**\n\n1. **AI Chat Assistant**\n   - Tanya jawab seputar umrah 24/7\n   - Rekomendasi paket personal\n   - Informasi manasik & doa\n\n2. **Perbandingan Harga**\n   - Bandingkan 100+ paket umrah\n   - Filter by budget, bintang, tanggal\n   - Update harga real-time\n\n3. **Kalkulator Biaya**\n   - Hitung estimasi biaya lengkap\n   - Termasuk biaya tambahan\n   - Simulasi cicilan\n\n4. **Travel Agent Terpercaya**\n   - Daftar travel agent resmi Kemenag\n   - Rating & review dari jamaah\n   - Kontak langsung via WhatsApp\n\n5. **Panduan Umrah**\n   - Manasik interaktif\n   - Video tutorial\n   - Checklist persiapan\n\n**Gratis untuk semua!**",
+      "tags": ["labbaik", "fitur", "aplikasi"],
+      "helpful_count": 987,
+      "order": 1
+    },
+    {
+      "id": "faq-020",
+      "category_id": "cat-10",
+      "question": "Bagaimana cara menggunakan fitur perbandingan harga?",
+      "answer": "**Cara Menggunakan:**\n\n1. **Buka halaman 'Bandingkan Harga'**\n\n2. **Atur Filter:**\n   - Budget: Min - Max (dalam juta rupiah)\n   - Tanggal keberangkatan\n   - Kota keberangkatan\n   - Rating hotel minimum\n   - Durasi perjalanan\n\n3. **Lihat Hasil:**\n   - Paket akan muncul terurut harga\n   - Klik paket untuk detail lengkap\n   - Bandingkan hingga 5 paket sekaligus\n\n4. **Fitur Tambahan:**\n   - Simpan paket favorit\n   - Set price alert\n   - Share ke WhatsApp\n   - Hubungi travel agent\n\n**Tips:**\n- Gunakan filter 'Terbaik' untuk rekomendasi AI\n- Cek rating & review sebelum memilih\n- Bandingkan minimal 3 paket\n- Perhatikan apa saja yang termasuk/tidak",
+      "tags": ["perbandingan", "harga", "cara"],
+      "helpful_count": 765,
+      "order": 2
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Ihram",
+      "definition": "Niat memasuki ritual umrah/haji dan keadaan suci yang dimulai dari miqat.",
+      "category": "ibadah"
+    },
+    {
+      "term": "Miqat",
+      "definition": "Batas tempat untuk memulai ihram. Untuk jamaah dari Indonesia via Madinah adalah Bir Ali (Dzul Hulaifah).",
+      "category": "tempat"
+    },
+    {
+      "term": "Tawaf",
+      "definition": "Mengelilingi Ka'bah sebanyak 7 kali putaran searah jarum jam, dimulai dari Hajar Aswad.",
+      "category": "ibadah"
+    },
+    {
+      "term": "Sa'i",
+      "definition": "Berjalan/berlari kecil antara bukit Shafa dan Marwah sebanyak 7 kali.",
+      "category": "ibadah"
+    },
+    {
+      "term": "Tahallul",
+      "definition": "Mencukur atau memotong rambut setelah selesai umrah sebagai tanda selesainya ihram.",
+      "category": "ibadah"
+    },
+    {
+      "term": "Hajar Aswad",
+      "definition": "Batu hitam yang terletak di sudut Ka'bah, menjadi titik awal dan akhir tawaf.",
+      "category": "tempat"
+    },
+    {
+      "term": "Multazam",
+      "definition": "Area antara Hajar Aswad dan pintu Ka'bah, tempat mustajab untuk berdoa.",
+      "category": "tempat"
+    },
+    {
+      "term": "Maqam Ibrahim",
+      "definition": "Tempat berdirinya Nabi Ibrahim AS saat membangun Ka'bah, lokasi sholat 2 rakaat setelah tawaf.",
+      "category": "tempat"
+    },
+    {
+      "term": "Raudhah",
+      "definition": "Area di Masjid Nabawi antara mimbar dan makam Rasulullah, disebut taman surga.",
+      "category": "tempat"
+    },
+    {
+      "term": "Muthawwif",
+      "definition": "Pembimbing ibadah umrah/haji yang bertugas mengarahkan jamaah dalam pelaksanaan manasik.",
+      "category": "orang"
+    },
+    {
+      "term": "Mahram",
+      "definition": "Laki-laki yang haram dinikahi wanita (suami, ayah, anak, saudara, paman) yang wajib mendampingi wanita <45 tahun.",
+      "category": "hukum"
+    },
+    {
+      "term": "Dam",
+      "definition": "Denda yang harus dibayar jika melanggar larangan ihram, biasanya dengan menyembelih hewan.",
+      "category": "hukum"
+    },
+    {
+      "term": "Talbiyah",
+      "definition": "Ucapan \"Labbaikallahumma labbaik...\" yang dibaca saat ihram hingga mulai tawaf.",
+      "category": "doa"
+    },
+    {
+      "term": "Zamzam",
+      "definition": "Sumur suci di area Masjidil Haram, airnya memiliki keberkahan dan khasiat kesehatan.",
+      "category": "tempat"
+    },
+    {
+      "term": "PPIU",
+      "definition": "Penyelenggara Perjalanan Ibadah Umrah - izin resmi dari Kemenag untuk travel agent umrah.",
+      "category": "regulasi"
+    }
+  ]
+}

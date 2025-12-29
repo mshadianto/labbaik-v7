@@ -1,0 +1,1337 @@
+{
+  "metadata": {
+    "name": "Umrah Packages Test Dataset",
+    "version": "1.0",
+    "description": "Sample Umrah travel packages for testing Labbaik features",
+    "created_at": "2025-01-01",
+    "total_records": 25
+  },
+  "packages": [
+    {
+      "id": "PKG-001",
+      "name": "Paket Umrah Hemat 9 Hari",
+      "travel_agent": "Cheria Travel",
+      "travel_agent_id": "TA-001",
+      "category": "ekonomis",
+      "price_idr": 25500000,
+      "price_per_person_idr": 25500000,
+      "duration_days": 9,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-03-15", "2025-03-22", "2025-04-05", "2025-04-12"],
+      "airline": "Saudi Arabian Airlines",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Elaf Ajyad Hotel",
+        "stars": 4,
+        "distance_to_haram_m": 300,
+        "nights": 4,
+        "room_type": "quad"
+      },
+      "hotel_madinah": {
+        "name": "Elaf Taiba Hotel",
+        "stars": 4,
+        "distance_to_haram_m": 350,
+        "nights": 3,
+        "room_type": "quad"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP",
+        "Hotel sesuai paket",
+        "Makan 3x sehari (prasmanan)",
+        "Visa Umrah",
+        "Transport AC",
+        "Muthawwif berpengalaman",
+        "Handling bandara",
+        "Air Zamzam 5 liter"
+      ],
+      "exclusions": [
+        "Perlengkapan ibadah",
+        "Tips guide",
+        "Laundry",
+        "Telepon/Internet"
+      ],
+      "itinerary": [
+        {"day": 1, "description": "Berkumpul di Bandara Soekarno-Hatta, check-in, penerbangan ke Madinah"},
+        {"day": 2, "description": "Tiba di Madinah, transfer ke hotel, istirahat, sholat di Masjid Nabawi"},
+        {"day": 3, "description": "Ziarah kota Madinah: Masjid Quba, Jabal Uhud, Masjid Qiblatain"},
+        {"day": 4, "description": "Free time di Madinah, sholat di Raudhah (jika memungkinkan)"},
+        {"day": 5, "description": "Perjalanan ke Makkah via Bir Ali, miqat dan niat Umrah"},
+        {"day": 6, "description": "Pelaksanaan Umrah: Tawaf, Sa'i, Tahallul"},
+        {"day": 7, "description": "Free time di Makkah, sholat di Masjidil Haram"},
+        {"day": 8, "description": "Ziarah kota Makkah: Jabal Rahmah, Muzdalifah, Mina, Jabal Tsur"},
+        {"day": 9, "description": "Transfer ke bandara Jeddah, penerbangan pulang ke Jakarta"}
+      ],
+      "quota": 45,
+      "booked": 28,
+      "is_available": true,
+      "valid_from": "2025-03-01",
+      "valid_until": "2025-06-30",
+      "rating": 4.5,
+      "review_count": 156
+    },
+    {
+      "id": "PKG-002",
+      "name": "Paket Umrah Premium 12 Hari",
+      "travel_agent": "Alhijaz Indowisata",
+      "travel_agent_id": "TA-002",
+      "category": "premium",
+      "price_idr": 45000000,
+      "price_per_person_idr": 45000000,
+      "duration_days": 12,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-03-10", "2025-03-24", "2025-04-07", "2025-04-21"],
+      "airline": "Garuda Indonesia",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Swissotel Makkah",
+        "stars": 5,
+        "distance_to_haram_m": 50,
+        "nights": 5,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "The Oberoi Madina",
+        "stars": 5,
+        "distance_to_haram_m": 200,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP Garuda Indonesia",
+        "Hotel Bintang 5 dekat Haram",
+        "Makan 3x sehari (prasmanan internasional)",
+        "Visa Umrah",
+        "Transport AC Full",
+        "Muthawwif senior berpengalaman",
+        "Handling bandara VIP",
+        "Air Zamzam 10 liter",
+        "City tour lengkap",
+        "Koper & travel bag",
+        "Asuransi perjalanan"
+      ],
+      "exclusions": [
+        "Tips guide (sukarela)",
+        "Laundry pribadi",
+        "Pengeluaran pribadi"
+      ],
+      "itinerary": [
+        {"day": 1, "description": "Berkumpul di Bandara, penerbangan Jakarta-Jeddah dengan Garuda"},
+        {"day": 2, "description": "Tiba Jeddah, langsung ke Makkah, check-in hotel, istirahat"},
+        {"day": 3, "description": "Pelaksanaan Umrah pertama dengan bimbingan muthawwif"},
+        {"day": 4, "description": "Free ibadah di Masjidil Haram, sholat & dzikir"},
+        {"day": 5, "description": "Ziarah Makkah: Jabal Nur (Gua Hira), Jabal Tsur"},
+        {"day": 6, "description": "Ziarah Arafah, Muzdalifah, Mina, Jamarat"},
+        {"day": 7, "description": "Perjalanan ke Madinah, check-in hotel"},
+        {"day": 8, "description": "Ziarah Madinah: Masjid Nabawi, Raudhah"},
+        {"day": 9, "description": "Ziarah: Masjid Quba, Jabal Uhud, Masjid Qiblatain, Kebun Kurma"},
+        {"day": 10, "description": "Free ibadah di Masjid Nabawi"},
+        {"day": 11, "description": "Umrah kedua (opsional), persiapan pulang"},
+        {"day": 12, "description": "Transfer ke bandara Madinah, penerbangan pulang ke Jakarta"}
+      ],
+      "quota": 40,
+      "booked": 35,
+      "is_available": true,
+      "valid_from": "2025-03-01",
+      "valid_until": "2025-06-30",
+      "rating": 4.8,
+      "review_count": 234
+    },
+    {
+      "id": "PKG-003",
+      "name": "Paket Umrah VIP Executive 14 Hari",
+      "travel_agent": "Maktour",
+      "travel_agent_id": "TA-003",
+      "category": "vip",
+      "price_idr": 75000000,
+      "price_per_person_idr": 75000000,
+      "duration_days": 14,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-04-01", "2025-04-15", "2025-05-01"],
+      "airline": "Emirates",
+      "flight_class": "business",
+      "hotel_makkah": {
+        "name": "Raffles Makkah Palace",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 6,
+        "room_type": "double"
+      },
+      "hotel_madinah": {
+        "name": "Dar Al Taqwa Hotel",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 5,
+        "room_type": "double"
+      },
+      "inclusions": [
+        "Tiket Pesawat Business Class Emirates",
+        "Hotel Bintang 5 Premium view Haram",
+        "Full board dining (halal gourmet)",
+        "Visa Umrah Express",
+        "Private transport Mercedes/BMW",
+        "Personal muthawwif (1:10)",
+        "VIP airport handling",
+        "Air Zamzam 20 liter",
+        "Exclusive city tour",
+        "Premium luggage set",
+        "Travel insurance premium",
+        "Laundry service",
+        "24/7 concierge"
+      ],
+      "exclusions": [
+        "Pengeluaran pribadi",
+        "Shopping"
+      ],
+      "quota": 20,
+      "booked": 12,
+      "is_available": true,
+      "valid_from": "2025-04-01",
+      "valid_until": "2025-08-31",
+      "rating": 4.9,
+      "review_count": 89
+    },
+    {
+      "id": "PKG-004",
+      "name": "Paket Umrah Backpacker 7 Hari",
+      "travel_agent": "Patuna Travel",
+      "travel_agent_id": "TA-004",
+      "category": "backpacker",
+      "price_idr": 18500000,
+      "price_per_person_idr": 18500000,
+      "duration_days": 7,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-03-08", "2025-03-15", "2025-03-22", "2025-03-29"],
+      "airline": "Saudi Arabian Airlines",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Dar Al Eiman Grand",
+        "stars": 3,
+        "distance_to_haram_m": 800,
+        "nights": 3,
+        "room_type": "quad"
+      },
+      "hotel_madinah": {
+        "name": "Grand Plaza Madinah",
+        "stars": 3,
+        "distance_to_haram_m": 700,
+        "nights": 2,
+        "room_type": "quad"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP",
+        "Hotel bersih & nyaman",
+        "Makan 2x sehari",
+        "Visa Umrah",
+        "Transport AC",
+        "Guide berbahasa Indonesia"
+      ],
+      "exclusions": [
+        "Makan siang",
+        "Tips",
+        "Perlengkapan ibadah",
+        "Asuransi"
+      ],
+      "quota": 50,
+      "booked": 42,
+      "is_available": true,
+      "valid_from": "2025-03-01",
+      "valid_until": "2025-05-31",
+      "rating": 4.2,
+      "review_count": 312
+    },
+    {
+      "id": "PKG-005",
+      "name": "Paket Umrah Plus Turki 16 Hari",
+      "travel_agent": "Cheria Travel",
+      "travel_agent_id": "TA-001",
+      "category": "plus",
+      "price_idr": 55000000,
+      "price_per_person_idr": 55000000,
+      "duration_days": 16,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-04-10", "2025-05-08", "2025-06-05"],
+      "airline": "Turkish Airlines",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Hilton Suites Makkah",
+        "stars": 5,
+        "distance_to_haram_m": 200,
+        "nights": 5,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "Pullman Zamzam Madina",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "hotel_istanbul": {
+        "name": "Hilton Istanbul Bosphorus",
+        "stars": 5,
+        "nights": 3
+      },
+      "inclusions": [
+        "Tiket Pesawat PP via Istanbul",
+        "Hotel Bintang 5",
+        "Full board meals",
+        "Visa Umrah + Visa Turki",
+        "Transport AC Premium",
+        "Muthawwif profesional",
+        "Tour Istanbul: Hagia Sophia, Blue Mosque, Topkapi Palace",
+        "Bosphorus Cruise",
+        "Shopping tour Grand Bazaar",
+        "Air Zamzam 10 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "quota": 35,
+      "booked": 20,
+      "is_available": true,
+      "valid_from": "2025-04-01",
+      "valid_until": "2025-09-30",
+      "rating": 4.7,
+      "review_count": 78
+    },
+    {
+      "id": "PKG-006",
+      "name": "Paket Umrah Ramadhan 10 Hari",
+      "travel_agent": "Arminareka Perdana",
+      "travel_agent_id": "TA-005",
+      "category": "ramadhan",
+      "price_idr": 42000000,
+      "price_per_person_idr": 42000000,
+      "duration_days": 10,
+      "departure_city": "Surabaya",
+      "departure_dates": ["2025-03-10", "2025-03-17", "2025-03-24"],
+      "airline": "Garuda Indonesia",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Makkah Clock Royal Tower",
+        "stars": 5,
+        "distance_to_haram_m": 50,
+        "nights": 5,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "Shaza Al Madina",
+        "stars": 5,
+        "distance_to_haram_m": 300,
+        "nights": 3,
+        "room_type": "triple"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP dari Surabaya",
+        "Hotel Bintang 5 view Haram",
+        "Sahur & Iftar di hotel",
+        "Visa Umrah",
+        "Transport AC",
+        "Muthawwif khusus Ramadhan",
+        "Kajian Ramadhan bersama ustadz",
+        "Air Zamzam 10 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "special_notes": "Paket khusus bulan Ramadhan dengan program ibadah intensif",
+      "quota": 40,
+      "booked": 38,
+      "is_available": true,
+      "valid_from": "2025-03-01",
+      "valid_until": "2025-03-31",
+      "rating": 4.9,
+      "review_count": 167
+    },
+    {
+      "id": "PKG-007",
+      "name": "Paket Umrah Keluarga 9 Hari",
+      "travel_agent": "Alhijaz Indowisata",
+      "travel_agent_id": "TA-002",
+      "category": "keluarga",
+      "price_idr": 28000000,
+      "price_per_person_idr": 28000000,
+      "duration_days": 9,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-06-21", "2025-06-28", "2025-07-05", "2025-07-12"],
+      "airline": "Garuda Indonesia",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Anjum Makkah Hotel",
+        "stars": 5,
+        "distance_to_haram_m": 350,
+        "nights": 4,
+        "room_type": "family"
+      },
+      "hotel_madinah": {
+        "name": "Madinah Hilton",
+        "stars": 5,
+        "distance_to_haram_m": 400,
+        "nights": 3,
+        "room_type": "family"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP",
+        "Family room (connecting)",
+        "Makan 3x sehari (kids menu available)",
+        "Visa Umrah termasuk anak",
+        "Transport AC family-friendly",
+        "Muthawwif sabar dengan anak",
+        "Kids activity pack",
+        "Stroller rental (jika diperlukan)",
+        "Air Zamzam 5 liter/keluarga"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Baby food khusus"
+      ],
+      "special_notes": "Cocok untuk keluarga dengan anak kecil, jadwal fleksibel",
+      "quota": 30,
+      "booked": 15,
+      "is_available": true,
+      "valid_from": "2025-06-01",
+      "valid_until": "2025-08-31",
+      "rating": 4.6,
+      "review_count": 98
+    },
+    {
+      "id": "PKG-008",
+      "name": "Paket Umrah Lansia 12 Hari",
+      "travel_agent": "Patuna Travel",
+      "travel_agent_id": "TA-004",
+      "category": "lansia",
+      "price_idr": 38000000,
+      "price_per_person_idr": 38000000,
+      "duration_days": 12,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-04-05", "2025-04-19", "2025-05-03"],
+      "airline": "Saudi Arabian Airlines",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Pullman ZamZam Makkah",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 5,
+        "room_type": "double"
+      },
+      "hotel_madinah": {
+        "name": "Dar Al Taqwa Hotel",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 4,
+        "room_type": "double"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP dengan wheelchair assistance",
+        "Hotel sangat dekat Haram (walkable)",
+        "Makan 3x sehari (menu sehat)",
+        "Visa Umrah",
+        "Transport AC dengan medical kit",
+        "Muthawwif terlatih lansia",
+        "Wheelchair rental",
+        "Pendamping medis (paramedic)",
+        "Asuransi kesehatan premium",
+        "Air Zamzam 10 liter"
+      ],
+      "exclusions": [
+        "Obat-obatan pribadi",
+        "Tips guide"
+      ],
+      "special_notes": "Jadwal santai, banyak waktu istirahat, pendampingan ekstra",
+      "age_requirement": "55+",
+      "quota": 25,
+      "booked": 18,
+      "is_available": true,
+      "valid_from": "2025-04-01",
+      "valid_until": "2025-06-30",
+      "rating": 4.8,
+      "review_count": 67
+    },
+    {
+      "id": "PKG-009",
+      "name": "Paket Umrah Wanita 9 Hari",
+      "travel_agent": "Maktour",
+      "travel_agent_id": "TA-003",
+      "category": "wanita",
+      "price_idr": 32000000,
+      "price_per_person_idr": 32000000,
+      "duration_days": 9,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-05-10", "2025-05-24", "2025-06-07"],
+      "airline": "Garuda Indonesia",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Swissotel Makkah",
+        "stars": 5,
+        "distance_to_haram_m": 50,
+        "nights": 4,
+        "room_type": "twin"
+      },
+      "hotel_madinah": {
+        "name": "Pullman Zamzam Madina",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 3,
+        "room_type": "twin"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP",
+        "Hotel premium (lantai wanita)",
+        "Makan 3x sehari",
+        "Visa Umrah",
+        "Transport AC khusus wanita",
+        "Muthawwifah (guide wanita)",
+        "Kajian kemuslimahan",
+        "Akses Raudhah terjadwal",
+        "Air Zamzam 5 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "special_notes": "Grup khusus wanita dengan muthawwifah, fokus pada kenyamanan muslimah",
+      "gender_requirement": "female",
+      "quota": 35,
+      "booked": 22,
+      "is_available": true,
+      "valid_from": "2025-05-01",
+      "valid_until": "2025-07-31",
+      "rating": 4.7,
+      "review_count": 134
+    },
+    {
+      "id": "PKG-010",
+      "name": "Paket Umrah Plus Dubai 14 Hari",
+      "travel_agent": "Arminareka Perdana",
+      "travel_agent_id": "TA-005",
+      "category": "plus",
+      "price_idr": 52000000,
+      "price_per_person_idr": 52000000,
+      "duration_days": 14,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-04-15", "2025-05-13", "2025-06-10"],
+      "airline": "Emirates",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Hilton Suites Makkah",
+        "stars": 5,
+        "distance_to_haram_m": 200,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "The Oberoi Madina",
+        "stars": 5,
+        "distance_to_haram_m": 200,
+        "nights": 3,
+        "room_type": "triple"
+      },
+      "hotel_dubai": {
+        "name": "JW Marriott Marquis Dubai",
+        "stars": 5,
+        "nights": 3
+      },
+      "inclusions": [
+        "Tiket Pesawat PP via Dubai",
+        "Hotel Bintang 5 semua kota",
+        "Full board meals",
+        "Visa Umrah + Visa UAE",
+        "Transport AC Premium",
+        "Muthawwif profesional",
+        "Tour Dubai: Burj Khalifa, Dubai Mall, Palm Jumeirah",
+        "Desert Safari",
+        "Dhow Cruise Dinner",
+        "Air Zamzam 10 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "quota": 40,
+      "booked": 25,
+      "is_available": true,
+      "valid_from": "2025-04-01",
+      "valid_until": "2025-09-30",
+      "rating": 4.6,
+      "review_count": 89
+    },
+    {
+      "id": "PKG-011",
+      "name": "Paket Umrah Murah Promo 8 Hari",
+      "travel_agent": "Cheria Travel",
+      "travel_agent_id": "TA-001",
+      "category": "promo",
+      "price_idr": 19900000,
+      "original_price_idr": 25000000,
+      "discount_percent": 20,
+      "price_per_person_idr": 19900000,
+      "duration_days": 8,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-02-20", "2025-02-27"],
+      "airline": "Saudi Arabian Airlines",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Makkah Millennium Hotel",
+        "stars": 4,
+        "distance_to_haram_m": 600,
+        "nights": 4,
+        "room_type": "quad"
+      },
+      "hotel_madinah": {
+        "name": "Frontel Al Harithia",
+        "stars": 4,
+        "distance_to_haram_m": 500,
+        "nights": 2,
+        "room_type": "quad"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP",
+        "Hotel Bintang 4",
+        "Makan 3x sehari",
+        "Visa Umrah",
+        "Transport AC",
+        "Guide berbahasa Indonesia"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Asuransi",
+        "Air Zamzam (beli sendiri)"
+      ],
+      "special_notes": "PROMO TERBATAS! Harga khusus bulan Februari",
+      "promo_ends": "2025-02-15",
+      "quota": 60,
+      "booked": 55,
+      "is_available": true,
+      "valid_from": "2025-02-01",
+      "valid_until": "2025-02-28",
+      "rating": 4.3,
+      "review_count": 45
+    },
+    {
+      "id": "PKG-012",
+      "name": "Paket Umrah Plus Aqsha 18 Hari",
+      "travel_agent": "Alhijaz Indowisata",
+      "travel_agent_id": "TA-002",
+      "category": "plus",
+      "price_idr": 68000000,
+      "price_per_person_idr": 68000000,
+      "duration_days": 18,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-05-05", "2025-06-02"],
+      "airline": "Royal Jordanian",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Raffles Makkah Palace",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 5,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "Dar Al Taqwa Hotel",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "hotel_jerusalem": {
+        "name": "King David Hotel Jerusalem",
+        "stars": 5,
+        "nights": 4
+      },
+      "inclusions": [
+        "Tiket Pesawat PP via Amman",
+        "Hotel Bintang 5 semua kota",
+        "Full board meals",
+        "Visa Umrah + Visa Jordan + Entry Israel",
+        "Transport AC Premium",
+        "Muthawwif & Tour guide profesional",
+        "Tour Masjid Al-Aqsa",
+        "Tour Dome of the Rock",
+        "Tour Bethlehem",
+        "Tour Hebron (Makam Ibrahim)",
+        "Tour Petra Jordan (World Wonder)",
+        "Air Zamzam 10 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "special_notes": "Perjalanan spiritual ke 3 masjid suci: Masjidil Haram, Masjid Nabawi, Masjid Al-Aqsa",
+      "quota": 25,
+      "booked": 10,
+      "is_available": true,
+      "valid_from": "2025-05-01",
+      "valid_until": "2025-08-31",
+      "rating": 4.9,
+      "review_count": 56
+    },
+    {
+      "id": "PKG-013",
+      "name": "Paket Umrah Express 5 Hari",
+      "travel_agent": "Patuna Travel",
+      "travel_agent_id": "TA-004",
+      "category": "express",
+      "price_idr": 22000000,
+      "price_per_person_idr": 22000000,
+      "duration_days": 5,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-03-05", "2025-03-12", "2025-03-19", "2025-03-26"],
+      "airline": "Saudi Arabian Airlines",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Anjum Makkah Hotel",
+        "stars": 5,
+        "distance_to_haram_m": 350,
+        "nights": 2,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "Shaza Al Madina",
+        "stars": 5,
+        "distance_to_haram_m": 300,
+        "nights": 1,
+        "room_type": "triple"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP",
+        "Hotel Bintang 5",
+        "Makan 3x sehari",
+        "Visa Umrah",
+        "Transport AC Express",
+        "Guide berpengalaman"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Air Zamzam"
+      ],
+      "special_notes": "Cocok untuk yang punya waktu terbatas, fokus ibadah utama",
+      "quota": 45,
+      "booked": 30,
+      "is_available": true,
+      "valid_from": "2025-03-01",
+      "valid_until": "2025-06-30",
+      "rating": 4.4,
+      "review_count": 123
+    },
+    {
+      "id": "PKG-014",
+      "name": "Paket Umrah Awal Tahun 10 Hari",
+      "travel_agent": "Maktour",
+      "travel_agent_id": "TA-003",
+      "category": "reguler",
+      "price_idr": 29500000,
+      "price_per_person_idr": 29500000,
+      "duration_days": 10,
+      "departure_city": "Surabaya",
+      "departure_dates": ["2025-01-15", "2025-01-22", "2025-01-29", "2025-02-05"],
+      "airline": "Garuda Indonesia",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Pullman ZamZam Makkah",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "Pullman Zamzam Madina",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP dari Surabaya",
+        "Hotel Bintang 5 dekat Haram",
+        "Makan 3x sehari",
+        "Visa Umrah",
+        "Transport AC",
+        "Muthawwif berpengalaman",
+        "City tour lengkap",
+        "Air Zamzam 5 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "quota": 40,
+      "booked": 25,
+      "is_available": true,
+      "valid_from": "2025-01-01",
+      "valid_until": "2025-02-28",
+      "rating": 4.5,
+      "review_count": 87
+    },
+    {
+      "id": "PKG-015",
+      "name": "Paket Umrah Libur Lebaran 12 Hari",
+      "travel_agent": "Arminareka Perdana",
+      "travel_agent_id": "TA-005",
+      "category": "lebaran",
+      "price_idr": 48000000,
+      "price_per_person_idr": 48000000,
+      "duration_days": 12,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-04-02", "2025-04-05"],
+      "airline": "Garuda Indonesia",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Makkah Clock Royal Tower",
+        "stars": 5,
+        "distance_to_haram_m": 50,
+        "nights": 5,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "The Oberoi Madina",
+        "stars": 5,
+        "distance_to_haram_m": 200,
+        "nights": 5,
+        "room_type": "triple"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP",
+        "Hotel Premium Bintang 5",
+        "Full board halal meals",
+        "Visa Umrah",
+        "Transport AC Premium",
+        "Muthawwif senior",
+        "Sholat Ied di Masjidil Haram/Nabawi",
+        "City tour lengkap",
+        "Air Zamzam 10 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "special_notes": "Rayakan Idul Fitri di Tanah Suci!",
+      "quota": 45,
+      "booked": 40,
+      "is_available": true,
+      "valid_from": "2025-04-01",
+      "valid_until": "2025-04-15",
+      "rating": 4.8,
+      "review_count": 145
+    },
+    {
+      "id": "PKG-016",
+      "name": "Paket Umrah Corporate Group 9 Hari",
+      "travel_agent": "Cheria Travel",
+      "travel_agent_id": "TA-001",
+      "category": "corporate",
+      "price_idr": 35000000,
+      "price_per_person_idr": 35000000,
+      "duration_days": 9,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-05-15", "2025-05-22", "2025-06-12"],
+      "airline": "Garuda Indonesia",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Hilton Suites Makkah",
+        "stars": 5,
+        "distance_to_haram_m": 200,
+        "nights": 4,
+        "room_type": "twin"
+      },
+      "hotel_madinah": {
+        "name": "Madinah Hilton",
+        "stars": 5,
+        "distance_to_haram_m": 400,
+        "nights": 3,
+        "room_type": "twin"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP grup",
+        "Hotel Bintang 5",
+        "Makan 3x sehari",
+        "Visa Umrah",
+        "Transport AC Premium",
+        "Muthawwif dedicated untuk grup",
+        "Meeting room untuk briefing",
+        "Group photo session",
+        "Company banner/merchandise",
+        "Air Zamzam 5 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "special_notes": "Minimum 20 pax, harga khusus corporate",
+      "min_pax": 20,
+      "quota": 100,
+      "booked": 45,
+      "is_available": true,
+      "valid_from": "2025-05-01",
+      "valid_until": "2025-08-31",
+      "rating": 4.6,
+      "review_count": 34
+    },
+    {
+      "id": "PKG-017",
+      "name": "Paket Umrah Honeymoon 10 Hari",
+      "travel_agent": "Alhijaz Indowisata",
+      "travel_agent_id": "TA-002",
+      "category": "honeymoon",
+      "price_idr": 65000000,
+      "price_per_person_idr": 32500000,
+      "price_note": "Harga per pasangan",
+      "duration_days": 10,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-04-20", "2025-05-18", "2025-06-15"],
+      "airline": "Emirates",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Raffles Makkah Palace",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 4,
+        "room_type": "king_suite"
+      },
+      "hotel_madinah": {
+        "name": "The Oberoi Madina",
+        "stars": 5,
+        "distance_to_haram_m": 200,
+        "nights": 4,
+        "room_type": "deluxe_suite"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP (sepasang)",
+        "Suite room dengan view Haram",
+        "Romantic dinner",
+        "Full board gourmet meals",
+        "Visa Umrah (2 orang)",
+        "Private transport",
+        "Personal muthawwif",
+        "Couple spa treatment",
+        "Photography session",
+        "Air Zamzam 10 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "special_notes": "Paket romantis untuk pengantin baru, memulai kehidupan dengan ibadah",
+      "quota": 15,
+      "booked": 8,
+      "is_available": true,
+      "valid_from": "2025-04-01",
+      "valid_until": "2025-09-30",
+      "rating": 4.9,
+      "review_count": 42
+    },
+    {
+      "id": "PKG-018",
+      "name": "Paket Umrah Pesantren 9 Hari",
+      "travel_agent": "Patuna Travel",
+      "travel_agent_id": "TA-004",
+      "category": "pesantren",
+      "price_idr": 23500000,
+      "price_per_person_idr": 23500000,
+      "duration_days": 9,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-06-25", "2025-07-02", "2025-07-09"],
+      "airline": "Saudi Arabian Airlines",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Al Shohada Hotel",
+        "stars": 4,
+        "distance_to_haram_m": 450,
+        "nights": 4,
+        "room_type": "quad"
+      },
+      "hotel_madinah": {
+        "name": "Dar Al Eiman Al Andalus",
+        "stars": 3,
+        "distance_to_haram_m": 600,
+        "nights": 3,
+        "room_type": "quad"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP",
+        "Hotel bersih & nyaman",
+        "Makan 3x sehari (halal)",
+        "Visa Umrah",
+        "Transport AC",
+        "Ustadz/Kyai pendamping",
+        "Kajian ilmu setiap hari",
+        "Manasik intensif",
+        "Air Zamzam 5 liter"
+      ],
+      "exclusions": [
+        "Tips",
+        "Perlengkapan ibadah"
+      ],
+      "special_notes": "Khusus santri & alumni pesantren, dengan pembimbing kyai",
+      "quota": 45,
+      "booked": 35,
+      "is_available": true,
+      "valid_from": "2025-06-01",
+      "valid_until": "2025-07-31",
+      "rating": 4.7,
+      "review_count": 156
+    },
+    {
+      "id": "PKG-019",
+      "name": "Paket Umrah Plus Mesir 15 Hari",
+      "travel_agent": "Maktour",
+      "travel_agent_id": "TA-003",
+      "category": "plus",
+      "price_idr": 58000000,
+      "price_per_person_idr": 58000000,
+      "duration_days": 15,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-05-20", "2025-06-17"],
+      "airline": "EgyptAir",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Swissotel Makkah",
+        "stars": 5,
+        "distance_to_haram_m": 50,
+        "nights": 5,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "Pullman Zamzam Madina",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "hotel_cairo": {
+        "name": "Marriott Mena House Cairo",
+        "stars": 5,
+        "nights": 3
+      },
+      "inclusions": [
+        "Tiket Pesawat PP via Kairo",
+        "Hotel Bintang 5 semua kota",
+        "Full board meals",
+        "Visa Umrah + Visa Mesir",
+        "Transport AC Premium",
+        "Muthawwif & Tour guide profesional",
+        "Tour Piramida Giza & Sphinx",
+        "Tour Museum Mesir",
+        "Tour Islamic Cairo (Al-Azhar, Khan El-Khalili)",
+        "Nile Cruise Dinner",
+        "Air Zamzam 10 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "quota": 35,
+      "booked": 18,
+      "is_available": true,
+      "valid_from": "2025-05-01",
+      "valid_until": "2025-08-31",
+      "rating": 4.7,
+      "review_count": 67
+    },
+    {
+      "id": "PKG-020",
+      "name": "Paket Umrah Arbain 45 Hari",
+      "travel_agent": "Arminareka Perdana",
+      "travel_agent_id": "TA-005",
+      "category": "arbain",
+      "price_idr": 95000000,
+      "price_per_person_idr": 95000000,
+      "duration_days": 45,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-02-01", "2025-03-01"],
+      "airline": "Saudi Arabian Airlines",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Makkah Clock Royal Tower",
+        "stars": 5,
+        "distance_to_haram_m": 50,
+        "nights": 20,
+        "room_type": "double"
+      },
+      "hotel_madinah": {
+        "name": "Dar Al Taqwa Hotel",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 20,
+        "room_type": "double"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP",
+        "Hotel Premium 45 malam",
+        "Full board meals",
+        "Visa Umrah long stay",
+        "Transport AC",
+        "Muthawwif senior",
+        "40 sholat di Masjidil Haram",
+        "40 sholat di Masjid Nabawi",
+        "Kajian rutin dengan ustadz",
+        "Medical checkup",
+        "Air Zamzam 20 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi",
+        "Laundry (paket terpisah tersedia)"
+      ],
+      "special_notes": "Program Arbain: 40 waktu sholat di masing-masing masjid untuk pahala maksimal",
+      "quota": 20,
+      "booked": 5,
+      "is_available": true,
+      "valid_from": "2025-02-01",
+      "valid_until": "2025-04-30",
+      "rating": 5.0,
+      "review_count": 23
+    },
+    {
+      "id": "PKG-021",
+      "name": "Paket Umrah dari Medan 9 Hari",
+      "travel_agent": "Cheria Travel",
+      "travel_agent_id": "TA-001",
+      "category": "reguler",
+      "price_idr": 27500000,
+      "price_per_person_idr": 27500000,
+      "duration_days": 9,
+      "departure_city": "Medan",
+      "departure_dates": ["2025-03-18", "2025-04-08", "2025-04-22"],
+      "airline": "Garuda Indonesia",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Anjum Makkah Hotel",
+        "stars": 5,
+        "distance_to_haram_m": 350,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "Shaza Al Madina",
+        "stars": 5,
+        "distance_to_haram_m": 300,
+        "nights": 3,
+        "room_type": "triple"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP dari Medan",
+        "Hotel Bintang 5",
+        "Makan 3x sehari",
+        "Visa Umrah",
+        "Transport AC",
+        "Muthawwif berbahasa Indonesia",
+        "City tour",
+        "Air Zamzam 5 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "quota": 40,
+      "booked": 22,
+      "is_available": true,
+      "valid_from": "2025-03-01",
+      "valid_until": "2025-06-30",
+      "rating": 4.5,
+      "review_count": 78
+    },
+    {
+      "id": "PKG-022",
+      "name": "Paket Umrah dari Makassar 9 Hari",
+      "travel_agent": "Alhijaz Indowisata",
+      "travel_agent_id": "TA-002",
+      "category": "reguler",
+      "price_idr": 28000000,
+      "price_per_person_idr": 28000000,
+      "duration_days": 9,
+      "departure_city": "Makassar",
+      "departure_dates": ["2025-03-20", "2025-04-10", "2025-04-24"],
+      "airline": "Garuda Indonesia",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Pullman ZamZam Makkah",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "Madinah Hilton",
+        "stars": 5,
+        "distance_to_haram_m": 400,
+        "nights": 3,
+        "room_type": "triple"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP dari Makassar",
+        "Hotel Bintang 5",
+        "Makan 3x sehari",
+        "Visa Umrah",
+        "Transport AC",
+        "Muthawwif",
+        "City tour",
+        "Air Zamzam 5 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "quota": 35,
+      "booked": 18,
+      "is_available": true,
+      "valid_from": "2025-03-01",
+      "valid_until": "2025-06-30",
+      "rating": 4.6,
+      "review_count": 56
+    },
+    {
+      "id": "PKG-023",
+      "name": "Paket Umrah dari Balikpapan 10 Hari",
+      "travel_agent": "Patuna Travel",
+      "travel_agent_id": "TA-004",
+      "category": "reguler",
+      "price_idr": 29000000,
+      "price_per_person_idr": 29000000,
+      "duration_days": 10,
+      "departure_city": "Balikpapan",
+      "departure_dates": ["2025-04-05", "2025-04-19", "2025-05-03"],
+      "airline": "Garuda Indonesia",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Hilton Suites Makkah",
+        "stars": 5,
+        "distance_to_haram_m": 200,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "Pullman Zamzam Madina",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP dari Balikpapan",
+        "Hotel Bintang 5",
+        "Makan 3x sehari",
+        "Visa Umrah",
+        "Transport AC",
+        "Muthawwif",
+        "City tour lengkap",
+        "Air Zamzam 5 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "quota": 30,
+      "booked": 15,
+      "is_available": true,
+      "valid_from": "2025-04-01",
+      "valid_until": "2025-06-30",
+      "rating": 4.4,
+      "review_count": 34
+    },
+    {
+      "id": "PKG-024",
+      "name": "Paket Umrah Reguler Plus 11 Hari",
+      "travel_agent": "Maktour",
+      "travel_agent_id": "TA-003",
+      "category": "reguler",
+      "price_idr": 33000000,
+      "price_per_person_idr": 33000000,
+      "duration_days": 11,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-03-25", "2025-04-08", "2025-04-22", "2025-05-06"],
+      "airline": "Garuda Indonesia",
+      "flight_class": "economy",
+      "hotel_makkah": {
+        "name": "Swissotel Makkah",
+        "stars": 5,
+        "distance_to_haram_m": 50,
+        "nights": 5,
+        "room_type": "triple"
+      },
+      "hotel_madinah": {
+        "name": "The Oberoi Madina",
+        "stars": 5,
+        "distance_to_haram_m": 200,
+        "nights": 4,
+        "room_type": "triple"
+      },
+      "inclusions": [
+        "Tiket Pesawat PP",
+        "Hotel Premium Bintang 5",
+        "Makan 3x sehari (buffet internasional)",
+        "Visa Umrah",
+        "Transport AC Premium",
+        "Muthawwif berpengalaman",
+        "City tour lengkap",
+        "Umrah kedua (optional)",
+        "Air Zamzam 10 liter"
+      ],
+      "exclusions": [
+        "Tips guide",
+        "Pengeluaran pribadi"
+      ],
+      "quota": 45,
+      "booked": 30,
+      "is_available": true,
+      "valid_from": "2025-03-01",
+      "valid_until": "2025-07-31",
+      "rating": 4.7,
+      "review_count": 189
+    },
+    {
+      "id": "PKG-025",
+      "name": "Paket Umrah First Class 10 Hari",
+      "travel_agent": "Arminareka Perdana",
+      "travel_agent_id": "TA-005",
+      "category": "first_class",
+      "price_idr": 125000000,
+      "price_per_person_idr": 125000000,
+      "duration_days": 10,
+      "departure_city": "Jakarta",
+      "departure_dates": ["2025-04-10", "2025-05-08"],
+      "airline": "Emirates",
+      "flight_class": "first",
+      "hotel_makkah": {
+        "name": "Raffles Makkah Palace",
+        "stars": 5,
+        "distance_to_haram_m": 100,
+        "nights": 5,
+        "room_type": "royal_suite"
+      },
+      "hotel_madinah": {
+        "name": "The Oberoi Madina",
+        "stars": 5,
+        "distance_to_haram_m": 200,
+        "nights": 3,
+        "room_type": "presidential_suite"
+      },
+      "inclusions": [
+        "First Class Emirates dengan lounge access",
+        "Royal Suite dengan Haram view",
+        "Private butler service",
+        "Personal chef (halal gourmet)",
+        "Visa Umrah Express VIP",
+        "Rolls Royce/Mercedes S-Class transfer",
+        "Personal muthawwif (1:4)",
+        "Priority access Raudhah",
+        "Full spa & wellness package",
+        "24/7 concierge",
+        "Air Zamzam unlimited"
+      ],
+      "exclusions": [
+        "Pengeluaran pribadi"
+      ],
+      "special_notes": "Pengalaman Umrah ultra-luxury, layanan setara raja",
+      "quota": 8,
+      "booked": 3,
+      "is_available": true,
+      "valid_from": "2025-04-01",
+      "valid_until": "2025-08-31",
+      "rating": 5.0,
+      "review_count": 12
+    }
+  ]
+}

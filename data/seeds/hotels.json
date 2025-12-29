@@ -1,0 +1,852 @@
+{
+  "metadata": {
+    "name": "Hotels Test Dataset",
+    "version": "1.0",
+    "description": "Sample hotels in Makkah and Madinah for testing",
+    "created_at": "2025-01-01",
+    "total_records": 40
+  },
+  "hotels": [
+    {
+      "id": "HTL-MKH-001",
+      "name": "Raffles Makkah Palace",
+      "name_ar": "رافلز مكة بالاس",
+      "city": "Makkah",
+      "stars": 5,
+      "category": "luxury",
+      "distance_to_haram_m": 100,
+      "walking_time_minutes": 2,
+      "latitude": 21.4225,
+      "longitude": 39.8262,
+      "address": "Abraj Al-Bait Complex, King Abdul Aziz Endowment",
+      "description": "Hotel mewah di kompleks Abraj Al-Bait dengan pemandangan langsung Ka'bah",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service 24 Jam",
+        "Concierge",
+        "Laundry",
+        "Spa",
+        "Gym",
+        "Business Center",
+        "Akses Langsung ke Haram"
+      ],
+      "room_types": [
+        {"type": "Deluxe Room", "capacity": 2, "price_per_night_idr": 5500000, "view": "city"},
+        {"type": "Premium Room", "capacity": 2, "price_per_night_idr": 7500000, "view": "haram"},
+        {"type": "Suite", "capacity": 4, "price_per_night_idr": 12000000, "view": "haram"},
+        {"type": "Royal Suite", "capacity": 4, "price_per_night_idr": 25000000, "view": "haram"}
+      ],
+      "rating": 4.9,
+      "review_count": 2345,
+      "images": [
+        "raffles_exterior.jpg",
+        "raffles_lobby.jpg",
+        "raffles_room.jpg",
+        "raffles_view.jpg"
+      ],
+      "check_in_time": "15:00",
+      "check_out_time": "12:00",
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-002",
+      "name": "Swissotel Makkah",
+      "name_ar": "سويس أوتيل مكة",
+      "city": "Makkah",
+      "stars": 5,
+      "category": "luxury",
+      "distance_to_haram_m": 50,
+      "walking_time_minutes": 1,
+      "latitude": 21.4228,
+      "longitude": 39.8265,
+      "address": "Abraj Al-Bait, Ibrahim Al Khalil Street",
+      "description": "Hotel premium di menara jam dengan akses langsung ke Masjidil Haram",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service 24 Jam",
+        "Concierge",
+        "Laundry",
+        "Spa",
+        "Gym",
+        "Akses Langsung ke Haram",
+        "View Ka'bah"
+      ],
+      "room_types": [
+        {"type": "Superior Room", "capacity": 2, "price_per_night_idr": 4000000, "view": "city"},
+        {"type": "Deluxe Room", "capacity": 2, "price_per_night_idr": 5500000, "view": "haram"},
+        {"type": "Executive Suite", "capacity": 4, "price_per_night_idr": 9000000, "view": "haram"}
+      ],
+      "rating": 4.8,
+      "review_count": 3456,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-003",
+      "name": "Makkah Clock Royal Tower",
+      "name_ar": "برج الساعة الملكي مكة",
+      "city": "Makkah",
+      "stars": 5,
+      "category": "luxury",
+      "distance_to_haram_m": 50,
+      "walking_time_minutes": 1,
+      "latitude": 21.4190,
+      "longitude": 39.8266,
+      "address": "Abraj Al-Bait, Clock Tower",
+      "description": "Hotel ikonik di menara jam tertinggi Arab Saudi dengan view Ka'bah spektakuler",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal Internasional",
+        "Room Service 24 Jam",
+        "Concierge Premium",
+        "Laundry Express",
+        "Spa Mewah",
+        "Fitness Center",
+        "View Ka'bah",
+        "Akses VIP Haram"
+      ],
+      "room_types": [
+        {"type": "Deluxe Room", "capacity": 2, "price_per_night_idr": 4500000, "view": "city"},
+        {"type": "Premium Room", "capacity": 3, "price_per_night_idr": 6000000, "view": "haram"},
+        {"type": "Royal Suite", "capacity": 4, "price_per_night_idr": 15000000, "view": "haram"}
+      ],
+      "rating": 4.9,
+      "review_count": 4567,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-004",
+      "name": "Pullman ZamZam Makkah",
+      "name_ar": "بولمان زمزم مكة",
+      "city": "Makkah",
+      "stars": 5,
+      "category": "premium",
+      "distance_to_haram_m": 100,
+      "walking_time_minutes": 2,
+      "latitude": 21.4215,
+      "longitude": 39.8260,
+      "address": "Abraj Al-Bait Complex",
+      "description": "Hotel premium dengan lokasi strategis dan fasilitas lengkap",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service 24 Jam",
+        "Concierge",
+        "Laundry",
+        "Gym"
+      ],
+      "room_types": [
+        {"type": "Superior Room", "capacity": 2, "price_per_night_idr": 3200000, "view": "city"},
+        {"type": "Deluxe Room", "capacity": 3, "price_per_night_idr": 4500000, "view": "haram"},
+        {"type": "Suite", "capacity": 4, "price_per_night_idr": 7000000, "view": "haram"}
+      ],
+      "rating": 4.7,
+      "review_count": 2890,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-005",
+      "name": "Hilton Suites Makkah",
+      "name_ar": "هيلتون سويتس مكة",
+      "city": "Makkah",
+      "stars": 5,
+      "category": "premium",
+      "distance_to_haram_m": 200,
+      "walking_time_minutes": 4,
+      "latitude": 21.4205,
+      "longitude": 39.8250,
+      "address": "Jabal Omar, Ibrahim Al Khalil Street",
+      "description": "All-suite hotel dengan kamar luas dan fasilitas keluarga",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Dapur Kecil",
+        "Restoran Halal",
+        "Room Service 24 Jam",
+        "Laundry",
+        "Gym",
+        "Kids Play Area"
+      ],
+      "room_types": [
+        {"type": "Studio Suite", "capacity": 2, "price_per_night_idr": 2800000, "view": "city"},
+        {"type": "One Bedroom Suite", "capacity": 4, "price_per_night_idr": 4000000, "view": "city"},
+        {"type": "Two Bedroom Suite", "capacity": 6, "price_per_night_idr": 6500000, "view": "haram"}
+      ],
+      "rating": 4.6,
+      "review_count": 1987,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-006",
+      "name": "Anjum Makkah Hotel",
+      "name_ar": "فندق أنجم مكة",
+      "city": "Makkah",
+      "stars": 5,
+      "category": "premium",
+      "distance_to_haram_m": 350,
+      "walking_time_minutes": 6,
+      "latitude": 21.4195,
+      "longitude": 39.8240,
+      "address": "King Abdul Aziz Road",
+      "description": "Hotel nyaman dengan shuttle gratis ke Haram",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service",
+        "Shuttle Gratis ke Haram",
+        "Laundry",
+        "Gym"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 1800000, "view": "city"},
+        {"type": "Deluxe Room", "capacity": 3, "price_per_night_idr": 2500000, "view": "city"},
+        {"type": "Family Room", "capacity": 5, "price_per_night_idr": 4000000, "view": "city"}
+      ],
+      "rating": 4.5,
+      "review_count": 2345,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-007",
+      "name": "Elaf Ajyad Hotel",
+      "name_ar": "فندق إيلاف أجياد",
+      "city": "Makkah",
+      "stars": 4,
+      "category": "moderate",
+      "distance_to_haram_m": 300,
+      "walking_time_minutes": 5,
+      "latitude": 21.4180,
+      "longitude": 39.8235,
+      "address": "Ajyad Street",
+      "description": "Hotel bintang 4 dengan lokasi strategis dan harga terjangkau",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service",
+        "Laundry"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 1200000, "view": "city"},
+        {"type": "Triple Room", "capacity": 3, "price_per_night_idr": 1600000, "view": "city"},
+        {"type": "Quad Room", "capacity": 4, "price_per_night_idr": 2000000, "view": "city"}
+      ],
+      "rating": 4.3,
+      "review_count": 1567,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-008",
+      "name": "Al Shohada Hotel",
+      "name_ar": "فندق الشهداء",
+      "city": "Makkah",
+      "stars": 4,
+      "category": "moderate",
+      "distance_to_haram_m": 450,
+      "walking_time_minutes": 8,
+      "latitude": 21.4165,
+      "longitude": 39.8220,
+      "address": "Al Shohada Street",
+      "description": "Hotel ekonomis dengan fasilitas lengkap dan lokasi dekat Haram",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Laundry"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 900000, "view": "city"},
+        {"type": "Triple Room", "capacity": 3, "price_per_night_idr": 1200000, "view": "city"},
+        {"type": "Quad Room", "capacity": 4, "price_per_night_idr": 1500000, "view": "city"}
+      ],
+      "rating": 4.2,
+      "review_count": 1234,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-009",
+      "name": "Makkah Millennium Hotel",
+      "name_ar": "فندق ميلينيوم مكة",
+      "city": "Makkah",
+      "stars": 4,
+      "category": "moderate",
+      "distance_to_haram_m": 600,
+      "walking_time_minutes": 10,
+      "latitude": 21.4150,
+      "longitude": 39.8200,
+      "address": "Ibrahim Al Khalil Road",
+      "description": "Hotel modern dengan shuttle service dan fasilitas bisnis",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service",
+        "Shuttle ke Haram",
+        "Laundry",
+        "Business Center"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 850000, "view": "city"},
+        {"type": "Superior Room", "capacity": 3, "price_per_night_idr": 1100000, "view": "city"},
+        {"type": "Deluxe Room", "capacity": 4, "price_per_night_idr": 1400000, "view": "city"}
+      ],
+      "rating": 4.1,
+      "review_count": 987,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-010",
+      "name": "Dar Al Eiman Grand",
+      "name_ar": "دار الإيمان جراند",
+      "city": "Makkah",
+      "stars": 3,
+      "category": "budget",
+      "distance_to_haram_m": 800,
+      "walking_time_minutes": 12,
+      "latitude": 21.4130,
+      "longitude": 39.8180,
+      "address": "Al Aziziyah District",
+      "description": "Hotel hemat dengan fasilitas dasar dan lokasi terjangkau",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Shuttle ke Haram"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 600000, "view": "city"},
+        {"type": "Triple Room", "capacity": 3, "price_per_night_idr": 750000, "view": "city"},
+        {"type": "Quad Room", "capacity": 4, "price_per_night_idr": 900000, "view": "city"}
+      ],
+      "rating": 4.0,
+      "review_count": 765,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-011",
+      "name": "Snood Ajyad Hotel",
+      "name_ar": "فندق سنود أجياد",
+      "city": "Makkah",
+      "stars": 3,
+      "category": "budget",
+      "distance_to_haram_m": 500,
+      "walking_time_minutes": 8,
+      "latitude": 21.4170,
+      "longitude": 39.8225,
+      "address": "Ajyad Street",
+      "description": "Hotel budget dengan lokasi cukup dekat Haram",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 550000, "view": "city"},
+        {"type": "Triple Room", "capacity": 3, "price_per_night_idr": 700000, "view": "city"},
+        {"type": "Quad Room", "capacity": 4, "price_per_night_idr": 850000, "view": "city"}
+      ],
+      "rating": 3.9,
+      "review_count": 543,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-012",
+      "name": "Makkah Towers",
+      "name_ar": "أبراج مكة",
+      "city": "Makkah",
+      "stars": 4,
+      "category": "moderate",
+      "distance_to_haram_m": 550,
+      "walking_time_minutes": 9,
+      "latitude": 21.4160,
+      "longitude": 39.8210,
+      "address": "King Fahd Road",
+      "description": "Apartemen hotel dengan dapur lengkap, cocok untuk keluarga",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Dapur Lengkap",
+        "Mesin Cuci",
+        "Restoran Halal",
+        "Shuttle ke Haram"
+      ],
+      "room_types": [
+        {"type": "Studio", "capacity": 2, "price_per_night_idr": 800000, "view": "city"},
+        {"type": "1BR Apartment", "capacity": 4, "price_per_night_idr": 1200000, "view": "city"},
+        {"type": "2BR Apartment", "capacity": 6, "price_per_night_idr": 1800000, "view": "city"}
+      ],
+      "rating": 4.2,
+      "review_count": 876,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-013",
+      "name": "Conrad Makkah",
+      "name_ar": "كونراد مكة",
+      "city": "Makkah",
+      "stars": 5,
+      "category": "luxury",
+      "distance_to_haram_m": 150,
+      "walking_time_minutes": 3,
+      "latitude": 21.4210,
+      "longitude": 39.8255,
+      "address": "Jabal Omar Development",
+      "description": "Hotel mewah terbaru dengan fasilitas modern dan view Haram",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal Gourmet",
+        "Room Service 24 Jam",
+        "Concierge",
+        "Spa Mewah",
+        "Gym Premium",
+        "Pool (Segregated)"
+      ],
+      "room_types": [
+        {"type": "Deluxe Room", "capacity": 2, "price_per_night_idr": 4200000, "view": "city"},
+        {"type": "Premium Room", "capacity": 3, "price_per_night_idr": 5800000, "view": "haram"},
+        {"type": "Executive Suite", "capacity": 4, "price_per_night_idr": 9500000, "view": "haram"}
+      ],
+      "rating": 4.8,
+      "review_count": 1567,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-014",
+      "name": "Hyatt Regency Makkah",
+      "name_ar": "حياة ريجنسي مكة",
+      "city": "Makkah",
+      "stars": 5,
+      "category": "premium",
+      "distance_to_haram_m": 250,
+      "walking_time_minutes": 4,
+      "latitude": 21.4200,
+      "longitude": 39.8245,
+      "address": "Jabal Omar",
+      "description": "Hotel premium dengan design modern dan fasilitas lengkap",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Multi Restoran Halal",
+        "Room Service 24 Jam",
+        "Concierge",
+        "Laundry",
+        "Gym",
+        "Business Center"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 2800000, "view": "city"},
+        {"type": "Regency Club", "capacity": 2, "price_per_night_idr": 4000000, "view": "haram"},
+        {"type": "Suite", "capacity": 4, "price_per_night_idr": 6500000, "view": "haram"}
+      ],
+      "rating": 4.6,
+      "review_count": 1234,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MKH-015",
+      "name": "Le Meridien Makkah",
+      "name_ar": "لو ميريديان مكة",
+      "city": "Makkah",
+      "stars": 5,
+      "category": "premium",
+      "distance_to_haram_m": 180,
+      "walking_time_minutes": 3,
+      "latitude": 21.4208,
+      "longitude": 39.8252,
+      "address": "Al Aziziyah",
+      "description": "Hotel artistik dengan sentuhan modern dan view spektakuler",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service 24 Jam",
+        "Concierge",
+        "Spa",
+        "Gym"
+      ],
+      "room_types": [
+        {"type": "Classic Room", "capacity": 2, "price_per_night_idr": 2500000, "view": "city"},
+        {"type": "Deluxe Room", "capacity": 3, "price_per_night_idr": 3500000, "view": "haram"},
+        {"type": "Suite", "capacity": 4, "price_per_night_idr": 5500000, "view": "haram"}
+      ],
+      "rating": 4.5,
+      "review_count": 987,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-001",
+      "name": "The Oberoi Madina",
+      "name_ar": "ذا أوبروي المدينة",
+      "city": "Madinah",
+      "stars": 5,
+      "category": "luxury",
+      "distance_to_haram_m": 200,
+      "walking_time_minutes": 3,
+      "latitude": 24.4685,
+      "longitude": 39.6115,
+      "address": "Central Area, Near Al Masjid An Nabawi",
+      "description": "Hotel mewah dengan pemandangan Masjid Nabawi dan layanan premium",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal Gourmet",
+        "Room Service 24 Jam",
+        "Concierge Premium",
+        "Laundry",
+        "Spa",
+        "Gym",
+        "View Masjid Nabawi"
+      ],
+      "room_types": [
+        {"type": "Deluxe Room", "capacity": 2, "price_per_night_idr": 3500000, "view": "city"},
+        {"type": "Premier Room", "capacity": 2, "price_per_night_idr": 5000000, "view": "mosque"},
+        {"type": "Kohinoor Suite", "capacity": 4, "price_per_night_idr": 12000000, "view": "mosque"}
+      ],
+      "rating": 4.9,
+      "review_count": 1890,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-002",
+      "name": "Dar Al Taqwa Hotel",
+      "name_ar": "فندق دار التقوى",
+      "city": "Madinah",
+      "stars": 5,
+      "category": "luxury",
+      "distance_to_haram_m": 100,
+      "walking_time_minutes": 2,
+      "latitude": 24.4680,
+      "longitude": 39.6120,
+      "address": "King Faisal Road",
+      "description": "Hotel klasik dengan akses langsung ke Masjid Nabawi",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service 24 Jam",
+        "Concierge",
+        "Laundry",
+        "Akses Langsung ke Masjid"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 2800000, "view": "city"},
+        {"type": "Deluxe Room", "capacity": 3, "price_per_night_idr": 4000000, "view": "mosque"},
+        {"type": "Suite", "capacity": 4, "price_per_night_idr": 7000000, "view": "mosque"}
+      ],
+      "rating": 4.7,
+      "review_count": 2345,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-003",
+      "name": "Pullman Zamzam Madina",
+      "name_ar": "بولمان زمزم المدينة",
+      "city": "Madinah",
+      "stars": 5,
+      "category": "premium",
+      "distance_to_haram_m": 100,
+      "walking_time_minutes": 2,
+      "latitude": 24.4678,
+      "longitude": 39.6118,
+      "address": "Central Area",
+      "description": "Hotel premium dengan lokasi sangat strategis",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service 24 Jam",
+        "Laundry",
+        "Gym"
+      ],
+      "room_types": [
+        {"type": "Superior Room", "capacity": 2, "price_per_night_idr": 2200000, "view": "city"},
+        {"type": "Deluxe Room", "capacity": 3, "price_per_night_idr": 3200000, "view": "mosque"},
+        {"type": "Suite", "capacity": 4, "price_per_night_idr": 5500000, "view": "mosque"}
+      ],
+      "rating": 4.6,
+      "review_count": 1876,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-004",
+      "name": "Madinah Hilton",
+      "name_ar": "هيلتون المدينة",
+      "city": "Madinah",
+      "stars": 5,
+      "category": "premium",
+      "distance_to_haram_m": 400,
+      "walking_time_minutes": 6,
+      "latitude": 24.4670,
+      "longitude": 39.6100,
+      "address": "King Fahd Road",
+      "description": "Hotel internasional dengan fasilitas lengkap dan shuttle ke Masjid",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Multi Restoran",
+        "Room Service 24 Jam",
+        "Shuttle Gratis",
+        "Laundry",
+        "Gym",
+        "Pool (Segregated)"
+      ],
+      "room_types": [
+        {"type": "Guest Room", "capacity": 2, "price_per_night_idr": 1600000, "view": "city"},
+        {"type": "Deluxe Room", "capacity": 3, "price_per_night_idr": 2200000, "view": "city"},
+        {"type": "Executive Room", "capacity": 2, "price_per_night_idr": 3000000, "view": "mosque"}
+      ],
+      "rating": 4.5,
+      "review_count": 1654,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-005",
+      "name": "Shaza Al Madina",
+      "name_ar": "شذا المدينة",
+      "city": "Madinah",
+      "stars": 5,
+      "category": "premium",
+      "distance_to_haram_m": 300,
+      "walking_time_minutes": 5,
+      "latitude": 24.4675,
+      "longitude": 39.6105,
+      "address": "Al Salam Road",
+      "description": "Hotel boutique mewah dengan nuansa Arab klasik",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service 24 Jam",
+        "Concierge",
+        "Laundry",
+        "Spa",
+        "Gym"
+      ],
+      "room_types": [
+        {"type": "Deluxe Room", "capacity": 2, "price_per_night_idr": 1900000, "view": "city"},
+        {"type": "Premium Room", "capacity": 3, "price_per_night_idr": 2800000, "view": "mosque"},
+        {"type": "Suite", "capacity": 4, "price_per_night_idr": 4500000, "view": "mosque"}
+      ],
+      "rating": 4.6,
+      "review_count": 1234,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-006",
+      "name": "Frontel Al Harithia",
+      "name_ar": "فرونتل الحارثية",
+      "city": "Madinah",
+      "stars": 4,
+      "category": "moderate",
+      "distance_to_haram_m": 500,
+      "walking_time_minutes": 8,
+      "latitude": 24.4665,
+      "longitude": 39.6090,
+      "address": "Al Harithia District",
+      "description": "Hotel nyaman dengan harga terjangkau dan shuttle service",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Shuttle ke Masjid",
+        "Laundry"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 800000, "view": "city"},
+        {"type": "Triple Room", "capacity": 3, "price_per_night_idr": 1000000, "view": "city"},
+        {"type": "Quad Room", "capacity": 4, "price_per_night_idr": 1200000, "view": "city"}
+      ],
+      "rating": 4.2,
+      "review_count": 876,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-007",
+      "name": "Elaf Taiba Hotel",
+      "name_ar": "فندق إيلاف طيبة",
+      "city": "Madinah",
+      "stars": 4,
+      "category": "moderate",
+      "distance_to_haram_m": 350,
+      "walking_time_minutes": 6,
+      "latitude": 24.4672,
+      "longitude": 39.6098,
+      "address": "Abu Bakr Al Siddiq Road",
+      "description": "Hotel bintang 4 dengan lokasi strategis",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service",
+        "Laundry"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 950000, "view": "city"},
+        {"type": "Superior Room", "capacity": 3, "price_per_night_idr": 1200000, "view": "city"},
+        {"type": "Deluxe Room", "capacity": 4, "price_per_night_idr": 1500000, "view": "city"}
+      ],
+      "rating": 4.3,
+      "review_count": 765,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-008",
+      "name": "Dar Al Eiman Al Andalus",
+      "name_ar": "دار الإيمان الأندلس",
+      "city": "Madinah",
+      "stars": 3,
+      "category": "budget",
+      "distance_to_haram_m": 600,
+      "walking_time_minutes": 10,
+      "latitude": 24.4660,
+      "longitude": 39.6080,
+      "address": "Al Andalus District",
+      "description": "Hotel ekonomis dengan fasilitas dasar",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Shuttle ke Masjid"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 500000, "view": "city"},
+        {"type": "Triple Room", "capacity": 3, "price_per_night_idr": 650000, "view": "city"},
+        {"type": "Quad Room", "capacity": 4, "price_per_night_idr": 800000, "view": "city"}
+      ],
+      "rating": 3.9,
+      "review_count": 543,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-009",
+      "name": "Grand Plaza Madinah",
+      "name_ar": "جراند بلازا المدينة",
+      "city": "Madinah",
+      "stars": 3,
+      "category": "budget",
+      "distance_to_haram_m": 700,
+      "walking_time_minutes": 12,
+      "latitude": 24.4655,
+      "longitude": 39.6070,
+      "address": "King Abdul Aziz Road",
+      "description": "Hotel budget dengan lokasi mudah diakses",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 450000, "view": "city"},
+        {"type": "Triple Room", "capacity": 3, "price_per_night_idr": 600000, "view": "city"},
+        {"type": "Quad Room", "capacity": 4, "price_per_night_idr": 750000, "view": "city"}
+      ],
+      "rating": 3.8,
+      "review_count": 432,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-010",
+      "name": "Intercontinental Madinah",
+      "name_ar": "انتركونتيننتال المدينة",
+      "city": "Madinah",
+      "stars": 5,
+      "category": "luxury",
+      "distance_to_haram_m": 150,
+      "walking_time_minutes": 2,
+      "latitude": 24.4682,
+      "longitude": 39.6112,
+      "address": "King Faisal Road",
+      "description": "Hotel mewah internasional dengan view langsung Masjid Nabawi",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Multi Restoran Gourmet",
+        "Room Service 24 Jam",
+        "Concierge Premium",
+        "Laundry",
+        "Spa",
+        "Gym Premium",
+        "Business Center"
+      ],
+      "room_types": [
+        {"type": "Classic Room", "capacity": 2, "price_per_night_idr": 3000000, "view": "city"},
+        {"type": "Club Room", "capacity": 2, "price_per_night_idr": 4500000, "view": "mosque"},
+        {"type": "Suite", "capacity": 4, "price_per_night_idr": 8000000, "view": "mosque"}
+      ],
+      "rating": 4.8,
+      "review_count": 1567,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-011",
+      "name": "Crowne Plaza Madinah",
+      "name_ar": "كراون بلازا المدينة",
+      "city": "Madinah",
+      "stars": 5,
+      "category": "premium",
+      "distance_to_haram_m": 250,
+      "walking_time_minutes": 4,
+      "latitude": 24.4676,
+      "longitude": 39.6108,
+      "address": "Al Haram Area",
+      "description": "Hotel premium dengan fasilitas bisnis dan leisure lengkap",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Restoran Halal",
+        "Room Service 24 Jam",
+        "Concierge",
+        "Laundry",
+        "Gym",
+        "Business Center"
+      ],
+      "room_types": [
+        {"type": "Standard Room", "capacity": 2, "price_per_night_idr": 2000000, "view": "city"},
+        {"type": "Club Room", "capacity": 2, "price_per_night_idr": 3000000, "view": "mosque"},
+        {"type": "Suite", "capacity": 4, "price_per_night_idr": 5000000, "view": "mosque"}
+      ],
+      "rating": 4.5,
+      "review_count": 1234,
+      "is_available": true
+    },
+    {
+      "id": "HTL-MDN-012",
+      "name": "Anwar Al Madinah Movenpick",
+      "name_ar": "أنوار المدينة موفنبيك",
+      "city": "Madinah",
+      "stars": 5,
+      "category": "premium",
+      "distance_to_haram_m": 200,
+      "walking_time_minutes": 3,
+      "latitude": 24.4679,
+      "longitude": 39.6110,
+      "address": "Al Masjid Al Nabawi South",
+      "description": "Hotel dengan koneksi langsung ke Masjid Nabawi",
+      "amenities": [
+        "WiFi Gratis",
+        "AC",
+        "Multi Restoran",
+        "Room Service 24 Jam",
+        "Concierge",
+        "Laundry",
+        "Gym",
+        "Akses Langsung Masjid"
+      ],
+      "room_types": [
+        {"type": "Superior Room", "capacity": 2, "price_per_night_idr": 2200000, "view": "city"},
+        {"type": "Deluxe Room", "capacity": 3, "price_per_night_idr": 3200000, "view": "mosque"},
+        {"type": "Suite", "capacity": 4, "price_per_night_idr": 5500000, "view": "mosque"}
+      ],
+      "rating": 4.6,
+      "review_count": 1456,
+      "is_available": true
+    }
+  ]
+}

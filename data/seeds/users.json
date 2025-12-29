@@ -1,0 +1,348 @@
+{
+  "metadata": {
+    "name": "Users Test Dataset",
+    "version": "1.0",
+    "description": "Sample users for testing authentication, roles, and features",
+    "created_at": "2025-01-01",
+    "total_records": 15,
+    "password_note": "All test passwords are 'Test123!' (hashed in production)"
+  },
+  "users": [
+    {
+      "id": "USR-001",
+      "email": "admin@labbaik.ai",
+      "name": "Admin Labbaik",
+      "phone": "+62-811-0000-001",
+      "role": "admin",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "last_login": "2025-01-01T10:00:00Z",
+      "preferences": {
+        "language": "id",
+        "notifications": true,
+        "newsletter": true
+      }
+    },
+    {
+      "id": "USR-002",
+      "email": "partner@cheriatravel.com",
+      "name": "Budi Santoso",
+      "phone": "+62-812-1234-5678",
+      "role": "partner",
+      "partner_id": "TA-001",
+      "company": "Cheria Travel",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-02-15T00:00:00Z",
+      "subscription": {
+        "plan": "partner_pro",
+        "valid_until": "2025-12-31"
+      }
+    },
+    {
+      "id": "USR-003",
+      "email": "premium@gmail.com",
+      "name": "Siti Rahmawati",
+      "phone": "+62-813-9876-5432",
+      "role": "premium",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-06-01T00:00:00Z",
+      "subscription": {
+        "plan": "premium_yearly",
+        "valid_until": "2025-06-01"
+      },
+      "umrah_history": [
+        {"year": 2023, "travel_agent": "Cheria Travel", "package": "Premium 12 Hari"}
+      ],
+      "saved_packages": ["PKG-002", "PKG-005"],
+      "xp_points": 2500,
+      "badges": ["first_umrah", "reviewer", "helper"]
+    },
+    {
+      "id": "USR-004",
+      "email": "user1@gmail.com",
+      "name": "Ahmad Hidayat",
+      "phone": "+62-857-1111-2222",
+      "role": "free",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-08-15T00:00:00Z",
+      "profile": {
+        "gender": "male",
+        "birth_date": "1985-05-15",
+        "city": "Jakarta",
+        "occupation": "Karyawan Swasta"
+      },
+      "preferences": {
+        "budget_min_idr": 25000000,
+        "budget_max_idr": 40000000,
+        "preferred_departure_city": "Jakarta",
+        "preferred_hotel_stars": 4,
+        "interested_categories": ["reguler", "keluarga"]
+      },
+      "xp_points": 350,
+      "badges": ["newcomer"]
+    },
+    {
+      "id": "USR-005",
+      "email": "user2@gmail.com",
+      "name": "Dewi Lestari",
+      "phone": "+62-858-3333-4444",
+      "role": "free",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-09-01T00:00:00Z",
+      "profile": {
+        "gender": "female",
+        "birth_date": "1990-03-20",
+        "city": "Bandung",
+        "occupation": "Guru"
+      },
+      "preferences": {
+        "budget_min_idr": 20000000,
+        "budget_max_idr": 30000000,
+        "preferred_departure_city": "Jakarta",
+        "preferred_hotel_stars": 3,
+        "interested_categories": ["wanita", "hemat"]
+      },
+      "xp_points": 150,
+      "badges": []
+    },
+    {
+      "id": "USR-006",
+      "email": "lansia@gmail.com",
+      "name": "H. Sudirman",
+      "phone": "+62-821-5555-6666",
+      "role": "free",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-07-01T00:00:00Z",
+      "profile": {
+        "gender": "male",
+        "birth_date": "1958-12-10",
+        "city": "Surabaya",
+        "occupation": "Pensiunan",
+        "health_notes": "Perlu wheelchair, hipertensi terkontrol"
+      },
+      "preferences": {
+        "budget_min_idr": 35000000,
+        "budget_max_idr": 50000000,
+        "preferred_departure_city": "Surabaya",
+        "preferred_hotel_stars": 5,
+        "interested_categories": ["lansia", "premium"],
+        "needs_wheelchair": true,
+        "needs_medical_support": true
+      },
+      "umrah_history": [
+        {"year": 2019, "travel_agent": "Maktour", "package": "VIP 14 Hari"}
+      ],
+      "xp_points": 800,
+      "badges": ["experienced_jamaah"]
+    },
+    {
+      "id": "USR-007",
+      "email": "keluarga@gmail.com",
+      "name": "Ir. Bambang Wijaya",
+      "phone": "+62-878-7777-8888",
+      "role": "premium",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-05-01T00:00:00Z",
+      "subscription": {
+        "plan": "premium_family",
+        "valid_until": "2025-05-01"
+      },
+      "profile": {
+        "gender": "male",
+        "birth_date": "1975-08-25",
+        "city": "Jakarta",
+        "occupation": "Direktur",
+        "family_members": [
+          {"name": "Ratna Wijaya", "relation": "wife", "age": 45},
+          {"name": "Andi Wijaya", "relation": "son", "age": 18},
+          {"name": "Bunga Wijaya", "relation": "daughter", "age": 15}
+        ]
+      },
+      "preferences": {
+        "budget_min_idr": 100000000,
+        "budget_max_idr": 200000000,
+        "preferred_hotel_stars": 5,
+        "interested_categories": ["keluarga", "vip", "plus"],
+        "family_size": 4
+      },
+      "xp_points": 1500,
+      "badges": ["family_planner", "premium_member"]
+    },
+    {
+      "id": "USR-008",
+      "email": "newuser@gmail.com",
+      "name": "Rina Kusuma",
+      "phone": "+62-852-9999-0000",
+      "role": "free",
+      "is_verified": false,
+      "is_active": true,
+      "created_at": "2024-12-28T00:00:00Z",
+      "profile": {
+        "gender": "female",
+        "birth_date": "1995-11-05",
+        "city": "Yogyakarta"
+      },
+      "xp_points": 0,
+      "badges": []
+    },
+    {
+      "id": "USR-009",
+      "email": "inactive@gmail.com",
+      "name": "Joko Susilo",
+      "phone": "+62-815-1234-0000",
+      "role": "free",
+      "is_verified": true,
+      "is_active": false,
+      "created_at": "2024-03-01T00:00:00Z",
+      "deactivated_at": "2024-11-01T00:00:00Z",
+      "deactivation_reason": "User request"
+    },
+    {
+      "id": "USR-010",
+      "email": "partner@alhijaz.com",
+      "name": "Haji Muhammadi",
+      "phone": "+62-812-8888-1234",
+      "role": "partner",
+      "partner_id": "TA-002",
+      "company": "Alhijaz Indowisata",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-01-15T00:00:00Z"
+    },
+    {
+      "id": "USR-011",
+      "email": "muthawwif@labbaik.ai",
+      "name": "Ustadz H. Ahmad Fauzi, Lc",
+      "phone": "+62-811-9999-1111",
+      "role": "partner",
+      "partner_type": "muthawwif",
+      "muthawwif_id": "MTW-001",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-02-01T00:00:00Z"
+    },
+    {
+      "id": "USR-012",
+      "email": "backpacker@gmail.com",
+      "name": "Fajar Nugroho",
+      "phone": "+62-838-2222-3333",
+      "role": "free",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-10-01T00:00:00Z",
+      "profile": {
+        "gender": "male",
+        "birth_date": "1998-02-14",
+        "city": "Malang",
+        "occupation": "Freelancer"
+      },
+      "preferences": {
+        "budget_min_idr": 15000000,
+        "budget_max_idr": 25000000,
+        "preferred_hotel_stars": 3,
+        "interested_categories": ["backpacker", "hemat", "promo"]
+      },
+      "xp_points": 200,
+      "badges": ["budget_hunter"]
+    },
+    {
+      "id": "USR-013",
+      "email": "ramadhan@gmail.com",
+      "name": "Hj. Fatimah Zahra",
+      "phone": "+62-819-4444-5555",
+      "role": "premium",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-04-01T00:00:00Z",
+      "subscription": {
+        "plan": "premium_monthly",
+        "valid_until": "2025-02-01"
+      },
+      "profile": {
+        "gender": "female",
+        "birth_date": "1970-01-01",
+        "city": "Solo"
+      },
+      "preferences": {
+        "interested_categories": ["ramadhan", "arbain", "wanita"]
+      },
+      "umrah_history": [
+        {"year": 2018, "travel_agent": "Arminareka", "package": "Arbain 45 Hari"},
+        {"year": 2022, "travel_agent": "Cheria Travel", "package": "Ramadhan 10 Hari"}
+      ],
+      "xp_points": 3500,
+      "badges": ["ramadhan_umrah", "arbain_veteran", "top_contributor"]
+    },
+    {
+      "id": "USR-014",
+      "email": "corporate@company.com",
+      "name": "PT Berkah Makmur",
+      "phone": "+62-21-5551234",
+      "role": "partner",
+      "partner_type": "corporate",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-06-15T00:00:00Z",
+      "company_info": {
+        "name": "PT Berkah Makmur",
+        "industry": "Manufacturing",
+        "employees": 500,
+        "contact_person": "HR Manager - Sari Dewi"
+      },
+      "preferences": {
+        "interested_categories": ["corporate"],
+        "typical_group_size": 30
+      }
+    },
+    {
+      "id": "USR-015",
+      "email": "honeymoon@gmail.com",
+      "name": "Reza & Amanda",
+      "phone": "+62-817-6666-7777",
+      "role": "free",
+      "is_verified": true,
+      "is_active": true,
+      "created_at": "2024-11-01T00:00:00Z",
+      "profile": {
+        "type": "couple",
+        "wedding_date": "2025-02-14"
+      },
+      "preferences": {
+        "budget_min_idr": 50000000,
+        "budget_max_idr": 80000000,
+        "interested_categories": ["honeymoon", "premium"]
+      },
+      "xp_points": 100,
+      "badges": ["newlywed"]
+    }
+  ],
+  "roles": {
+    "guest": {
+      "level": 0,
+      "features": ["browse_packages", "view_hotels", "basic_calculator"]
+    },
+    "free": {
+      "level": 1,
+      "features": ["browse_packages", "view_hotels", "basic_calculator", "save_packages", "chat_basic", "compare_5"]
+    },
+    "premium": {
+      "level": 2,
+      "features": ["all_free_features", "ai_chat_unlimited", "price_alerts", "early_access", "compare_unlimited", "export_pdf", "priority_support"]
+    },
+    "partner": {
+      "level": 3,
+      "features": ["all_premium_features", "upload_packages", "manage_bookings", "analytics", "api_access", "crm"]
+    },
+    "admin": {
+      "level": 4,
+      "features": ["all_features", "user_management", "system_config", "analytics_full", "audit_logs"]
+    }
+  }
+}

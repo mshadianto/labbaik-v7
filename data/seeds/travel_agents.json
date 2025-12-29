@@ -1,0 +1,419 @@
+{
+  "metadata": {
+    "name": "Travel Agents & Partners Dataset",
+    "version": "1.0",
+    "description": "Sample travel agents and partners for testing",
+    "created_at": "2025-01-01",
+    "total_records": 15
+  },
+  "travel_agents": [
+    {
+      "id": "TA-001",
+      "name": "Cheria Travel",
+      "legal_name": "PT Cheria Wisata Nusantara",
+      "logo": "cheria_logo.png",
+      "description": "Biro perjalanan umrah & haji terpercaya sejak 1999. Melayani lebih dari 500.000 jamaah.",
+      "established_year": 1999,
+      "license_number": "PPIU/123/2020",
+      "license_valid_until": "2025-12-31",
+      "kemenag_registered": true,
+      "address": {
+        "street": "Jl. Salemba Tengah No. 17",
+        "city": "Jakarta Pusat",
+        "province": "DKI Jakarta",
+        "postal_code": "10440",
+        "country": "Indonesia"
+      },
+      "contact": {
+        "phone": "+62-21-3913355",
+        "whatsapp": "+62-811-1234-567",
+        "email": "info@cheria-travel.com",
+        "website": "https://www.cheria-travel.com"
+      },
+      "social_media": {
+        "instagram": "@cheriatravel",
+        "facebook": "CheriaTravel",
+        "youtube": "CheriaTravel"
+      },
+      "branch_offices": [
+        {"city": "Surabaya", "address": "Jl. Raya Darmo No. 45"},
+        {"city": "Bandung", "address": "Jl. Braga No. 88"},
+        {"city": "Medan", "address": "Jl. Gatot Subroto No. 121"}
+      ],
+      "specializations": ["Umrah", "Haji Plus", "Tour Muslim"],
+      "price_range": "Ekonomis - VIP",
+      "min_package_price_idr": 19000000,
+      "max_package_price_idr": 95000000,
+      "total_jamaah_served": 520000,
+      "rating": 4.7,
+      "review_count": 12456,
+      "certifications": ["ISO 9001:2015", "ASITA Member", "HIMPUH Member"],
+      "payment_methods": ["Transfer Bank", "Kartu Kredit", "Cicilan 0%"],
+      "is_verified": true,
+      "is_active": true,
+      "partnership_tier": "platinum"
+    },
+    {
+      "id": "TA-002",
+      "name": "Alhijaz Indowisata",
+      "legal_name": "PT Alhijaz Indowisata",
+      "logo": "alhijaz_logo.png",
+      "description": "Penyelenggara ibadah umrah & haji terdepan dengan layanan prima.",
+      "established_year": 1985,
+      "license_number": "PPIU/089/2020",
+      "license_valid_until": "2025-12-31",
+      "kemenag_registered": true,
+      "address": {
+        "street": "Jl. Kramat Raya No. 98",
+        "city": "Jakarta Pusat",
+        "province": "DKI Jakarta",
+        "postal_code": "10450",
+        "country": "Indonesia"
+      },
+      "contact": {
+        "phone": "+62-21-3909944",
+        "whatsapp": "+62-812-8888-123",
+        "email": "cs@alhijaz-indowisata.co.id",
+        "website": "https://www.alhijaz-indowisata.co.id"
+      },
+      "social_media": {
+        "instagram": "@alhijazindowisata",
+        "facebook": "AlhijazIndowisata"
+      },
+      "branch_offices": [
+        {"city": "Yogyakarta", "address": "Jl. Malioboro No. 56"},
+        {"city": "Semarang", "address": "Jl. Pemuda No. 33"}
+      ],
+      "specializations": ["Umrah", "Haji Khusus", "Umrah Plus"],
+      "price_range": "Reguler - VIP",
+      "min_package_price_idr": 24000000,
+      "max_package_price_idr": 125000000,
+      "total_jamaah_served": 380000,
+      "rating": 4.8,
+      "review_count": 8765,
+      "certifications": ["ISO 9001:2015", "ASITA Member"],
+      "payment_methods": ["Transfer Bank", "Kartu Kredit", "Cicilan"],
+      "is_verified": true,
+      "is_active": true,
+      "partnership_tier": "gold"
+    },
+    {
+      "id": "TA-003",
+      "name": "Maktour",
+      "legal_name": "PT Maktour Indonesia",
+      "logo": "maktour_logo.png",
+      "description": "Travel haji umrah dengan jaringan internasional dan standar layanan tinggi.",
+      "established_year": 1992,
+      "license_number": "PPIU/156/2020",
+      "license_valid_until": "2025-12-31",
+      "kemenag_registered": true,
+      "address": {
+        "street": "Jl. H.O.S Cokroaminoto No. 25",
+        "city": "Jakarta Pusat",
+        "province": "DKI Jakarta",
+        "postal_code": "10350",
+        "country": "Indonesia"
+      },
+      "contact": {
+        "phone": "+62-21-3156789",
+        "whatsapp": "+62-817-123-456",
+        "email": "info@maktour.co.id",
+        "website": "https://www.maktour.co.id"
+      },
+      "specializations": ["Umrah VIP", "Haji Furoda", "Tour Aqsha"],
+      "price_range": "Premium - First Class",
+      "min_package_price_idr": 35000000,
+      "max_package_price_idr": 150000000,
+      "total_jamaah_served": 250000,
+      "rating": 4.9,
+      "review_count": 6543,
+      "certifications": ["ISO 9001:2015", "ASITA Member", "IATA Member"],
+      "is_verified": true,
+      "is_active": true,
+      "partnership_tier": "platinum"
+    },
+    {
+      "id": "TA-004",
+      "name": "Patuna Travel",
+      "legal_name": "PT Patuna Mekar Jaya",
+      "logo": "patuna_logo.png",
+      "description": "Melayani perjalanan ibadah umrah dengan hati, amanah dan profesional.",
+      "established_year": 2005,
+      "license_number": "PPIU/234/2020",
+      "license_valid_until": "2025-12-31",
+      "kemenag_registered": true,
+      "address": {
+        "street": "Jl. Hasyim Ashari No. 67",
+        "city": "Jakarta Pusat",
+        "province": "DKI Jakarta",
+        "postal_code": "10150",
+        "country": "Indonesia"
+      },
+      "contact": {
+        "phone": "+62-21-6345678",
+        "whatsapp": "+62-813-1234-5678",
+        "email": "reservasi@patuna.co.id",
+        "website": "https://www.patuna.co.id"
+      },
+      "specializations": ["Umrah Hemat", "Umrah Keluarga", "Umrah Lansia"],
+      "price_range": "Ekonomis - Premium",
+      "min_package_price_idr": 18000000,
+      "max_package_price_idr": 65000000,
+      "total_jamaah_served": 180000,
+      "rating": 4.5,
+      "review_count": 4532,
+      "certifications": ["ASITA Member", "HIMPUH Member"],
+      "is_verified": true,
+      "is_active": true,
+      "partnership_tier": "gold"
+    },
+    {
+      "id": "TA-005",
+      "name": "Arminareka Perdana",
+      "legal_name": "PT Arminareka Perdana",
+      "logo": "arminareka_logo.png",
+      "description": "Pionir bisnis travel haji & umrah dengan konsep MLM halal.",
+      "established_year": 1990,
+      "license_number": "PPIU/078/2020",
+      "license_valid_until": "2025-12-31",
+      "kemenag_registered": true,
+      "address": {
+        "street": "Jl. Mampang Prapatan No. 100",
+        "city": "Jakarta Selatan",
+        "province": "DKI Jakarta",
+        "postal_code": "12790",
+        "country": "Indonesia"
+      },
+      "contact": {
+        "phone": "+62-21-7987654",
+        "whatsapp": "+62-815-999-8888",
+        "email": "info@arminareka.com",
+        "website": "https://www.arminareka.com"
+      },
+      "specializations": ["Umrah", "Haji Plus", "Umrah Arbain"],
+      "price_range": "Reguler - VIP",
+      "min_package_price_idr": 22000000,
+      "max_package_price_idr": 100000000,
+      "total_jamaah_served": 450000,
+      "rating": 4.6,
+      "review_count": 9876,
+      "is_verified": true,
+      "is_active": true,
+      "partnership_tier": "platinum"
+    },
+    {
+      "id": "TA-006",
+      "name": "NRA Travel",
+      "legal_name": "PT Nur Ramadhan Travel",
+      "logo": "nra_logo.png",
+      "description": "Travel umrah terpercaya dengan pembimbing ustadz kondang.",
+      "established_year": 2008,
+      "license_number": "PPIU/312/2020",
+      "license_valid_until": "2025-12-31",
+      "kemenag_registered": true,
+      "address": {
+        "street": "Jl. Tebet Raya No. 45",
+        "city": "Jakarta Selatan",
+        "province": "DKI Jakarta",
+        "postal_code": "12810",
+        "country": "Indonesia"
+      },
+      "contact": {
+        "phone": "+62-21-8765432",
+        "whatsapp": "+62-821-1111-2222",
+        "email": "booking@nratravel.com",
+        "website": "https://www.nratravel.com"
+      },
+      "specializations": ["Umrah Bersama Ustadz", "Tour Islami", "Wisata Halal"],
+      "price_range": "Premium - VIP",
+      "min_package_price_idr": 35000000,
+      "max_package_price_idr": 85000000,
+      "total_jamaah_served": 95000,
+      "rating": 4.7,
+      "review_count": 3456,
+      "is_verified": true,
+      "is_active": true,
+      "partnership_tier": "gold"
+    },
+    {
+      "id": "TA-007",
+      "name": "Ebad Rahman",
+      "legal_name": "PT Ebad Wisata Indonesia",
+      "logo": "ebad_logo.png",
+      "description": "Travel haji umrah dengan fokus pada kualitas pembimbing.",
+      "established_year": 2001,
+      "license_number": "PPIU/189/2020",
+      "license_valid_until": "2025-12-31",
+      "kemenag_registered": true,
+      "address": {
+        "street": "Jl. Kalibata Raya No. 21",
+        "city": "Jakarta Selatan",
+        "province": "DKI Jakarta",
+        "postal_code": "12740",
+        "country": "Indonesia"
+      },
+      "contact": {
+        "phone": "+62-21-7912345",
+        "whatsapp": "+62-856-1234-5678",
+        "email": "info@ebadrahman.co.id",
+        "website": "https://www.ebadrahman.co.id"
+      },
+      "specializations": ["Umrah", "Haji Plus", "Manasik"],
+      "price_range": "Reguler - Premium",
+      "min_package_price_idr": 25000000,
+      "max_package_price_idr": 75000000,
+      "total_jamaah_served": 120000,
+      "rating": 4.4,
+      "review_count": 2345,
+      "is_verified": true,
+      "is_active": true,
+      "partnership_tier": "silver"
+    },
+    {
+      "id": "TA-008",
+      "name": "Nurul Haramain",
+      "legal_name": "PT Nurul Haramain Wisata",
+      "logo": "nurulharamain_logo.png",
+      "description": "Spesialis perjalanan umrah dan ziarah Wali Songo.",
+      "established_year": 2010,
+      "license_number": "PPIU/287/2020",
+      "license_valid_until": "2025-12-31",
+      "kemenag_registered": true,
+      "address": {
+        "street": "Jl. Raya Surabaya No. 88",
+        "city": "Surabaya",
+        "province": "Jawa Timur",
+        "postal_code": "60111",
+        "country": "Indonesia"
+      },
+      "contact": {
+        "phone": "+62-31-5678901",
+        "whatsapp": "+62-858-1234-5678",
+        "email": "info@nurulharamain.com",
+        "website": "https://www.nurulharamain.com"
+      },
+      "specializations": ["Umrah", "Ziarah Wali Songo", "Tour Jawa"],
+      "price_range": "Ekonomis - Reguler",
+      "min_package_price_idr": 20000000,
+      "max_package_price_idr": 45000000,
+      "total_jamaah_served": 75000,
+      "rating": 4.3,
+      "review_count": 1876,
+      "is_verified": true,
+      "is_active": true,
+      "partnership_tier": "silver"
+    },
+    {
+      "id": "TA-009",
+      "name": "First Travel",
+      "legal_name": "PT First Anugerah Karya Wisata",
+      "logo": "firsttravel_logo.png",
+      "description": "Travel umrah dengan layanan premium dan harga kompetitif.",
+      "established_year": 2012,
+      "license_number": "PPIU/345/2020",
+      "license_valid_until": "2025-12-31",
+      "kemenag_registered": true,
+      "address": {
+        "street": "Jl. Kemang Raya No. 15",
+        "city": "Jakarta Selatan",
+        "province": "DKI Jakarta",
+        "postal_code": "12730",
+        "country": "Indonesia"
+      },
+      "contact": {
+        "phone": "+62-21-7654321",
+        "whatsapp": "+62-812-9999-8888",
+        "email": "cs@firsttravel.co.id",
+        "website": "https://www.firsttravel.co.id"
+      },
+      "specializations": ["Umrah", "Tour Eropa Muslim", "Wisata Halal Asia"],
+      "price_range": "Reguler - VIP",
+      "min_package_price_idr": 26000000,
+      "max_package_price_idr": 80000000,
+      "total_jamaah_served": 65000,
+      "rating": 4.5,
+      "review_count": 1543,
+      "is_verified": true,
+      "is_active": true,
+      "partnership_tier": "gold"
+    },
+    {
+      "id": "TA-010",
+      "name": "Sahid Tour",
+      "legal_name": "PT Sahid Tour and Travel",
+      "logo": "sahid_logo.png",
+      "description": "Bagian dari Sahid Group dengan pengalaman puluhan tahun.",
+      "established_year": 1978,
+      "license_number": "PPIU/045/2020",
+      "license_valid_until": "2025-12-31",
+      "kemenag_registered": true,
+      "address": {
+        "street": "Jl. Jend. Sudirman Kav. 86",
+        "city": "Jakarta Pusat",
+        "province": "DKI Jakarta",
+        "postal_code": "10220",
+        "country": "Indonesia"
+      },
+      "contact": {
+        "phone": "+62-21-5701818",
+        "whatsapp": "+62-811-1818-123",
+        "email": "umrah@sahidtour.co.id",
+        "website": "https://www.sahidtour.co.id"
+      },
+      "specializations": ["Umrah", "Haji Plus", "MICE"],
+      "price_range": "Premium - VIP",
+      "min_package_price_idr": 38000000,
+      "max_package_price_idr": 120000000,
+      "total_jamaah_served": 200000,
+      "rating": 4.6,
+      "review_count": 5432,
+      "is_verified": true,
+      "is_active": true,
+      "partnership_tier": "platinum"
+    }
+  ],
+  "muthawwif": [
+    {
+      "id": "MTW-001",
+      "name": "Ustadz H. Ahmad Fauzi, Lc",
+      "title": "Muthawwif Senior",
+      "photo": "ustadz_fauzi.jpg",
+      "education": "Al-Azhar University, Cairo",
+      "experience_years": 20,
+      "languages": ["Indonesia", "Arab", "English"],
+      "specializations": ["Manasik Umrah", "Kajian Fiqih", "Sejarah Islam"],
+      "jamaah_served": 15000,
+      "rating": 4.9,
+      "review_count": 456,
+      "is_available": true
+    },
+    {
+      "id": "MTW-002",
+      "name": "Ustadz Muhammad Rizki, M.Ag",
+      "title": "Pembimbing Ibadah",
+      "photo": "ustadz_rizki.jpg",
+      "education": "UIN Sunan Ampel Surabaya",
+      "experience_years": 12,
+      "languages": ["Indonesia", "Arab"],
+      "specializations": ["Manasik", "Doa & Dzikir", "Fiqih Umrah"],
+      "jamaah_served": 8500,
+      "rating": 4.7,
+      "review_count": 234,
+      "is_available": true
+    },
+    {
+      "id": "MTW-003",
+      "name": "Ustadzah Hj. Siti Khadijah, S.Ag",
+      "title": "Muthawwifah Wanita",
+      "photo": "ustadzah_khadijah.jpg",
+      "education": "IAIN Walisongo Semarang",
+      "experience_years": 15,
+      "languages": ["Indonesia", "Arab"],
+      "specializations": ["Pembimbing Jamaah Wanita", "Fiqih Muslimah", "Akses Raudhah"],
+      "jamaah_served": 10000,
+      "rating": 4.9,
+      "review_count": 567,
+      "is_available": true
+    }
+  ]
+}
