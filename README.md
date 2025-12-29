@@ -11,17 +11,6 @@
 
 ---
 
-## Demo Video
-
-Lihat LABBAIK AI beraksi:
-
-| Video | Link |
-|-------|------|
-| **Demo Live Session** | [![YouTube](https://img.shields.io/badge/YouTube-Live-red?logo=youtube)](https://www.youtube.com/live/sS7T6YqIJHI) |
-| **Feature Walkthrough** | [![YouTube](https://img.shields.io/badge/YouTube-Watch-red?logo=youtube)](https://youtu.be/e1XsLF6aUaA) |
-
----
-
 ## Daftar Isi
 
 1. [Tentang Project](#tentang-project)

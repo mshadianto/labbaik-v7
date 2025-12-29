@@ -6,7 +6,7 @@
     "created_at": "2025-01-01",
     "language": "id",
     "total_categories": 10,
-    "total_questions": 50
+    "total_questions": 51
   },
   "categories": [
     {
@@ -144,6 +144,15 @@
       "order": 2
     },
     {
+      "id": "faq-021",
+      "category_id": "cat-04",
+      "question": "Video panduan manasik umrah yang direkomendasikan?",
+      "answer": "**Video Panduan Umrah dari Ustadz Terpercaya:**\n\n1. **Ustadz Adi Hidayat**\n   - Panduan lengkap manasik umrah\n   - Link: https://www.youtube.com/live/sS7T6YqIJHI\n   - Penjelasan detail tata cara umrah\n\n2. **Ustadz Amnu NurBait**\n   - Bimbingan praktis ibadah umrah\n   - Link: https://youtu.be/e1XsLF6aUaA\n   - Tips dan pengalaman langsung\n\n**Tips Menonton:**\n- Tonton sebelum berangkat\n- Catat poin-poin penting\n- Praktikkan gerakan tawaf & sa'i\n- Hafalkan doa-doa yang diajarkan\n\n**Catatan:**\nVideo ini sangat direkomendasikan untuk persiapan spiritual sebelum umrah.",
+      "tags": ["video", "manasik", "ustadz", "panduan", "tutorial"],
+      "helpful_count": 1500,
+      "order": 3
+    },
+    {
       "id": "faq-009",
       "category_id": "cat-05",
       "question": "Vaksin apa yang wajib untuk umrah?",
@@ -237,8 +246,8 @@
       "id": "faq-019",
       "category_id": "cat-10",
       "question": "Apa itu Labbaik AI dan fiturnya?",
-      "answer": "**Labbaik AI** adalah platform berbasis AI untuk membantu perencanaan umrah.\n\n**Demo Video:**\n- Demo Live: https://www.youtube.com/live/sS7T6YqIJHI\n- Feature Walkthrough: https://youtu.be/e1XsLF6aUaA\n\n**Fitur Utama:**\n\n1. **AI Chat Assistant**\n   - Tanya jawab seputar umrah 24/7\n   - Rekomendasi paket personal\n   - Informasi manasik & doa\n\n2. **Perbandingan Harga**\n   - Bandingkan 100+ paket umrah\n   - Filter by budget, bintang, tanggal\n   - Update harga real-time\n\n3. **Kalkulator Biaya**\n   - Hitung estimasi biaya lengkap\n   - Termasuk biaya tambahan\n   - Simulasi cicilan\n\n4. **Travel Agent Terpercaya**\n   - Daftar travel agent resmi Kemenag\n   - Rating & review dari jamaah\n   - Kontak langsung via WhatsApp\n\n5. **Panduan Umrah**\n   - Manasik interaktif\n   - Video tutorial\n   - Checklist persiapan\n\n**Gratis untuk semua!**",
-      "tags": ["labbaik", "fitur", "aplikasi", "demo", "video"],
+      "answer": "**Labbaik AI** adalah platform berbasis AI untuk membantu perencanaan umrah.\n\n**Fitur Utama:**\n\n1. **AI Chat Assistant**\n   - Tanya jawab seputar umrah 24/7\n   - Rekomendasi paket personal\n   - Informasi manasik & doa\n\n2. **Perbandingan Harga**\n   - Bandingkan 100+ paket umrah\n   - Filter by budget, bintang, tanggal\n   - Update harga real-time\n\n3. **Kalkulator Biaya**\n   - Hitung estimasi biaya lengkap\n   - Termasuk biaya tambahan\n   - Simulasi cicilan\n\n4. **Travel Agent Terpercaya**\n   - Daftar travel agent resmi Kemenag\n   - Rating & review dari jamaah\n   - Kontak langsung via WhatsApp\n\n5. **Panduan Umrah**\n   - Manasik interaktif\n   - Video tutorial\n   - Checklist persiapan\n\n**Gratis untuk semua!**",
+      "tags": ["labbaik", "fitur", "aplikasi"],
       "helpful_count": 987,
       "order": 1
     },
