@@ -101,7 +101,8 @@ def render_referral_code(code: str):
     st.markdown("**Bagikan via:**")
 
     wa_text = f"Halo! Yuk pakai LABBAIK AI untuk perencanaan Umrah. Daftar gratis dengan kode saya: {code}\n\n{share_link}"
-    wa_url = f"https://wa.me/?text={wa_text.replace(' ', '%20').replace('\n', '%0A')}"
+    newline = "\n"
+    wa_url = f"https://wa.me/?text={wa_text.replace(' ', '%20').replace(newline, '%0A')}"
 
     col1, col2, col3 = st.columns(3)
     with col1:
