@@ -396,6 +396,155 @@ class OpenAIChatService(BaseChatService):
 
 
 # =============================================================================
+# GLM CHAT SERVICE (Zhipu AI)
+# =============================================================================
+
+class GLMChatService(BaseChatService):
+    """Chat service implementation for GLM-4 (Zhipu AI) API."""
+
+    DEFAULT_MODEL = "glm-4"
+    AVAILABLE_MODELS = [
+        "glm-4",
+        "glm-4-plus",
+        "glm-4-air",
+        "glm-4-airx",
+        "glm-4-flash",
+        "glm-4v",  # Vision model
+    ]
+
+    def __init__(
+        self,
+        api_key: str,
+        model: str = None,
+        max_tokens: int = 4096,
+        temperature: float = 0.7,
+        requests_per_minute: int = 60,
+        tokens_per_minute: int = 100000,
+        **kwargs
+    ):
+        super().__init__(api_key, **kwargs)
+        self.model = model or self.DEFAULT_MODEL
+        self.max_tokens = max_tokens
+        self.temperature = temperature
+        self._client = None
+        self._rate_limiter = RateLimiter(requests_per_minute, tokens_per_minute)
+
+    @property
+    def provider_name(self) -> str:
+        return "glm"
+
+    def initialize(self) -> bool:
+        """Initialize GLM client."""
+        try:
+            from zhipuai import ZhipuAI
+            self._client = ZhipuAI(api_key=self.api_key)
+            self._initialized = True
+            logger.info(f"GLM service initialized with model: {self.model}")
+            return True
+        except ImportError:
+            logger.error("ZhipuAI package not installed. Run: pip install zhipuai")
+            return False
+        except Exception as e:
+            logger.error(f"Failed to initialize GLM: {e}")
+            return False
+
+    def _check_rate_limit(self, estimated_tokens: int = 1000):
+        """Check and wait for rate limit if needed."""
+        can_proceed, wait_time = self._rate_limiter.can_proceed(estimated_tokens)
+        if not can_proceed:
+            logger.warning(f"Rate limit hit, waiting {wait_time:.1f}s")
+            time.sleep(wait_time)
+
+    def _prepare_messages(self, messages: List[ChatMessage]) -> List[Dict[str, str]]:
+        """Convert ChatMessage objects to API format."""
+        return [msg.to_dict() for msg in messages]
+
+    def complete(self, request: ChatCompletionRequest) -> ChatCompletionResponse:
+        """Generate chat completion."""
+        self._ensure_initialized()
+        self._check_rate_limit(request.max_tokens)
+
+        start_time = time.time()
+
+        try:
+            response = self._client.chat.completions.create(
+                model=request.model or self.model,
+                messages=self._prepare_messages(request.messages),
+                max_tokens=request.max_tokens or self.max_tokens,
+                temperature=request.temperature,
+                top_p=request.top_p,
+                stop=request.stop_sequences,
+                stream=False,
+            )
+
+            latency_ms = (time.time() - start_time) * 1000
+
+            # Record usage
+            usage = {
+                "prompt_tokens": response.usage.prompt_tokens,
+                "completion_tokens": response.usage.completion_tokens,
+                "total_tokens": response.usage.total_tokens,
+            }
+            self._rate_limiter.record_request(usage["total_tokens"])
+
+            return ChatCompletionResponse(
+                content=response.choices[0].message.content,
+                model=response.model,
+                usage=usage,
+                finish_reason=response.choices[0].finish_reason,
+                latency_ms=latency_ms,
+            )
+
+        except Exception as e:
+            error_msg = str(e).lower()
+            if "rate_limit" in error_msg or "rate limit" in error_msg:
+                raise AIRateLimitError(provider="glm")
+            elif "quota" in error_msg:
+                raise AIQuotaExceededError(provider="glm")
+            else:
+                logger.error(f"GLM API error: {e}")
+                raise AIServiceError(message=str(e), provider="glm")
+
+    def stream(self, request: ChatCompletionRequest) -> Generator[str, None, None]:
+        """Generate streaming chat completion."""
+        self._ensure_initialized()
+        self._check_rate_limit(request.max_tokens)
+
+        try:
+            stream_response = self._client.chat.completions.create(
+                model=request.model or self.model,
+                messages=self._prepare_messages(request.messages),
+                max_tokens=request.max_tokens or self.max_tokens,
+                temperature=request.temperature,
+                top_p=request.top_p,
+                stop=request.stop_sequences,
+                stream=True,
+            )
+
+            for chunk in stream_response:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    yield chunk.choices[0].delta.content
+
+            self._rate_limiter.record_request(request.max_tokens // 2)
+
+        except Exception as e:
+            logger.error(f"GLM streaming error: {e}")
+            raise AIServiceError(message=str(e), provider="glm")
+
+    async def acomplete(self, request: ChatCompletionRequest) -> ChatCompletionResponse:
+        """Async chat completion - GLM uses sync client, wrapping with asyncio."""
+        import asyncio
+        return await asyncio.get_event_loop().run_in_executor(
+            None, self.complete, request
+        )
+
+    async def astream(self, request: ChatCompletionRequest) -> AsyncGenerator[str, None]:
+        """Async streaming - yields from sync stream."""
+        for chunk in self.stream(request):
+            yield chunk
+
+
+# =============================================================================
 # UNIFIED CHAT SERVICE WITH FALLBACK
 # =============================================================================
 
@@ -454,3 +603,4 @@ class UnifiedChatService:
 
 AIServiceFactory.register_chat_service("groq", GroqChatService)
 AIServiceFactory.register_chat_service("openai", OpenAIChatService)
+AIServiceFactory.register_chat_service("glm", GLMChatService)

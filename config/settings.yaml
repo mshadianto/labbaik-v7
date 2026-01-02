@@ -39,22 +39,31 @@ database:
 # AI SERVICES CONFIGURATION
 # =============================================================================
 ai:
+  # Default provider: groq, glm, or openai
+  default_provider: "groq"
+
   # Groq Configuration (primary)
   groq_api_key: ""  # Override with GROQ_API_KEY env var
   groq_model: "llama-3.3-70b-versatile"
   groq_max_tokens: 4096
   groq_temperature: 0.7
-  
+
+  # GLM-4 Configuration (Zhipu AI)
+  glm_api_key: ""  # Override with GLM_API_KEY env var
+  glm_model: "glm-4"
+  glm_max_tokens: 4096
+  glm_temperature: 0.7
+
   # OpenAI Configuration (fallback)
   openai_api_key: ""  # Override with OPENAI_API_KEY env var
   openai_model: "gpt-4o-mini"
-  
+
   # RAG Configuration
   embedding_model: "all-MiniLM-L6-v2"
   chunk_size: 500
   chunk_overlap: 50
   top_k_results: 5
-  
+
   # Rate Limiting
   requests_per_minute: 30
   tokens_per_minute: 100000

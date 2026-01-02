@@ -3,12 +3,49 @@ LABBAIK AI v6.0 - AI Chat (Super WOW Edition)
 =============================================
 Enhanced chat interface with quick actions,
 smart suggestions, rich responses, and history.
+Supports multiple AI providers: Groq, OpenAI, GLM-4.
 """
 
 import streamlit as st
 from datetime import datetime
 from typing import Dict, List, Any, Optional
 import random
+import os
+
+# AI Service imports
+try:
+    from services.ai.chat_service import (
+        GroqChatService,
+        OpenAIChatService,
+        GLMChatService,
+        UnifiedChatService,
+    )
+    from services.ai.base import ChatMessage, ChatCompletionRequest
+    HAS_AI_SERVICES = True
+except ImportError:
+    HAS_AI_SERVICES = False
+
+# Available AI providers
+AI_PROVIDERS = {
+    "groq": {
+        "name": "Groq (Llama 3.3)",
+        "icon": "🚀",
+        "model": "llama-3.3-70b-versatile",
+        "env_key": "GROQ_API_KEY",
+    },
+    "glm": {
+        "name": "GLM-4 (Zhipu AI)",
+        "icon": "🧠",
+        "model": "glm-4",
+        "env_key": "GLM_API_KEY",
+    },
+    "openai": {
+        "name": "OpenAI (GPT-4o)",
+        "icon": "🤖",
+        "model": "gpt-4o-mini",
+        "env_key": "OPENAI_API_KEY",
+    },
+}
 
 # =============================================================================
 # CONSTANTS & DATA
@@ -174,9 +211,50 @@ Biaya umrah bervariasi tergantung beberapa faktor:
 # SESSION STATE
 # =============================================================================
 
+def get_api_key(provider: str) -> Optional[str]:
+    """Get API key for provider from secrets or environment."""
+    env_key = AI_PROVIDERS.get(provider, {}).get("env_key", "")
+
+    # Try Streamlit secrets first
+    try:
+        if hasattr(st, 'secrets') and env_key in st.secrets:
+            return st.secrets[env_key]
+    except:
+        pass
+
+    # Try environment variable
+    return os.environ.get(env_key)
+
+
+def get_ai_service(provider: str = "groq"):
+    """Get AI service instance for the specified provider."""
+    if not HAS_AI_SERVICES:
+        return None
+
+    api_key = get_api_key(provider)
+    if not api_key:
+        return None
+
+    try:
+        if provider == "groq":
+            service = GroqChatService(api_key=api_key)
+        elif provider == "glm":
+            service = GLMChatService(api_key=api_key)
+        elif provider == "openai":
+            service = OpenAIChatService(api_key=api_key)
+        else:
+            return None
+
+        service.initialize()
+        return service
+    except Exception as e:
+        st.error(f"Failed to initialize {provider}: {e}")
+        return None
+
+
 def init_chat_state():
     """Initialize chat session state."""
-    
+
     if "chat_messages" not in st.session_state:
         st.session_state.chat_messages = [
             {
@@ -185,13 +263,23 @@ def init_chat_state():
                 "timestamp": datetime.now().isoformat(),
             }
         ]
-    
+
     if "chat_context" not in st.session_state:
         st.session_state.chat_context = "default"
-    
+
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []
-    
+
+    # Default AI provider
+    if "ai_provider" not in st.session_state:
+        # Auto-detect available provider
+        for provider in ["groq", "glm", "openai"]:
+            if get_api_key(provider):
+                st.session_state.ai_provider = provider
+                break
+        else:
+            st.session_state.ai_provider = "groq"
+
     # Check for quick question from home page
     if "quick_question" in st.session_state and st.session_state.quick_question:
         question = st.session_state.quick_question
@@ -215,23 +303,85 @@ def add_message(role: str, content: str):
 
 
 def get_ai_response(user_message: str) -> str:
-    """Get AI response for user message (mock implementation)."""
-    
+    """Get AI response using the selected provider."""
+
+    provider = st.session_state.get("ai_provider", "groq")
+    service = get_ai_service(provider)
+
+    # System prompt for Umrah assistant
+    system_prompt = """Anda adalah LABBAIK AI, asisten cerdas untuk perencanaan ibadah Umrah.
+
+INSTRUKSI:
+1. Jawab dalam Bahasa Indonesia yang baik dan santun
+2. Berikan informasi akurat tentang umrah (syarat, tata cara, biaya, tips)
+3. Gunakan format markdown untuk response yang rapi
+4. Sertakan emoji yang relevan untuk membuat jawaban lebih menarik
+5. Jika tidak yakin, sarankan untuk berkonsultasi dengan ustadz/travel agent
+6. Dorong sikap DYOR (Do Your Own Research)
+
+KONTEKS: Anda membantu umat Muslim Indonesia merencanakan ibadah umrah."""
+
+    if service:
+        try:
+            # Build messages from chat history
+            messages = [ChatMessage.system(system_prompt)]
+
+            # Add recent chat history (last 6 messages)
+            chat_msgs = st.session_state.get("chat_messages", [])
+            for msg in chat_msgs[-6:]:
+                if msg["role"] == "user":
+                    messages.append(ChatMessage.user(msg["content"]))
+                elif msg["role"] == "assistant":
+                    messages.append(ChatMessage.assistant(msg["content"]))
+
+            # Add current question
+            messages.append(ChatMessage.user(user_message))
+
+            # Create request
+            request = ChatCompletionRequest(
+                messages=messages,
+                temperature=0.7,
+                max_tokens=2048
+            )
+
+            # Get response
+            response = service.complete(request)
+
+            # Update context based on response
+            user_lower = user_message.lower()
+            if any(word in user_lower for word in ["syarat", "persyaratan", "dokumen", "persiapan"]):
+                st.session_state.chat_context = "persiapan"
+            elif any(word in user_lower for word in ["tata cara", "rukun", "thawaf", "sai", "ihram"]):
+                st.session_state.chat_context = "ibadah"
+            elif any(word in user_lower for word in ["biaya", "harga", "cost", "budget"]):
+                st.session_state.chat_context = "biaya"
+            else:
+                st.session_state.chat_context = "default"
+
+            return response.content
+
+        except Exception as e:
+            return f"""⚠️ Maaf, terjadi kesalahan saat memproses pertanyaan Anda.
+
+**Error:** {str(e)}
+
+Silakan coba lagi atau gunakan pertanyaan populer di atas."""
+
+    # Fallback to sample responses if no AI service available
     user_lower = user_message.lower()
-    
-    # Detect context and generate response
+
     if any(word in user_lower for word in ["syarat", "persyaratan", "dokumen", "persiapan"]):
         st.session_state.chat_context = "persiapan"
         return SAMPLE_RESPONSES["syarat"]
-    
+
     elif any(word in user_lower for word in ["tata cara", "rukun", "cara", "thawaf", "sai", "ihram"]):
         st.session_state.chat_context = "ibadah"
         return SAMPLE_RESPONSES["tata_cara"]
-    
+
     elif any(word in user_lower for word in ["biaya", "harga", "cost", "budget", "mahal", "murah"]):
         st.session_state.chat_context = "biaya"
         return SAMPLE_RESPONSES["biaya"]
-    
+
     else:
         st.session_state.chat_context = "default"
         return f"""
@@ -239,16 +389,12 @@ Terima kasih atas pertanyaannya! 🤲
 
 Pertanyaan Anda tentang **"{user_message}"** sangat baik.
 
-Untuk memberikan jawaban yang lebih spesifik, saya perlu informasi tambahan:
+⚠️ **AI Service tidak tersedia.** Pastikan API key sudah dikonfigurasi.
 
-1. Apakah Anda sudah pernah umrah sebelumnya?
-2. Kapan rencana keberangkatan Anda?
-3. Ada preferensi khusus yang ingin dipertimbangkan?
-
-Silakan pilih kategori di bawah untuk pertanyaan yang lebih spesifik, atau ketik pertanyaan baru.
+Silakan pilih kategori di bawah untuk pertanyaan yang lebih spesifik.
 
 ---
-💡 **Tip:** Anda juga bisa menggunakan fitur **Simulasi Biaya** untuk menghitung estimasi umrah!
+💡 **Tip:** Konfigurasi `GROQ_API_KEY` atau `GLM_API_KEY` di secrets untuk mengaktifkan AI.
 """
 
 
@@ -271,10 +417,45 @@ def process_user_message(message: str):
 
 def render_sidebar():
     """Render chat sidebar with quick actions."""
-    
+
     with st.sidebar:
+        # AI Provider Selection
+        st.markdown("## 🧠 AI Provider")
+
+        current_provider = st.session_state.get("ai_provider", "groq")
+
+        # Build provider options
+        provider_options = []
+        provider_labels = {}
+        for key, info in AI_PROVIDERS.items():
+            has_key = get_api_key(key) is not None
+            status = "✓" if has_key else "✗"
+            label = f"{info['icon']} {info['name']} [{status}]"
+            provider_options.append(key)
+            provider_labels[key] = label
+
+        selected_provider = st.selectbox(
+            "Pilih AI:",
+            options=provider_options,
+            index=provider_options.index(current_provider) if current_provider in provider_options else 0,
+            format_func=lambda x: provider_labels.get(x, x),
+            key="provider_select"
+        )
+
+        if selected_provider != current_provider:
+            st.session_state.ai_provider = selected_provider
+            st.rerun()
+
+        # Show provider status
+        if get_api_key(selected_provider):
+            st.success(f"✓ {AI_PROVIDERS[selected_provider]['name']} aktif", icon="🟢")
+        else:
+            st.warning(f"API key belum dikonfigurasi", icon="⚠️")
+
+        st.divider()
+
         st.markdown("## 🎯 Aksi Cepat")
-        
+
         # Quick actions
         actions = [
             ("💰 Simulasi Biaya", "simulator"),
@@ -282,17 +463,17 @@ def render_sidebar():
             ("👥 Umrah Bareng", "umrah_bareng"),
             ("📚 Panduan", "guide"),
         ]
-        
+
         for label, page in actions:
             if st.button(label, use_container_width=True):
                 st.session_state.current_page = page
                 st.rerun()
-        
+
         st.divider()
-        
+
         # Chat history
         st.markdown("## 📜 Riwayat")
-        
+
         history = st.session_state.get("chat_history", [])
         if history:
             for i, item in enumerate(history[-5:]):
@@ -302,16 +483,16 @@ def render_sidebar():
                         st.info("Memuat riwayat chat...")
         else:
             st.caption("Belum ada riwayat")
-        
+
         st.divider()
-        
+
         # Chat controls
         st.markdown("## ⚙️ Pengaturan")
-        
+
         if st.button("🗑️ Hapus Chat", use_container_width=True):
             st.session_state.chat_messages = [st.session_state.chat_messages[0]]
             st.rerun()
-        
+
         if st.button("📤 Export Chat", use_container_width=True):
             st.info("Fitur export akan segera hadir")
 
@@ -489,17 +670,24 @@ def render_chat_features():
 
 def render_ai_status():
     """Render AI status indicator."""
-    
+
+    provider = st.session_state.get("ai_provider", "groq")
+    provider_info = AI_PROVIDERS.get(provider, {})
+    has_key = get_api_key(provider) is not None
+
     col1, col2, col3 = st.columns([2, 2, 1])
-    
+
     with col1:
-        st.caption("🟢 AI Assistant Aktif")
-    
+        if has_key:
+            st.caption(f"🟢 {provider_info.get('icon', '🤖')} {provider_info.get('name', 'AI')} Aktif")
+        else:
+            st.caption("🟡 AI Offline (Demo Mode)")
+
     with col2:
         st.caption(f"💬 {len(st.session_state.chat_messages)} pesan")
-    
+
     with col3:
-        st.caption("⚡ Fast Mode")
+        st.caption(f"⚡ {provider.upper()}")
 
 
 # =============================================================================
