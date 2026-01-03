@@ -6,9 +6,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 LABBAIK AI is a Streamlit-based AI platform for Umrah (Islamic pilgrimage) planning. It helps Indonesian Muslims plan their Umrah journey with features like AI chat, cost simulation, group matching, Travel CRM, and emergency SOS.
 
-**Tech Stack:** Python 3.9+, Streamlit, PostgreSQL (Supabase), Groq/OpenAI LLM, ChromaDB for RAG
+**Tech Stack:** Python 3.9+, Streamlit, PostgreSQL (Supabase), Groq/GLM-4/OpenAI LLM, ChromaDB for RAG
 
-**Deployment:** Railway (https://app.labbaik.io/)
+## Domain Structure
+
+| URL | Platform | Purpose |
+|-----|----------|---------|
+| `https://labbaik.io` | Hostinger (WordPress) | Landing page, marketing, SEO |
+| `https://app.labbaik.io` | Railway (Streamlit) | Main AI application |
+
+**Email Addresses:**
+- `admin@labbaik.io` - Admin login
+- `founder@labbaik.io` - Business contact
+- `salam@labbaik.io` - Customer support
 
 ## Common Commands
 
@@ -37,11 +47,11 @@ python scripts/run_cleanup_data.py
 ### Database Setup (Supabase)
 
 Run migration in Supabase SQL Editor:
-```bash
-# Full schema migration
+```sql
+-- Full schema migration
 sql/supabase_migration.sql
 
-# CRM tables only
+-- CRM tables only
 sql/travel_crm_schema.sql
 ```
 
@@ -64,7 +74,7 @@ psql $DATABASE_URL < sql/schema.sql # Initialize schema
 ```
 core/           # Configuration, constants, exceptions, logging
 services/       # Backend services (AI, database, analytics, WhatsApp)
-  ai/           # LLM services (Groq, OpenAI) with provider abstraction
+  ai/           # LLM services (Groq, GLM-4, OpenAI) with provider abstraction
   database/     # PostgreSQL connection pool and repository pattern
   intelligence/ # Name normalization, pricing, risk scores
   umrah/        # Hotel/transport data fetching from multiple APIs
@@ -89,7 +99,7 @@ umrah-crawler/  # Separate FastAPI backend for data crawling
 **Session State:** All state is managed via `st.session_state`. See `init_session_state()` in `app.py` for all keys including navigation, auth, chat, gamification, SOS, tracking, and more.
 
 **Service Layer:**
-- `services/ai/chat_service.py` - Groq/OpenAI chat with rate limiting
+- `services/ai/chat_service.py` - Multi-provider chat (Groq, GLM-4, OpenAI) with rate limiting
 - `services/database/repository.py` - Database singleton with connection pooling
 - `services/user/user_repository.py` - User CRUD with PostgreSQL/SQLite fallback
 - `services/intelligence/` - Name normalization, currency conversion, risk scoring
@@ -102,12 +112,14 @@ umrah-crawler/  # Separate FastAPI backend for data crawling
 ### AI Services
 
 The AI layer uses a provider abstraction via `AIServiceFactory`:
-- `GroqChatService` - Primary LLM (llama-3.3-70b-versatile), with rate limiting
-- `GLMChatService` - GLM-4 from Zhipu AI (glm-4, glm-4-plus, glm-4-flash)
-- `OpenAIChatService` - Fallback (gpt-4o-mini)
-- All extend `BaseChatService` from `services/ai/base.py`
 
-Provider selection is available in the chat page sidebar. Users can switch between providers in real-time.
+| Provider | Model | Package |
+|----------|-------|---------|
+| `GroqChatService` | llama-3.3-70b-versatile | `groq` |
+| `GLMChatService` | glm-4, glm-4-plus, glm-4-flash | `zhipuai` |
+| `OpenAIChatService` | gpt-4o-mini | `openai` |
+
+All extend `BaseChatService` from `services/ai/base.py`. Provider selection is available in the chat page sidebar - users can switch between providers in real-time.
 
 ### Travel CRM System
 
@@ -130,34 +142,52 @@ Use `check_page_access(page)` to verify permissions before rendering premium fea
 
 PostgreSQL (Supabase) with connection pooling. Uses pooler URL (port 6543) for serverless compatibility.
 
-- `services/user/user_repository.py` - User operations with PostgreSQL/SQLite fallback
-- `services/database/repository.py` - General database singleton
-- Auto-initializes from `DATABASE_URL` env var or Streamlit secrets
+Connection string format:
+```
+postgresql://postgres.[project-ref]:[password]@aws-0-[region].pooler.supabase.com:6543/postgres
+```
 
 ## Environment Variables
 
-Required:
-- `DATABASE_URL` - PostgreSQL connection string (use Supabase pooler URL)
+**Required:**
+- `DATABASE_URL` - PostgreSQL connection string (Supabase pooler URL, port 6543)
 
-AI Providers (at least one required):
-- `GROQ_API_KEY` - Groq API key (llama-3.3-70b-versatile)
-- `GLM_API_KEY` - Zhipu AI key (glm-4)
-- `OPENAI_API_KEY` - OpenAI key (gpt-4o-mini)
+**AI Providers (at least one required):**
+- `GROQ_API_KEY` - Groq API key
+- `GLM_API_KEY` - Zhipu AI (GLM-4) key
+- `OPENAI_API_KEY` - OpenAI key
 
-Optional:
+**Admin:**
+- `ADMIN_EMAIL` - Admin email (default: admin@labbaik.io)
+- `ADMIN_PASSWORD` - Admin password
+
+**Optional:**
 - `WAHA_API_URL`, `WAHA_SESSION` - WhatsApp integration (WAHA self-hosted)
 - `AMADEUS_API_KEY`, `AMADEUS_API_SECRET` - Amadeus hotel API
 - `RAPIDAPI_KEY` - RapidAPI key for Xotelo
-- `ADMIN_EMAIL`, `ADMIN_PASSWORD` - Auto-create admin on startup
 
-## Deployment (Railway)
+## Deployment
 
-Environment variables are set in Railway dashboard. Local changes to `secrets.toml` don't affect production.
+### Railway (Application)
+
+App deployed at: `https://app.labbaik.io`
 
 ```bash
 # Link project (if Railway CLI installed)
 railway link
 railway variables set KEY=value
+railway logs
+```
+
+Environment variables are set in Railway dashboard. Local `secrets.toml` changes don't affect production.
+
+### Hostinger (Landing Page)
+
+WordPress landing page at: `https://labbaik.io`
+
+DNS setup for subdomain:
+```
+CNAME  app  labbaik-v7-production.up.railway.app
 ```
 
 ## Conventions
@@ -176,3 +206,4 @@ Follow conventional commits:
 - `fix:` - Bug fix
 - `docs:` - Documentation
 - `refactor:` - Code refactoring
+- `chore:` - Maintenance tasks
