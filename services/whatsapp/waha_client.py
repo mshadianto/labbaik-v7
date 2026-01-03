@@ -135,7 +135,7 @@ Jazakallahu khairan atas kepercayaan Anda! 🤲
 
 ---
 _LABBAIK AI - Platform Umrah Cerdas_
-_labbaik.cloud_"""
+_labbaik.io_"""
 
     @staticmethod
     def group_notification(

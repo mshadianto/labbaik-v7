@@ -19,7 +19,7 @@ except ImportError:
     APP_TAGLINE = "Platform Umrah Cerdas Indonesia"
 
 APP_AUTHOR = "MS Hadianto"
-APP_WEBSITE = "https://labbaik.cloud"
+APP_WEBSITE = "https://labbaik.io"
 
 
 # =============================================================================

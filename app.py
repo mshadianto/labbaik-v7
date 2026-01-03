@@ -36,8 +36,8 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
-        'Get Help': 'https://labbaik.cloud/help',
-        'Report a bug': 'https://labbaik.cloud/feedback',
+        'Get Help': 'https://labbaik.io/help',
+        'Report a bug': 'https://labbaik.io/feedback',
         'About': 'LABBAIK AI - Platform Perencanaan Umrah AI #1 Indonesia'
     }
 )

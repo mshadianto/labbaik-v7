@@ -346,7 +346,7 @@ ADMIN_PASSWORD = "your_secure_password"
 ### Base URL
 
 ```
-https://api.labbaik.cloud/api/v1
+https://api.labbaik.io/api/v1
 ```
 
 ### Authentication

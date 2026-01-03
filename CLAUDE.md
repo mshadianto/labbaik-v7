@@ -8,7 +8,7 @@ LABBAIK AI is a Streamlit-based AI platform for Umrah (Islamic pilgrimage) plann
 
 **Tech Stack:** Python 3.9+, Streamlit, PostgreSQL (Supabase), Groq/OpenAI LLM, ChromaDB for RAG
 
-**Deployment:** Railway (https://labbaik-v7-production.up.railway.app/)
+**Deployment:** Railway (https://app.labbaik.io/)
 
 ## Common Commands
 

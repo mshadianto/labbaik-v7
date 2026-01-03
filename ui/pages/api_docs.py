@@ -76,7 +76,7 @@ def render_getting_started():
     st.markdown("""
     #### Base URL
     ```
-    https://api.labbaik.cloud/api/v1
+    https://api.labbaik.io/api/v1
     ```
 
     #### Quick Start
@@ -87,7 +87,7 @@ def render_getting_started():
 
     #### Request Format
     ```bash
-    curl -X GET "https://api.labbaik.cloud/api/v1/packages" \\
+    curl -X GET "https://api.labbaik.io/api/v1/packages" \\
       -H "Authorization: Bearer lbk_live_xxxxxxxxxxxx" \\
       -H "Content-Type: application/json"
     ```
@@ -268,7 +268,7 @@ def render_endpoints_docs():
                 path = endpoint.split()[1]
 
                 example = f"""```bash
-curl -X {method} "https://api.labbaik.cloud{path}" \\
+curl -X {method} "https://api.labbaik.io{path}" \\
   -H "Authorization: Bearer lbk_live_xxxx" \\
   -H "Content-Type: application/json"
 ```"""

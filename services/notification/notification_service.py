@@ -309,7 +309,7 @@ class EmailSender(BaseNotificationSender):
         self.smtp_port = smtp_port or int(os.environ.get("SMTP_PORT", "587"))
         self.smtp_user = smtp_user or os.environ.get("SMTP_USER", "")
         self.smtp_password = smtp_password or os.environ.get("SMTP_PASSWORD", "")
-        self.from_address = from_address or os.environ.get("EMAIL_FROM", "noreply@labbaik.cloud")
+        self.from_address = from_address or os.environ.get("EMAIL_FROM", "noreply@labbaik.io")
         self.use_tls = use_tls
         
         self._templates = EmailTemplates()
@@ -615,7 +615,7 @@ class NotificationService:
         results = self.send(message)
         return results.get(NotificationChannel.EMAIL)
     
-    def send_welcome_email(self, email: str, name: str, app_url: str = "https://labbaik.cloud") -> NotificationResult:
+    def send_welcome_email(self, email: str, name: str, app_url: str = "https://labbaik.io") -> NotificationResult:
         """Send welcome email to new user."""
         sender = self._senders.get(NotificationChannel.EMAIL)
         if isinstance(sender, EmailSender):

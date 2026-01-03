@@ -84,7 +84,7 @@ def render_referral_code(code: str):
     """, unsafe_allow_html=True)
 
     # Share link
-    share_link = f"https://labbaik.cloud/register?ref={code}"
+    share_link = f"https://app.labbaik.io/register?ref={code}"
 
     col1, col2 = st.columns(2)
 
